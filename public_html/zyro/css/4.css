@@ -1,0 +1,54 @@
+
+#wb_header { height: 80px; }
+#wb_header > .wb_cont_bg { background: transparent none repeat scroll left top; }
+#wb_main { height: 751px; padding-bottom: 30px; }
+#wb_main > .wb_cont_bg { background: transparent none repeat scroll left top; }
+#wb_footer { height: 74px; }
+#wb_footer > .wb_cont_bg { background: transparent none repeat-x scroll left top; }
+body { background: transparent none repeat-x scroll left top; }
+.wb_sbg { background: transparent url("../gallery_gen/1aa65be81ca706afc7f0fa6bdac38dda.jpg") repeat-x scroll center top; }
+body, .wb_sbg { min-width: 1200px; min-height: 905px; }
+.wb_cont_inner { width: 1200px; }
+.wb_cont_bg { width: 1200px; margin-left: -600px; }
+.root { height: 875px; overflow: visible; min-height: 905px; }
+#wb_element_instance35 { top: 12px; left: 676px; min-width: 510px; width: 510px; min-height: 56px; height: 56px; display: block; z-index: 400; }
+#wb_element_instance35 > ul { display: block; }
+#wb_element_instance35 ul { background: transparent none repeat scroll right top; border: 1px none #000000; }
+#wb_element_instance35, #wb_element_instance35 ul { text-align: right; }
+#wb_element_instance35 ul ul { background: #000000 none repeat scroll right top; }
+#wb_element_instance35 li { margin: 0px 0px 0px 0px; }
+#wb_element_instance35 li a { text-transform: uppercase; border: 0px none #000000; padding: 20px 20px 20px 20px; font: normal bold 14px Helvetica,Arial,sans-serif; text-decoration: none; color: #ffffff; line-height: 16px; background: transparent none repeat-x scroll center center; }
+#wb_element_instance35 li.over > a, #wb_element_instance35 li:focus > a { border: 0px none #000000; font: normal bold 14px Helvetica,Arial,sans-serif; text-decoration: none; color: #0097e3; line-height: 16px; background: transparent none repeat-x scroll center center; }
+#wb_element_instance35 li.active > a { border: 0px none #000000; font: normal bold 14px Helvetica,Arial,sans-serif; text-decoration: none; color: #0097e3; line-height: 16px; background: transparent none repeat-x scroll center center; }
+#wb_element_instance35:not(.collapse-expanded) .vmenu ul.open-left,#wb_element_instance35:not(.collapse-expanded) .hmenu ul.open-left { left: auto; right: 100%; }
+#wb_element_instance35:not(.collapse-expanded) .hmenu > li > ul.open-left { left: auto; right: 0; }
+#wb_element_instance36 { top: 10px; left: 30px; min-width: 190px; width: 190px; min-height: 60px; height: 60px; display: block; z-index: 197; }
+#wb_element_instance36 img { width: 190px; height: 60px; display: block; position: static; left: 0px; top: 0px; }
+#wb_element_instance37 { top: 30px; left: 10px; min-width: 219px; width: 219px; min-height: 34px; height: 34px; display: block; z-index: 202; }
+#wb_element_instance38 { top: 250px; left: 10px; min-width: 760px; width: 760px; min-height: 145px; height: 145px; display: block; z-index: 61; }
+#wb_element_instance39 { top: 90px; left: 10px; min-width: 760px; width: 760px; min-height: 108px; height: 108px; display: block; z-index: 62; }
+#wb_element_instance40 { top: 90px; left: 800px; min-width: 390px; width: 390px; min-height: 280px; height: 280px; display: block; z-index: 63; }
+#wb_element_instance40 > .wb_shp { background: #00aaff none repeat scroll left top; background-size: auto auto; border: 0px solid #C0C0C0; opacity: 0.95; border-radius: 0px 0px 0px 0px; -moz-border-radius: 0px 0px 0px 0px; -webkit-border-radius: 0px 0px 0px 0px; width: 390px; height: 280px; }
+#wb_element_instance41 { top: 30px; left: 10px; min-width: 1180px; width: 1180px; min-height: 42px; height: 42px; display: block; z-index: 64; }
+#wb_element_instance42 { top: 430px; left: 10px; min-width: 1180px; width: 1180px; min-height: 261px; height: 261px; display: block; z-index: 66; }
+#wb_element_instance43 { top: 165px; left: 930px; min-width: 128px; width: 128px; min-height: 128px; height: 128px; display: block; z-index: 67; }
+#wb_element_instance43 img { width: 128px; height: 128px; display: block; position: static; left: 0px; top: 0px; }
+#wb_element_instance44 { top: 711px; left: 0px; display: block; z-index: 9000; }
+#wb_element_instance45 { top: 84px; left: 0px; display: block; z-index: 9999; }
+
+
+#wb_element_instance37 p:last-child { margin-bottom: 0; }
+#wb_element_instance38 p:last-child { margin-bottom: 0; }
+#wb_element_instance39 p:last-child { margin-bottom: 0; }
+#wb_element_instance41 p:last-child { margin-bottom: 0; }
+#wb_element_instance42 p:last-child { margin-bottom: 0; }
+
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
+}
+
+@media (max-width: 767px) {
+}
