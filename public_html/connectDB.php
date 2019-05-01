@@ -23,10 +23,13 @@
 	    return runQuery($sql);
 	}
 
-	function getEvent(){
+	function getEvent($orderBy, $active , $upcoming){
+		$date = date('Y-m-dTH:i:s');
 		$sql= "SELECT name as Name, fromDate as `From` , toDate as `To`, Venue, Location, contactName as `Contact Person`, contactEmail as `Contact Email`, applicationDeadline as `Application Deadline`, quota as Quota
-				From event  
-			    order by fromDate DESC";
+				From event
+				where active = " . $active .
+				($upcoming?(" and fromDate > '2020-01-01T01:01:01'"):" ") .
+			    " order by fromDate " . $orderBy;
 	    return runQuery($sql);
 	}
        

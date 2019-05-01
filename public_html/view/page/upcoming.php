@@ -61,9 +61,11 @@
 		<div class="vbox wb_container" id="wb_main">
 
 			<div class="wb_cont_inner">
-				<div id="wb_element_instance18" class="wb_element wb_text_element" style=" line-height: normal;">
-					<script type="text/javascript">
-						var results = <?php include 'connectDB.php';	echo  getEvent();?>;
+					<div id="wb_element_instance21" class="wb_element wb_text_element" style=" line-height: normal;">
+						<h1 class="wb-stl-heading1">Upcoming Event</h1></div>
+						<div id="wb_element_instance22" class="wb_element wb_text_element" style=" line-height: normal;">
+							<script type="text/javascript">
+						var results = <?php include 'connectDB.php';	echo  getEvent("DESC", 1 , 1);?>;
 						table = '';
 						for ( var i = 0; i < results.length; i++) {
 							var obj = results[i];
@@ -84,16 +86,6 @@
 							}
 							document.write('<table>' + table + '</table>');
 						</script>
-					</div>
-					<div id="wb_element_instance19" class="wb_element wb_text_element" style=" line-height: normal;">
-						<h2 class="wb-stl-heading2">You will find the latest information...<span style="background-color: transparent;">About our company here. You will find the...</span><span style="background-color: transparent;">Latest information about our company...</span><span style="background-color: transparent;">Here. You will find the latest...</span>Information about our...</h2></div>
-					<div id="wb_element_instance20" class="wb_element wb_element_shape">
-						<div class="wb_shp"></div>
-					</div>
-					<div id="wb_element_instance21" class="wb_element wb_text_element" style=" line-height: normal;">
-						<h1 class="wb-stl-heading1">About us</h1></div>
-						<div id="wb_element_instance22" class="wb_element wb_text_element" style=" line-height: normal;">
-							<p class="wb-stl-normal">You will find the latest information about us on this page. Our company is constantly evolving and growing. We provide wide range of services. Our mission is to provide best solution that helps everyone. If you want to contact us, please fill the contact form on our website. We wish you a good day! You will find the latest information about us on this page. Our company is constantly evolving and growing. We provide wide range of services. Our mission is to provide best solution that helps everyone. If you want to contact us, please fill the contact form on our website. We wish you a good day! You will find the latest information about us on this page. Our company is constantly evolving and growing. We provide wide range of services. Our mission is to provide best solution that helps everyone. If you want to contact us, please fill the contact form on our website. We wish you a good day! You will find the latest information about us on this page. Our company is constantly evolving and growing. We provide wide range of services. Our mission is to provide best solution that helps everyone. If you want to contact us, please fill the contact form on our website. We wish you a good day! You will find the latest information about...</p>
 						</div>
 						<div id="wb_element_instance23" class="wb_element wb_element_picture" title=""><img alt="gallery/big_ring" src="gallery_gen/5652020a1bdb066641b0172598a54c5b.png"></div>
 						<div id="wb_element_instance24" class="wb_element" style="width: 100%;">
