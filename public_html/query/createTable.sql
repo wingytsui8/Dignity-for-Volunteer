@@ -26,6 +26,7 @@ CREATE TABLE `event` (
   `venue` varchar(255) NOT NULL,
   `location` varchar(1000) DEFAULT NULL,
   `quota` mediumint(9) NOT NULL,
+  `applicationDeadline` date NOT NULL,
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -42,6 +43,7 @@ CREATE TABLE `register` (
   `volId` mediumint(9) NOT NULL,
   `createDate` date NOT NULL,
   `modifyDate` date NOT NULL,
+  `status` varchar(10) NOT NULL,
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

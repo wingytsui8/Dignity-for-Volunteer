@@ -24,7 +24,7 @@
 	}
 
 	function getEvent(){
-		$sql= "SELECT name as Name, fromDate, toDate, Venue, Location, contactName, contactEmail, quota, status
+		$sql= "SELECT name as Name, fromDate as `From` , toDate as `To`, Venue, Location, contactName as `Contact Person`, contactEmail as `Contact Email`, applicationDeadline as `Application Deadline`, quota as Quota
 				From event  
 			    order by fromDate DESC";
 	    return runQuery($sql);
