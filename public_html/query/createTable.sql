@@ -18,9 +18,8 @@ DROP TABLE IF EXISTS `event`;
 CREATE TABLE `event` (
   `id` mediumint(9) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
-  `status` varchar(10) NOT NULL,
-  `fromDate` date NOT NULL,
-  `toDate` date NOT NULL,
+  `fromDate` datetime NOT NULL,
+  `toDate` datetime NOT NULL,
   `contactName` varchar(50) Not NULL,
   `contactEmail` varchar(255) Not NULL, 
   `venue` varchar(255) NOT NULL,
@@ -41,8 +40,8 @@ CREATE TABLE `register` (
   `id` mediumint(9) NOT NULL,
   `eventId` mediumint(9) NOT NULL,
   `volId` mediumint(9) NOT NULL,
-  `createDate` date NOT NULL,
-  `modifyDate` date NOT NULL,
+  `createDate` datetime NOT NULL,
+  `modifyDate` datetime NOT NULL,
   `status` varchar(10) NOT NULL,
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
