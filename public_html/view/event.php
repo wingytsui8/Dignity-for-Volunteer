@@ -3,7 +3,7 @@
 
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Login</title>
+	<title>Dignity For Volunteer - Event</title>
 	<base href="{{base_url}}" />
 	<meta name="viewport" content="width=1200" />
 	<meta name="description" content="" />
@@ -24,7 +24,7 @@
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
 	<link href="css/common.css?ts=1556705653" rel="stylesheet" type="text/css" />
-	<link href="css/3.css?ts=1556705653" rel="stylesheet" type="text/css" />
+	<link href="css/event.css?ts=1556705653" rel="stylesheet" type="text/css" />
 	<ga-code/>
 	<script type="text/javascript">
 		window.useTrailingSlashes = true;
@@ -44,10 +44,10 @@
 			<div class="wb_cont_inner">
 				<div id="wb_element_instance26" class="wb_element wb-menu">
 					<ul class="hmenu">
-						<li><a href="" target="_self">Home</a></li>
-						<li><a href="Event/" target="_self">Event</a></li>
-						<li><a href="About/" target="_self">About</a></li>
-						<li class="active"><a href="Login/" target="_self">Login</a></li>
+						<li><a href="Home" target="_self">Home</a></li>
+						<li class="active"><a href="Event/" target="_self">Event</a></li>
+						<li><a href="Upcoming/" target="_self">Upcoming</a></li>
+						<li><a href="Register/" target="_self">Register</a></li>
 					</ul>
 					<div class="clearfix"></div>
 				</div>

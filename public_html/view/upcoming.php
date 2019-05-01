@@ -3,7 +3,7 @@
 
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>About</title>
+	<title>Dignity For Volunteer - Upcoming</title>
 	<base href="{{base_url}}" />
 	<meta name="viewport" content="width=1200" />
 	<meta name="description" content="" />
@@ -24,7 +24,7 @@
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
 	<link href="css/common.css?ts=1556705653" rel="stylesheet" type="text/css" />
-	<link href="css/2.css?ts=1556705653" rel="stylesheet" type="text/css" />
+	<link href="css/upcoming.css?ts=1556705653" rel="stylesheet" type="text/css" />
 	<ga-code/>
 	<script type="text/javascript">
 		window.useTrailingSlashes = true;
@@ -44,10 +44,10 @@
 			<div class="wb_cont_inner">
 				<div id="wb_element_instance15" class="wb_element wb-menu">
 					<ul class="hmenu">
-						<li><a href="" target="_self">Home</a></li>
+						<li><a href="Home" target="_self">Home</a></li>
 						<li><a href="Event/" target="_self">Event</a></li>
-						<li class="active"><a href="About/" target="_self">About</a></li>
-						<li><a href="Login/" target="_self">Login</a></li>
+						<li class="active"><a href="Upcoming/" target="_self">Upcoming</a></li>
+						<li><a href="Register/" target="_self">Register</a></li>
 					</ul>
 					<div class="clearfix"></div>
 				</div>
@@ -62,10 +62,31 @@
 
 			<div class="wb_cont_inner">
 				<div id="wb_element_instance18" class="wb_element wb_text_element" style=" line-height: normal;">
-					<p class="wb-stl-normal">You will find the latest information about us on this page. Our company is constantly evolving and growing. We provide wide range of services. Our mission is to provide best solution that helps everyone. If you want to contact us, please fill the contact form on our website. We wish you a good day! You will find the latest information about us on this page. Our company is constantly evolving and...</p>
-				</div>
-				<div id="wb_element_instance19" class="wb_element wb_text_element" style=" line-height: normal;">
-					<h2 class="wb-stl-heading2">You will find the latest information...<span style="background-color: transparent;">About our company here. You will find the...</span><span style="background-color: transparent;">Latest information about our company...</span><span style="background-color: transparent;">Here. You will find the latest...</span>Information about our...</h2></div>
+					<script type="text/javascript">
+						var results = <?php include 'connectDB.php';	echo  getEvent();?>;
+						table = '';
+						for ( var i = 0; i < results.length; i++) {
+							var obj = results[i];
+								//header 
+								if (i == 0){
+									table = table + "<tr>";
+									for ( var key in obj) {
+										table = table + "<th>" + key + "</th>"; 
+									}
+									table = table + "</tr>";
+								}
+								//body 
+								table = table + "<tr>";
+								for ( var key in obj) {
+									table = table + "<td>" + obj[key] + "</td>"; 
+								}
+								table = table + "</tr>";
+							}
+							document.write('<table>' + table + '</table>');
+						</script>
+					</div>
+					<div id="wb_element_instance19" class="wb_element wb_text_element" style=" line-height: normal;">
+						<h2 class="wb-stl-heading2">You will find the latest information...<span style="background-color: transparent;">About our company here. You will find the...</span><span style="background-color: transparent;">Latest information about our company...</span><span style="background-color: transparent;">Here. You will find the latest...</span>Information about our...</h2></div>
 					<div id="wb_element_instance20" class="wb_element wb_element_shape">
 						<div class="wb_shp"></div>
 					</div>

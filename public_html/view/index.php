@@ -4,10 +4,10 @@
 	$tz = @date_default_timezone_get(); @date_default_timezone_set($tz ? $tz : 'UTC');
 	require_once dirname(__FILE__).'/polyfill.php';
 	$pages = array(
-		'0'	=> array('id' => '1', 'alias' => '', 'file' => '1.php','controllers' => array()),
-		'1'	=> array('id' => '4', 'alias' => 'Event', 'file' => '4.php','controllers' => array()),
-		'2'	=> array('id' => '2', 'alias' => 'About', 'file' => '2.php','controllers' => array()),
-		'3'	=> array('id' => '3', 'alias' => 'Login', 'file' => '3.php','controllers' => array())
+		'0'	=> array('id' => '1', 'alias' => 'Home', 'file' => 'home.php','controllers' => array()),
+		'1'	=> array('id' => '4', 'alias' => 'Event', 'file' => 'event.php','controllers' => array()),
+		'2'	=> array('id' => '2', 'alias' => 'Upcoming', 'file' => 'upcoming.php','controllers' => array()),
+		'3'	=> array('id' => '3', 'alias' => 'Register', 'file' => 'register.php','controllers' => array())
 	);
 	$forms = array(
 		'3'	=> array(
