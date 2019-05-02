@@ -20,6 +20,8 @@
 	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 	<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="js/main.js?v=20190117142751" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="../controller/commonController.js"></script>
 
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
@@ -37,7 +39,7 @@
 
 </head>
 
-<body>
+<body ng-app="digVol" ng-controller="CommonController">
 	<div class="root">
 		<div class="vbox wb_container" id="wb_header">
 
@@ -62,7 +64,7 @@
 
 			<div class="wb_cont_inner">
 					<div id="wb_element_instance21" class="wb_element wb_text_element" style=" line-height: normal;">
-						<h1 class="wb-stl-heading1">Upcoming Event</h1></div>
+						<h1 ng-style="tableStyle">Upcoming Event</h1></div>
 						<div id="wb_element_instance22" class="wb_element wb_text_element" style=" line-height: normal;">
 							<script type="text/javascript">
 						var results = <?php include 'connectDB.php';	echo  getEvent("DESC", 1 , 1);?>;
