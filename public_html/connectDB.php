@@ -24,11 +24,10 @@
 	}
 
 	function getEvent($orderBy, $active , $upcoming){
-		$date = date('Y-m-d') . 'T00:00:00';
 		$sql= "SELECT name as Name, fromDate as `From` , toDate as `To`, Venue, Location, contactName as `Contact Person`, contactEmail as `Contact Email`, applicationDeadline as `Application Deadline`, quota as Quota
 				From event
 				where active = " . $active .
-				" and fromDate " . ($upcoming? " >= '" : " <= '") . $date . "' " .
+				" and fromDate " . ($upcoming? " >= " : " <= ") . " CURDATE() " .
 			    " order by fromDate " . $orderBy;
 	    return runQuery($sql);
 	}
