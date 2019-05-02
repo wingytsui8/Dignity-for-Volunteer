@@ -122,24 +122,9 @@
 
 					<div class="wb_cont_inner" style="height: 144px;">
 						<div id="wb_element_instance17" class="wb_element wb_text_element" style=" line-height: normal;">
-							<p class="wb-stl-footer">© 2019 <a href="http://dignityforvolunteer.000webhostapp.com">dignityforvolunteer.000webhostapp.com</a></p>
+							<p class="wb-stl-footer">© 2019 Dignity for Children Foundation (506188W).  Designed by <a href="https://github.com/neiamenase">Sam Tang</a>, <a href="https://github.com/wingytsui8">Winnie Tsui</a></p>
 						</div>
-						<div id="wb_element_instance25" class="wb_element" style="text-align: center; width: 100%;">
-							<div class="wb_footer"></div>
-							<script type="text/javascript">
-								$(function() {
-									var footer = $(".wb_footer");
-									var html = (footer.html() + "").replace(/^\s+|\s+$/g, "");
-									if (!html) {
-										footer.parent().remove();
-										footer = $("#wb_footer, #wb_footer .wb_cont_inner");
-										footer.css({
-											height: ""
-										});
-									}
-								});
-							</script>
-						</div>
+						
 					</div>
 					<div class="wb_cont_outer"></div>
 					<div class="wb_cont_bg"></div>
