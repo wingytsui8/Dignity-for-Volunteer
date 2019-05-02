@@ -24,15 +24,15 @@
 	}
 
 	function getEvent($orderBy, $active , $upcoming){
-		$date = date('Y-m-dTH:i:s');
+		$date = date('Y-m-d') . 'T00:00:00';
 		$sql= "SELECT name as Name, fromDate as `From` , toDate as `To`, Venue, Location, contactName as `Contact Person`, contactEmail as `Contact Email`, applicationDeadline as `Application Deadline`, quota as Quota
 				From event
 				where active = " . $active .
-				($upcoming?(" and fromDate > '2020-01-01T01:01:01'"):" ") .
+				" and fromDate " . ($upcoming? " >= '" : " <= '") . $date . "' " .
 			    " order by fromDate " . $orderBy;
 	    return runQuery($sql);
 	}
-       
+      
     function getUpcomingEvent(){ // e.date >= CURDATE() and e.status <> 'Ended' implies e.status = 'Upcoming'
 		$sql= "SELECT e.name as Name, Date, Venue, Location
 				From event e 
