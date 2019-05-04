@@ -39,8 +39,8 @@
 
 </head>
 
-<body ng-app="digVol" ng-controller="CommonController">
-	<div class="root">
+<body ng-app="digVol" ng-controller="CommonController" ng-style="mainStyle">
+	<div ng-style="bodyStyle">
 		<div class="vbox wb_container" id="wb_header">
 
 			<div class="wb_cont_inner">
@@ -60,12 +60,9 @@
 			<div class="wb_cont_outer"></div>
 			<div class="wb_cont_bg"></div>
 		</div>
-		<div class="vbox wb_container" id="wb_main">
-
-			<div class="wb_cont_inner">
-					<div id="wb_element_instance21" class="wb_element wb_text_element" style=" line-height: normal;">
-						<h1 ng-style="tableStyle">Upcoming Event</h1></div>
-						<div id="wb_element_instance22" class="wb_element wb_text_element" style=" line-height: normal;">
+		<div id="upcomingEvent">
+						<h1 ng-style="header1Style">Upcoming Event</h1>
+						<div id="upcomingEventTable" ng-style="tableStyle">
 							<script type="text/javascript">
 						var results = <?php include 'connectDB.php';	echo  getEvent("DESC", 1 , 1);?>;
 						table = '';
@@ -89,49 +86,11 @@
 							document.write('<table>' + table + '</table>');
 						</script>
 						</div>
-						<div id="wb_element_instance23" class="wb_element wb_element_picture" title=""><img alt="gallery/big_ring" src="gallery_gen/5652020a1bdb066641b0172598a54c5b.png"></div>
-						<div id="wb_element_instance24" class="wb_element" style="width: 100%;">
-							<?php
-							global $show_comments;
-							if (isset($show_comments) && $show_comments) {
-								renderComments(2);
-								?>
-								<script type="text/javascript">
-									$(function() {
-										var block = $("#wb_element_instance24");
-										var comments = block.children(".wb_comments").eq(0);
-										var contentBlock = $("#wb_main");
-										contentBlock.height(contentBlock.height() + comments.height());
-									});
-								</script>
-								<?php
-							} else {
-								?>
-								<script type="text/javascript">
-									$(function() {
-										$("#wb_element_instance24").hide();
-									});
-								</script>
-								<?php
-							}
-							?>
-						</div>
-					</div>
-					<div class="wb_cont_outer"></div>
-					<div class="wb_cont_bg"></div>
-				</div>
-				<div class="vbox wb_container" id="wb_footer">
-
-					<div class="wb_cont_inner" style="height: 144px;">
-						<div id="wb_element_instance17" class="wb_element wb_text_element" style=" line-height: normal;">
-							<p class="wb-stl-footer">© 2019 Dignity for Children Foundation (506188W).  Designed by <a href="https://github.com/neiamenase">Sam Tang</a>, <a href="https://github.com/wingytsui8">Winnie Tsui</a></p>
-						</div>
 						
-					</div>
-					<div class="wb_cont_outer"></div>
-					<div class="wb_cont_bg"></div>
+					
 				</div>
-				<div class="wb_sbg"></div>
-			</div>{{hr_out}}</body>
-
-			</html>
+				<div ng-style="footerStyle" id="wb_footer">© 2019 Dignity for Children Foundation (506188W).  Designed by <a href="https://github.com/neiamenase">Sam Tang</a>, <a href="https://github.com/wingytsui8">Winnie Tsui</a>
+				</div>
+			</div>
+		</body>
+	</html>
