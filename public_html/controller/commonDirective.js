@@ -2,21 +2,31 @@
 // require page.js
 var app = angular.module("digVol", []);
 var title = document.getElementsByTagName("title")[0].innerHTML.replace("Dignity For Volunteer - ", "");
-var headerMenuHtml = "<ul class=\"hmenu\">";
+var commonHeaderHtml = "<ul class=\"hmenu\">";
 for (var i = 0; i < pages.length; i++){
 	if (pages[i] == title){
-		headerMenuHtml += "<li class=\"active\">";
+		commonHeaderHtml += "<li class=\"active\">";
 	}else{
-		headerMenuHtml += "<li>";
+		commonHeaderHtml += "<li>";
 	}
-	headerMenuHtml += <a href=\"" + pages[i] + "/\" target=\"_self\">" + pages[i] + "</a></li>";
+	commonHeaderHtml += "<a href=\"" + pages[i] + "/\" target=\"_self\">" + pages[i] + "</a></li>";
 }
-app.directive("headermenu", function() {
+
+
+app.directive("common-header", function() {
     return {
     	restrict : 'E',
-        template : headerMenuHtml,
+        template : commonHeaderHtml,
         styleUrls: ["../view/css/headerMenu.css"]
 
     };
 
+});
+
+
+app.directive("common-footer", function() {
+    return {
+    	restrict : 'E',
+        template : "<div ng-style=\"footerStyle\">© 2019 Dignity for Children Foundation (506188W).  Designed by <a href=\"https://github.com/neiamenase\">Sam Tang</a>, <a href=\"https://github.com/wingytsui8\">Winnie Tsui</a></div>"
+    };
 });

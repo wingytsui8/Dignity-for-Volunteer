@@ -1,6 +1,6 @@
-var pages = {
+var pages = [
 "Home",
 "Event",
 "Upcoming",
 "Register"
-};
+];

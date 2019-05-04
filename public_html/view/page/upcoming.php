@@ -89,6 +89,7 @@
 						
 					
 				</div>
+				<footer></footer>
 				<div ng-style="footerStyle" id="wb_footer">© 2019 Dignity for Children Foundation (506188W).  Designed by <a href="https://github.com/neiamenase">Sam Tang</a>, <a href="https://github.com/wingytsui8">Winnie Tsui</a>
 				</div>
 			</div>

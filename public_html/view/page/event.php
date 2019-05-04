@@ -22,6 +22,7 @@
 	<script src="js/main.js?v=20190117142751" type="text/javascript"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<script src="../controller/commonDirective.js" type="text/javascript"></script>
+	<script src="../controller/pages.js" type="text/javascript"></script>
 
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
@@ -35,11 +36,11 @@
 </head>
 
 <body ng-app="digVol">
-	<headerMenu></headerMenu>
+	<common-header></common-header>
 	<div class="root">
 		<div class="vbox wb_container" id="wb_header">
 			<div class="wb_cont_inner">
-				<div id="wb_element_instance26" class="wb_element wb-menu">
+				<!-- <div id="wb_element_instance26" class="wb_element wb-menu">
 					<ul class="hmenu">
 						<li><a href="Home/" target="_self">Home</a></li>
 						<li class="active"><a href="Event/" target="_self">Event</a></li>
@@ -50,7 +51,7 @@
 				</div>
 				<div id="wb_element_instance27" class="wb_element wb_element_picture" title="">
 					<a href="http://dignityforchildren.org/" target="1"><img alt="gallery/dignity_logo" src="gallery_gen/37c944c27b869908c211dea96575621f_190x60.png"></a>
-				</div>
+				</div> -->
 			</div>
 			<div class="wb_cont_outer"></div>
 			<div class="wb_cont_bg"></div>
@@ -62,6 +63,7 @@
 		</div>
 		<div class="vbox wb_container" id="wb_footer">
 		</div>
+		<common-footer></common-footer>
 		<div class="wb_sbg"></div>
 	</div>
 </body>
