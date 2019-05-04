@@ -1,0 +1,85 @@
+
+.headerMenu { /* Applies to all elements with <... class="headerMenu"> specified. */
+	top: 12px; 
+	left: 676px; 
+	min-width: 510px; 
+	width: 510px; 
+	min-height: 56px; 
+	height: 56px; 
+	display: block; 
+	z-index: 400;
+}
+
+.headerMenu > ul { /* Selects all <ul> elements where the parent is headerMenu class element*/
+	display: block; 
+} 
+
+.headerMenu ul {  /* all <ul> elements inside elements*/
+	background: transparent none repeat scroll right top; 
+	border: 1px none #000000; 
+}
+
+.headerMenu, .headerMenu ul {  /* headerMenu & all ul under headerMenu */
+	text-align: right; 
+}
+
+.headerMenu li { 
+	margin: 0px 0px 0px 0px; 
+}
+
+.headerMenu ul ul { 
+	background: #000000 none repeat scroll right top; 
+}
+
+.headerMenu li a { 
+	text-transform: uppercase; 
+	border: 0px none #000000; 
+	padding: 20px 20px 20px 20px; 
+	font: normal bold 14px Helvetica,Arial,sans-serif; 
+	text-decoration: none; 
+	color: #ffffff; 
+	line-height: 16px; 
+	background: transparent none repeat-x scroll center center; }
+.headerMenu li.over > a, .headerMenu li:focus > a { 
+	border: 0px none #000000; 
+	font: normal bold 14px Helvetica,Arial,sans-serif; 
+	text-decoration: none; 
+	color: #0097e3; 
+	line-height: 16px; 
+	background: transparent none repeat-x scroll center center; 
+}
+.headerMenu li.active > a {  /* class active */
+	border: 0px none #000000; 
+	font: normal bold 14px Helvetica,Arial,sans-serif; 
+	text-decoration: none; 
+	color: #0097e3; 
+	line-height: 16px; 
+	background: transparent none repeat-x scroll center center; 
+}
+.headerMenu:not(.collapse-expanded) .vmenu ul.open-left,.headerMenu:not(.collapse-expanded) .hmenu ul.open-left { l
+	eft: auto; 
+	right: 100%; 
+}
+.headerMenu:not(.collapse-expanded) .hmenu > li > ul.open-left { 
+	left: auto; 
+	right: 0; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

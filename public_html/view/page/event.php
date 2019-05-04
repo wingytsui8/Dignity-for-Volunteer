@@ -21,30 +21,27 @@
 	<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="js/main.js?v=20190117142751" type="text/javascript"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="../controller/commonDirective.js" type="text/javascript"></script>
+
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
 	<link href="css/common.css?ts=1556705653" rel="stylesheet" type="text/css" />
-	<link href="css/event.css?ts=1556705653" rel="stylesheet" type="text/css" />
+	<!-- <link href="css/event.css?ts=1556705653" rel="stylesheet" type="text/css" /> -->
 	<ga-code/>
 	<script type="text/javascript">
 		window.useTrailingSlashes = true;
 	</script>
-
 	<link href="css/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
-    <!--[if lt IE 9]>
-	<script src="js/html5shiv.min.js"></script>
-<![endif]-->
-
 </head>
 
-<body>
+<body ng-app="digVol">
+	<headerMenu></headerMenu>
 	<div class="root">
 		<div class="vbox wb_container" id="wb_header">
-
 			<div class="wb_cont_inner">
 				<div id="wb_element_instance26" class="wb_element wb-menu">
 					<ul class="hmenu">
-						<li><a href="Home" target="_self">Home</a></li>
+						<li><a href="Home/" target="_self">Home</a></li>
 						<li class="active"><a href="Event/" target="_self">Event</a></li>
 						<li><a href="Upcoming/" target="_self">Upcoming</a></li>
 						<li><a href="Register/" target="_self">Register</a></li>
@@ -60,8 +57,8 @@
 		</div>
 		<div class="vbox wb_container" id="wb_main">
 
+		<table ng-style="myObj">Welcome</table>
 
-			
 		</div>
 		<div class="vbox wb_container" id="wb_footer">
 		</div>
