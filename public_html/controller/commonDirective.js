@@ -1,6 +1,13 @@
+var pages = [
+"Home",
+"Event",
+"Upcoming",
+"Register"
+];
 
 // require page.js
 var app = angular.module("digVol", []);
+
 var title = document.getElementsByTagName("title")[0].innerHTML.replace("Dignity For Volunteer - ", "");
 var commonHeaderHtml = "<ul class=\"hmenu\">";
 for (var i = 0; i < pages.length; i++){
@@ -13,7 +20,9 @@ for (var i = 0; i < pages.length; i++){
 }
 
 
-app.directive("common-header", function() {
+commonHeaderHtml += "</ul>"
+
+app.directive("commonheader", function() {
     return {
     	restrict : 'E',
         template : commonHeaderHtml,
@@ -24,7 +33,7 @@ app.directive("common-header", function() {
 });
 
 
-app.directive("common-footer", function() {
+app.directive("commonfooter", function() {
     return {
     	restrict : 'E',
         template : "<div ng-style=\"footerStyle\">© 2019 Dignity for Children Foundation (506188W).  Designed by <a href=\"https://github.com/neiamenase\">Sam Tang</a>, <a href=\"https://github.com/wingytsui8\">Winnie Tsui</a></div>"

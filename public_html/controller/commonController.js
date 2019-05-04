@@ -1,10 +1,15 @@
 // MUST insert first before other controllers
 var app = angular.module("digVol", []);
 app.controller("CommonController", function($scope) {
+$scope.menuStyle = {
+  	"color" : "#e28a00",
+  	"background-color" : "black",
+  }
 	$scope.mainStyle = {
   	"color" : "white",
   	"background-color" : "black",
   }
+
 
   $scope.bodyStyle = {
   	"color" : "black",

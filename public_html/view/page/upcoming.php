@@ -41,6 +41,7 @@
 
 <body ng-app="digVol" ng-controller="CommonController" ng-style="mainStyle">
 	<div ng-style="bodyStyle">
+		
 		<div class="vbox wb_container" id="wb_header">
 
 			<div class="wb_cont_inner">

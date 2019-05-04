@@ -36,7 +36,7 @@
 </head>
 
 <body ng-app="digVol">
-	<common-header></common-header>
+	<commonheader></commonheader>
 	<div class="root">
 		<div class="vbox wb_container" id="wb_header">
 			<div class="wb_cont_inner">
@@ -63,7 +63,7 @@
 		</div>
 		<div class="vbox wb_container" id="wb_footer">
 		</div>
-		<common-footer></common-footer>
+		<commonfooter></commonfooter>
 		<div class="wb_sbg"></div>
 	</div>
 </body>
