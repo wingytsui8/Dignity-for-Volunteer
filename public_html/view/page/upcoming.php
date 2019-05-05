@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Upcoming'">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Dignity For Volunteer - Upcoming</title>
+	<title>Dignity For Volunteer - {{pageTitle}}</title>
 	<base href="{{base_url}}" />
 	<meta name="viewport" content="width=1200" />
 	<meta name="description" content="" />
@@ -21,12 +20,14 @@
 	<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="js/main.js?v=20190117142751" type="text/javascript"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 	<script src="../controller/commonController.js"></script>
 
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
 	<link href="css/common.css?ts=1556705653" rel="stylesheet" type="text/css" />
 	<link href="css/upcoming.css?ts=1556705653" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css/loginForm.css">
 	<ga-code/>
 	<script type="text/javascript">
 		window.useTrailingSlashes = true;
@@ -39,7 +40,7 @@
 
 </head>
 
-<body ng-app="digVol" ng-controller="CommonController" ng-style="mainStyle">
+<body ng-style="mainStyle">
 	<div ng-style="bodyStyle">
 		
 		<div class="vbox wb_container" id="wb_header">
@@ -57,18 +58,43 @@
 				<div id="wb_element_instance16" class="wb_element wb_element_picture" title="">
 					<a href="http://dignityforchildren.org/" target="1"><img alt="gallery/dignity_logo" src="gallery_gen/37c944c27b869908c211dea96575621f_190x60.png"></a>
 				</div>
+				<div id="wrap">
+					<div id="regbar">
+						<div id="navthing">
+							<div class = "loginPanel">
+								<button id="loginform">Login</button> | <button>Sign up</button>
+							</div>
+							<div class="login">
+								<div class="arrow-up"></div>
+								<div class="formholder">
+									<div class="randompad">
+										<fieldset>
+											<label name="email">Email</label>
+											<input type="email" placeholder="example@example.com" />
+											<label name="password" placeholder="Date of birth in yyyymmdd format">Password</label>
+											<input type="password" />
+											<input type="submit" value="Login" />
+
+										</fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 			<div class="wb_cont_outer"></div>
 			<div class="wb_cont_bg"></div>
 		</div>
 		<div id="upcomingEvent">
-						<h1 ng-style="header1Style">Upcoming Event</h1>
-						<div id="upcomingEventTable" ng-style="tableStyle">
-							<script type="text/javascript">
-						var results = <?php include 'connectDB.php';	echo  getEvent("DESC", 1 , 1);?>;
-						table = '';
-						for ( var i = 0; i < results.length; i++) {
-							var obj = results[i];
+			<h1 ng-style="header1Style">Upcoming Event</h1>
+			<div id="upcomingEventTable" ng-style="tableStyle">
+				<script type="text/javascript">
+					var results = <?php include 'connectDB.php';	echo  getEvent("DESC", 1 , 1);?>;
+					table = '';
+					for ( var i = 0; i < results.length; i++) {
+						var obj = results[i];
 								//header 
 								if (i == 0){
 									table = table + "<tr>";
@@ -86,13 +112,15 @@
 							}
 							document.write('<table>' + table + '</table>');
 						</script>
-						</div>
-						
+					</div>
+
 					
 				</div>
 				<footer></footer>
 				<div ng-style="footerStyle" id="wb_footer">© 2019 Dignity for Children Foundation (506188W).  Designed by <a href="https://github.com/neiamenase">Sam Tang</a>, <a href="https://github.com/wingytsui8">Winnie Tsui</a>
 				</div>
 			</div>
+
+			<script src="js/loginForm.js" type="text/javascript"></script>
 		</body>
-	</html>
+		</html>

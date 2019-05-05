@@ -11,7 +11,7 @@ body, .wb_sbg { min-width: 1200px; min-height: 905px; }
 .wb_cont_inner { width: 1200px; }
 .wb_cont_bg { width: 1200px; margin-left: -600px; }
 .root { height: 875px; overflow: visible; min-height: 905px; }
-#wb_element_instance15 { top: 12px; left: 676px; min-width: 510px; width: 510px; min-height: 56px; height: 56px; display: block; z-index: 400; }
+#wb_element_instance15 { top: 12px; left: 420px; min-width: 510px; width: 510px; min-height: 56px; height: 56px; display: block; z-index: 400; }
 #wb_element_instance15 > ul { display: block; }
 #wb_element_instance15 ul { background: transparent none repeat scroll right top; border: 1px none #000000; }
 #wb_element_instance15, #wb_element_instance15 ul { text-align: right; }

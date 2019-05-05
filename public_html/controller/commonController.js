@@ -19,7 +19,7 @@ $scope.menuStyle = {
   $scope.header1Style = {
   	"color" : "#e28a00",
   	"font-weight" : "700",
-  	"letter-spacing": "1px";
+  	"letter-spacing": "1px",
   	"font-size": "25px";
   }
 
