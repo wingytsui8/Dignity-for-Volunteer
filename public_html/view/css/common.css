@@ -85,7 +85,18 @@ table{
             padding: 5px;
          }
 
-background-color: black;
+ul { 
+  display: inline-block;
+  list-style-type: disc;
+  margin-top: 1em;
+  margin-bottom: 1 em;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 40px;
+  color: blue;
+}
+
+
 @media (min-width: 768px) {
 }
 
@@ -94,3 +105,21 @@ background-color: black;
 
 @media (max-width: 767px) {
 }
+
+commonheader {
+	display: block;
+	color : #ffb835;
+  	background-color : black;
+  	padding : 10px
+}
+
+commonfooter {
+	display: block;
+	color : #ffb835;
+  	background-color : black;
+  	padding : 10px
+}
+
+
+
+

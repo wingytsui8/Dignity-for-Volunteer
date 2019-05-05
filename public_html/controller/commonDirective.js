@@ -9,7 +9,9 @@ var pages = [
 var app = angular.module("digVol", []);
 
 var title = document.getElementsByTagName("title")[0].innerHTML.replace("Dignity For Volunteer - ", "");
-var commonHeaderHtml = "<ul class=\"hmenu\">";
+
+var commonHeaderHtml = "<div><a href=\"http://dignityforchildren.org/\" target=\"1\"><img alt=\"gallery/dignity_logo\" src=\"gallery_gen/37c944c27b869908c211dea96575621f_190x60.png\"></a></div>";
+commonHeaderHtml += "<div><ul class=\"hmenu\">";
 for (var i = 0; i < pages.length; i++){
 	if (pages[i] == title){
 		commonHeaderHtml += "<li class=\"active\">";
@@ -20,7 +22,7 @@ for (var i = 0; i < pages.length; i++){
 }
 
 
-commonHeaderHtml += "</ul>"
+commonHeaderHtml += "</ul></div>"
 
 app.directive("commonheader", function() {
     return {
@@ -36,6 +38,6 @@ app.directive("commonheader", function() {
 app.directive("commonfooter", function() {
     return {
     	restrict : 'E',
-        template : "<div ng-style=\"footerStyle\">© 2019 Dignity for Children Foundation (506188W).  Designed by <a href=\"https://github.com/neiamenase\">Sam Tang</a>, <a href=\"https://github.com/wingytsui8\">Winnie Tsui</a></div>"
+        template : "<div>© 2019 Dignity for Children Foundation (506188W).  Designed by <a href=\"https://github.com/neiamenase\">Sam Tang</a>, <a href=\"https://github.com/wingytsui8\">Winnie Tsui</a></div>"
     };
 });
