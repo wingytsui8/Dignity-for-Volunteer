@@ -18,18 +18,12 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', funct
         		async: false,
 				success: function(response) {
 					responseData = JSON.parse(response);
-					$scope.islogged = responseData
+					$scope.islogged = responseData;
 				}
 			});
-
 		}else{
 			$scope.isValid = false;
 		}
     }
-
-
-
-
-
 
 }]);
