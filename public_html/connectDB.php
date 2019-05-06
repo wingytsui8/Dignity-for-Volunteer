@@ -2,7 +2,9 @@
 
 if(isset($_POST['action'])){
 	$action = (string)$_POST['action']; 
-	if("getEvent" == $action) {
+	switch ($action){
+
+		case "getEvent":
 		$orderBy = (string)$_POST['orderBy'];
 		$active = (string)$_POST['active'];
 		$upcoming = (string)$_POST['upcoming'];
@@ -10,23 +12,17 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( getEvent($orderBy, $active, $upcoming) );
 		exit;
+
+		case "login":
+		$password = (string)$_POST['password'];
+		$email = (string)$_POST['email'];
+
+		header('Content-type: application/json');
+		echo json_encode( login($email, $password) );
+		exit;
 	}
 }
 
-
-
-if (isset($_POST['action'])) {
-	switch ($_POST['action']) {
-		case 'draw':
-		alert("action : " + $_POST['action']);
-		if (isset($_POST['upcomingEId'])){
-			alert("upcomingEId : " + $_POST['upcomingEId']);
-			$list = getToDrawList($_POST['upcomingEId']);
-			alert("action performed successfully");
-		}
-		break;
-	}
-}
 
 function login($email, $password){
 	$pwHash = hash("sha256", $password);
@@ -87,7 +83,7 @@ function runQuery($sql){
 }
 
 function validate($sql){
-	return connectDB($sql)?;
+	return connectDB($sql)?true:false;
 }
 
 

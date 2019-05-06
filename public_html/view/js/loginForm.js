@@ -21,5 +21,6 @@ $(document).mouseup(function (e)
         $('#loginform').removeClass('green');
         $('#loginEmail').val("");
         $('#loginPw').val("");
+        
     }
 });

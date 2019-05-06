@@ -25,10 +25,10 @@
 	<script src="js/sha256.js" type="text/javascript"></script>
 
 
+
 	<script src="../controller/commonController.js"></script>
 	<script src="../controller/loginController.js"></script>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
 	<link href="css/common.css?ts=1556705653" rel="stylesheet" type="text/css" />
