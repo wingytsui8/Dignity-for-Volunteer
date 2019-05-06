@@ -39,6 +39,7 @@
 	<commonheader></commonheader>
 	<div id="event" ng-app="digVol" ng-controller="CommonController" ng-style="bodyStyle"  ng-init="pageTitle='Event'">
 		<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventController">
+			<h1>Past Event</h1>
 			<table st-table="pastEvents" class="table table-striped">
 				<thead>
 					<tr>

@@ -66,7 +66,7 @@ app.controller("CommonController", function($scope) {
 
 
 	$scope.bodyStyle = {
-		"padding" : "50px"
+		"padding" : "50px",
 		"color" : "black",
 		"background-color" : "white",
 	}
@@ -88,7 +88,16 @@ app.controller("CommonController", function($scope) {
 app.controller("PastEventController", function($scope) {
 	$scope.pastEvents = [];
 	$scope.init = function(){
-		getPastEvent();
+		$.ajax({
+		url: '../connectDB.php',
+		type: 'POST',
+		data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '1' ,  upcoming: 1 },
+		dataType: "json",
+		async: false,
+		success: function(response) {
+			responseData = JSON.parse(response);
+		}
+		});
 		$scope.pastEvents = responseData;
 	}
 	$scope.init();
