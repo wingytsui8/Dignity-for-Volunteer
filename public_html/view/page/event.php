@@ -21,8 +21,7 @@
 	<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="js/main.js?v=20190117142751" type="text/javascript"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-	<script src="../controller/commonDirective.js" type="text/javascript"></script>
-	<script src="../controller/commonController.js" type="text/javascript"></script>
+	<script src="../controller/ng-common.js" type="text/javascript"></script>
 	<script src="../controller/pages.js" type="text/javascript"></script>
 
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
@@ -36,33 +35,33 @@
 	<link href="css/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body id="eventTEST" ng-app="digVol" >
+<body id="eventPage" ng-app="digVol" >
 	<commonheader></commonheader>
-	<div id="event" ng-app="digVol" ng-controller="CommonController" ng-style="mainStyle"  ng-init="pageTitle='Event'">
-	<div id="passEventTable" ng-app="digVol" ng-controller="PastEventController" ng-style="tableStyle">
-		<table st-table="pastEvents" class="table table-striped">
-			<thead>
-				<tr>
-					<th>Event Name</th>
-					<th>Period</th>
-					<th>Venue</th>
-					<th>Contact Person</th>
-					<th>Application Deadline</th>
-					<th>Quota</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in pastEvents">
-					<td>{{row.name}}</td>
-					<td>{{row.fromDate}} - {{row.toDate}}</td>
-					<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
-					<td><strong>{{row.contactName}}</strong>:<br> {{row.contactEmail}}</td>
-					<td>{{row.applicationDeadline}}</td>
-					<td>{{row.quota}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+	<div id="event" ng-app="digVol" ng-controller="CommonController" ng-style="bodyStyle"  ng-init="pageTitle='Event'">
+		<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventController">
+			<table st-table="pastEvents" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Event Name</th>
+						<th>Period</th>
+						<th>Venue</th>
+						<th>Contact Person</th>
+						<th>Application Deadline</th>
+						<th>Quota</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in pastEvents">
+						<td>{{row.name}}</td>
+						<td>{{row.fromDate}} - {{row.toDate}}</td>
+						<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
+						<td><strong>{{row.contactName}}</strong>:<br> {{row.contactEmail}}</td>
+						<td>{{row.applicationDeadline}}</td>
+						<td>{{row.quota}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 <commonfooter></commonfooter>
