@@ -10,10 +10,6 @@ $('#loginform').click(function(){
   $(this).toggleClass('green');
 });
 
-//document.getElementById("loginform").addEventListener("click", displayDate);
-
-
-
 $(document).mouseup(function (e)
 {
     var container = $(".login");
@@ -23,5 +19,7 @@ $(document).mouseup(function (e)
     {
         container.hide();
         $('#loginform').removeClass('green');
+        $('#loginEmail').val("");
+        $('#loginPw').val("");
     }
 });

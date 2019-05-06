@@ -29,12 +29,11 @@ if (isset($_POST['action'])) {
 }
 
 function login($email, $password){
-	$sql= "SELECT e.name as Name, Date, Venue, Location
-	From event  e 
-	inner join `group` g on e.groupId = g.id and (g.name like 'WWS%' or g.name = 'Master')
-	order by date DESC";
-
-	return runQuery($sql);
+	$pwHash = hash("sha256", $password);
+	$sql= "SELECT 1
+	From volunteer
+	where email = '". $email . "' and password = '". $pwHash . "'";
+	return validate($sql);
 }
 
 function getEvent($orderBy, $active , $upcoming){
@@ -74,6 +73,7 @@ function getToDrawList($upcomingEId){
 	return runQuery($sql);
 }
 
+
 function runQuery($sql){
 	$result = connectDB($sql);
 
@@ -84,6 +84,10 @@ function runQuery($sql){
 		}
 		return json_encode($resArr);
 	}
+}
+
+function validate($sql){
+	return connectDB($sql)?;
 }
 
 

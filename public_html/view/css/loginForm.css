@@ -126,10 +126,23 @@ fieldset {
   color: #1abc9c;
 }
 
-a {
+/*a {
   color: #ecf0f1;
   text-decoration: none;
 }
 a:hover {
   color: #1abc9c;
+}*/
+
+.logged {
+  position: absolute;
+  font-size: 20px;
+  top:12px;
+  right:0;
 }
+
+
+
+
+
+

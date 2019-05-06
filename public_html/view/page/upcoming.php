@@ -21,8 +21,14 @@
 	<script src="js/main.js?v=20190117142751" type="text/javascript"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<script src="../controller/commonController.js"></script>
 
+	<script src="js/sha256.js" type="text/javascript"></script>
+
+
+	<script src="../controller/commonController.js"></script>
+	<script src="../controller/loginController.js"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
 	<link href="css/common.css?ts=1556705653" rel="stylesheet" type="text/css" />
@@ -58,28 +64,38 @@
 				<div id="wb_element_instance16" class="wb_element wb_element_picture" title="">
 					<a href="http://dignityforchildren.org/" target="1"><img alt="gallery/dignity_logo" src="gallery_gen/37c944c27b869908c211dea96575621f_190x60.png"></a>
 				</div>
-				<div id="wrap">
+				<div id="wrap" ng-controller="loginController">
 					<div id="regbar">
 						<div id="navthing">
-							<div class = "loginPanel">
-								<button id="loginform">Login</button> | <button>Sign up</button>
-							</div>
-							<div class="login">
-								<div class="arrow-up"></div>
-								<div class="formholder">
-									<div class="randompad">
-										<fieldset>
-											<label name="email">Email</label>
-											<input type="email" placeholder="example@example.com" />
-											<label name="password" placeholder="Date of birth in yyyymmdd format">Password</label>
-											<input type="password" />
-											<input type="submit" value="Login" />
-
-										</fieldset>
+							<div ng-style="{visibility: (islogged)?'hidden':'visible'}">
+								<div class = "loginPanel">
+									<button id="loginform">Login</button> | <button>Sign up</button>
+								</div>
+								<div class="login">
+									<div class="arrow-up"></div>
+									<div class="formholder">
+										<div class="randompad">
+											<fieldset>
+												<label name="email">Email</label>
+												<input id="loginEmail" type="email" placeholder="example@example.com" ng-model="email"/>
+												<label name="password">Password</label>
+												<input id="loginPw" placeholder = "Initial password = date of birth (YYYMMDD)" type="password" ng-model="password"/>
+												<input type="submit" value="Login" ng-click="loginSubmit()"/>
+											</fieldset>
+										</div>
 									</div>
 								</div>
 							</div>
+							<div ng-style="{visibility: (islogged)?'visible':'hidden'}">
+								<div class="logged">
+									<fieldset>
+										<label name="emailLabel">Email:</label>
+										<label name="loggedEmail">{{email}}</label>
+									</fieldset>
+								</div>
+							</div>
 						</div>
+						
 					</div>
 				</div>
 
