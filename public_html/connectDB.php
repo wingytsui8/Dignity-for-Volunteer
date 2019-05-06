@@ -83,7 +83,7 @@ function runQuery($sql){
 }
 
 function validate($sql){
-	return connectDB($sql)?true:false;
+	return mysqli_num_rows(connectDB($sql)) > 0?true:false;
 }
 
 
