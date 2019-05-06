@@ -69,21 +69,8 @@ ul.wb-stl-list3 li:before { content: "\2022"; font-size: 24px; font-family: ; di
 
 .wb-elm-line { font-size: 1px; overflow: hidden; line-height: 1px; padding: 0; background: transparent; float: none; position: relative; }
 
-table{
-            border: 1px solid grey;
-            border-collapse: collapse;
-            padding: 5px;
-         }
-         th  {
-            border: 1px solid grey;
-            border-collapse: collapse;
-            padding: 5px;
-         }
-          td {
-            border: 1px solid grey;
-            border-collapse: collapse;
-            padding: 5px;
-         }
+
+ 
 
 ul { 
   display: inline-block;
@@ -119,6 +106,35 @@ commonfooter {
   	background-color : black;
   	padding : 10px
 }
+
+body {
+	color : #ffb835;
+	background-color : black;
+	padding :10px;
+}
+
+h1 {
+	color : #e28a00;
+	font-weight : 700;
+	letter-spacing: 2px;
+	font-size: 25px;
+}
+
+th  {
+ 	color : white;
+ 	background-color: #e28a00;
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+ }
+ 
+ td {
+  	color : black;
+  	background-color: #ffefdd;
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+ }
 
 
 
