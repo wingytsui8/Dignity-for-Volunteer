@@ -26,7 +26,7 @@
 
 
 
-	<script src="../controller/commonController.js"></script>
+	<script src="../controller/ng-common.js"></script>
 	<script src="../controller/loginController.js"></script>
 
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
@@ -104,39 +104,36 @@
 			<div class="wb_cont_bg"></div>
 		</div>
 		<div id="upcomingEvent">
-			<h1 ng-style="header1Style">Upcoming Event</h1>
-			<div id="upcomingEventTable" ng-style="tableStyle">
-				<script type="text/javascript">
-					var results = <?php include 'connectDB.php';	echo  getEvent("DESC", 1 , 1);?>;
-					table = '';
-					for ( var i = 0; i < results.length; i++) {
-						var obj = results[i];
-								//header 
-								if (i == 0){
-									table = table + "<tr>";
-									for ( var key in obj) {
-										table = table + "<th>" + key + "</th>"; 
-									}
-									table = table + "</tr>";
-								}
-								//body 
-								table = table + "<tr>";
-								for ( var key in obj) {
-									table = table + "<td>" + obj[key] + "</td>"; 
-								}
-								table = table + "</tr>";
-							}
-							document.write('<table>' + table + '</table>');
-						</script>
-					</div>
-
-					
-				</div>
-				<footer></footer>
-				<div ng-style="footerStyle" id="wb_footer">© 2019 Dignity for Children Foundation (506188W).  Designed by <a href="https://github.com/neiamenase">Sam Tang</a>, <a href="https://github.com/wingytsui8">Winnie Tsui</a>
-				</div>
+			<h1>Upcoming Event</h1>
+			<div id="upcomingEventTable" ng-app="digVol" ng-controller="UpcomingEventController">
+				<h1>Past Event</h1>
+				<table st-table="upcommingEvents" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Event Name</th>
+							<th>Period</th>
+							<th>Venue</th>
+							<th>Contact Person</th>
+							<th>Application Deadline</th>
+							<th>Quota</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in upcomingEvents">
+							<td>{{row.name}}</td>
+							<td>{{row.fromDate}} - {{row.toDate}}</td>
+							<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
+							<td><strong>{{row.contactName}}</strong>:<br> {{row.contactEmail}}</td>
+							<td>{{row.applicationDeadline}}</td>
+							<td>{{row.quota}}</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+		</div>
+	</div>
 
-			<script src="js/loginForm.js" type="text/javascript"></script>
-		</body>
-		</html>
+	<commonfooter></commonfooter>
+	<script src="js/loginForm.js" type="text/javascript"></script>
+</body>
+</html>

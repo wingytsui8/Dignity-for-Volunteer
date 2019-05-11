@@ -39,19 +39,6 @@ app.directive("commonfooter", function() {
     };
 });
 
-//function
-function getPastEvent() {
-	$.ajax({
-		url: '../connectDB.php',
-		type: 'POST',
-		data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '1' ,  upcoming: 1 },
-		dataType: "json",
-		async: false,
-		success: function(response) {
-			responseData = JSON.parse(response);
-		}
-	});
-}
 
 // Controller
 app.controller("CommonController", function($scope) {
@@ -63,7 +50,6 @@ app.controller("CommonController", function($scope) {
 		"color" : "white",
 		"background-color" : "black",
 	}
-
 
 	$scope.bodyStyle = {
 		"padding" : "50px",
@@ -99,6 +85,24 @@ app.controller("PastEventController", function($scope) {
 		}
 		});
 		$scope.pastEvents = responseData;
+	}
+	$scope.init();
+});
+
+app.controller("UpcomingEventController", function($scope) {
+	$scope.upcomingEvents = [];
+	$scope.init = function(){
+		$.ajax({
+		url: '../connectDB.php',
+		type: 'POST',
+		data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 0 },
+		dataType: "json",
+		async: false,
+		success: function(response) {
+			responseData = JSON.parse(response);
+		}
+		});
+		$scope.upcomingEvents = responseData;
 	}
 	$scope.init();
 });
