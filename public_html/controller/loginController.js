@@ -4,6 +4,7 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', funct
 	$scope.password = "";
 	$scope.islogged = false;
 	$scope.isValid = true;
+	$scope.lEmail = "";
 
 	$scope.loginSubmit = function() {
 
@@ -19,6 +20,7 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', funct
 				success: function(response) {
 					responseData = JSON.parse(response);
 					$scope.islogged = responseData;
+					$scope.lEmail = $scope.email;
 				}
 			});
 		}else{

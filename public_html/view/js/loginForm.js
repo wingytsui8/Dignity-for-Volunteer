@@ -24,3 +24,17 @@ $(document).mouseup(function (e)
         
     }
 });
+
+window.onbeforeunload = function() {
+   sessionStorage.setItem("lEmail", $('#loggedEmail').val());
+   sessionStorage.setItem("islogged", $('$loggedfield').val());
+}
+
+window.onload = function() {
+   var lEmailVal = sessionStorage.getItem("lEmail");
+   var islogged = sessionStorage.getItem("islogged");
+   if (islogged != null && lEmailVal !== null) {
+    $('$loggedfield').val(islogged);
+    $('#loggedEmail').val(lEmailVal);
+  }
+}

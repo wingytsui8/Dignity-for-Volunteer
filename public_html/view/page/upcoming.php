@@ -89,8 +89,8 @@
 							<div ng-style="{visibility: (islogged)?'visible':'hidden'}">
 								<div class="logged">
 									<fieldset>
-										<label name="emailLabel">Email:</label>
-										<label name="loggedEmail">{{email}}</label>
+										<label name="loggedEmail">{{lEmail}}</label>
+										<input name="loggedfield" ng-model="islogged" type="hidden">
 									</fieldset>
 								</div>
 							</div>
