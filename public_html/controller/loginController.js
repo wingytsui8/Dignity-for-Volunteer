@@ -1,8 +1,20 @@
-angular.module('digVol').controller('loginController', ['$scope', '$http', function($scope, $http){
+var extScope;
+var extEmail;
 
+angular.module('digVol').run(['$window',function($window, Utilities) {
+
+    $window.addEventListener('load', function(e) {
+    	var email = sessionStorage.getItem("lEmail");
+    	if (email!= null && email != "undefined" && email.length > 0){
+    		extScope.setLEmail(sessionStorage.getItem("lEmail"));
+    	}
+    });
+
+  }]).controller('loginController', ['$scope', '$http', function($scope, $http){
+
+	extScope = $scope;
 	$scope.email = "";
 	$scope.password = "";
-	$scope.islogged = false;
 	$scope.isValid = true;
 	$scope.lEmail = "";
 
@@ -19,13 +31,26 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', funct
         		async: false,
 				success: function(response) {
 					responseData = JSON.parse(response);
-					$scope.islogged = responseData;
-					$scope.lEmail = $scope.email;
+					if (responseData){
+						$scope.lEmail = $scope.email;
+						extEmail = $scope.lEmail;
+					}
 				}
 			});
 		}else{
 			$scope.isValid = false;
 		}
     }
+    $scope.setLEmail = function(email) {
+    	$scope.lEmail = email;
+    }
 
-}]);
+}]).run(['$window',function($window, Utilities) {
+
+    $window.addEventListener('beforeunload', function(e) {
+    	sessionStorage.setItem("lEmail", extEmail);
+    });
+
+  }]);
+
+

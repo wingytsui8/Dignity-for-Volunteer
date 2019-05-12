@@ -67,7 +67,7 @@
 				<div id="wrap" ng-controller="loginController">
 					<div id="regbar">
 						<div id="navthing">
-							<div ng-style="{visibility: (islogged)?'hidden':'visible'}">
+							<div ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'hidden':'visible'}">
 								<div class = "loginPanel">
 									<button id="loginform">Login</button> | <button>Sign up</button>
 								</div>
@@ -86,11 +86,10 @@
 									</div>
 								</div>
 							</div>
-							<div ng-style="{visibility: (islogged)?'visible':'hidden'}">
+							<div ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">
 								<div class="logged">
 									<fieldset>
 										<label name="loggedEmail">{{lEmail}}</label>
-										<input name="loggedfield" ng-model="islogged" type="hidden">
 									</fieldset>
 								</div>
 							</div>
