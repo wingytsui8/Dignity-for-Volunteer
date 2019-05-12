@@ -1,17 +1,7 @@
 var extScope;
 var extEmail;
 
-angular.module('digVol').run(['$window',function($window, Utilities) {
-
-    $window.addEventListener('load', function(e) {
-    	var email = sessionStorage.getItem("lEmail");
-    	if (email!= null && email != "undefined" && email.length > 0){
-    		extEmail = email;
-    		extScope.setLEmail(email);
-    	}
-    });
-
-  }]).controller('loginController', ['$scope', '$http', function($scope, $http){
+angular.module('digVol').controller('loginController', ['$scope', '$http', function($scope, $http){
 
 	extScope = $scope;
 	$scope.email = "";
@@ -51,6 +41,14 @@ angular.module('digVol').run(['$window',function($window, Utilities) {
 
     $window.addEventListener('beforeunload', function(e) {
     	sessionStorage.setItem("lEmail", extEmail);
+    });
+
+    $window.addEventListener('load', function(e) {
+    	var email = sessionStorage.getItem("lEmail");
+    	if (email!= null && email != "undefined" && email.length > 0){
+    		extEmail = email;
+    		extScope.setLEmail(email);
+    	}
     });
 
   }]);
