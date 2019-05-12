@@ -46,9 +46,9 @@
 						<th>Event Name</th>
 						<th>Period</th>
 						<th>Venue</th>
-						<th>Contact Person</th>
 						<th>Application Deadline</th>
 						<th>Quota</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -56,15 +56,77 @@
 						<td>{{row.name}}</td>
 						<td>{{row.fromDate}} - {{row.toDate}}</td>
 						<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
-						<td><strong>{{row.contactName}}</strong>:<br> {{row.contactEmail}}</td>
 						<td>{{row.applicationDeadline}}</td>
 						<td>{{row.quota}}</td>
+						<td><button ng-click="getEventDetail(row.id)">Details</button></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-	</div>
-</div>
-<commonfooter></commonfooter>
-</body>
-</html>
+		<div>
+			<h1>Create Event</h1>
+			<label >Id</label> <br>
+			{{eventDetail.id}} <br>
+			<label >Name</label><br>
+			<input id="name" type="text" ng-model="eventDetail.name"/><br>
+			<label >From </label><br>
+			<input id="formDate" type="date" ng-model="eventDetail.formDate"/>  
+			<input id="formDate" type="time" ng-model="eventDetail.formTime"/><br>
+			<label >To</label><br>
+			<input id="toDate" type="date" ng-model="eventDetail.toDate | date:'dd/mm/YYYY'"/>
+			<input id="toTime" type="time" ng-model="eventDetail.toTime"/><br>
+			<label >Venue</label><br>
+			<input id="venue" type="text" ng-model="eventDetail.venue"/><br>
+			<label >Location</label><br>
+			<input id="location" type="text" ng-model="eventDetail.location"/><br>
+			<label >Contact Person Name</label><br>
+			<input id="contactName" type="text" ng-model="eventDetail.contactName"/><br>
+			<label >Contact Person Email</label><br>
+			<input id="loginEmail" type="text" ng-model="eventDetail.contactEmail"/><br>
+			<label >Application Deadline</label><br>
+			<input id="applictionDeadline" type="date" ng-model="eventDetail.applicationDeadline"/><br>
+			<label >Quota</label><br>
+			<input id="quota" type="number" ng-model="eventDetail.quota"/><br>
+			<label>Active</label><br>
+			<select ng-model="eventDetail.active">
+				<option value="1">Active
+					<option value="0">Cancelled
+					</select><br>
+					<label >Registered: </label>{{eventDetail.registered}}<br>
+					<label >Remaing: </label>{{eventDetail.quota - eventDetail.registered}}<br>
+			<br><br><br>
+
+				<button ng-click="postEvent()">Save</button>
+				<!-- <button ng-click="getRegisteredList()">Get Registered List</button> -->
+				</div>
+
+					<div>
+			<h1>Registered List</h1>
+			<table st-table="registered" class="table table-striped">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>Volunteer id</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Registered Date</th>
+						<th>Active</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in registeredList">
+						<td>{{$index + 1}}</td>
+						<td>{{row.volId}}</td>
+						<td>{{row.name}}</td>
+						<td>{{row.email}}</td>
+						<td>{{row.createDate}}</td>
+						<td>{{row.active}}</td>
+						
+					</tr>
+				</tbody>
+			</table>
+			</div>
+		</div>
+		<commonfooter></commonfooter>
+	</body>
+	</html>

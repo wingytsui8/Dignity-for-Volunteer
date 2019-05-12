@@ -68,6 +68,55 @@ app.controller("CommonController", function($scope) {
 		"color" : "orange",
 		"padding" : "50px"
 	}
+	$scope.eventDetail = {id: null}
+	$scope.registeredList = {name: 'null'}
+	$scope.getEventDetail = function(id) {
+		$.ajax({
+		url: '../connectDB.php',
+		type: 'POST',
+		data : { action: 'getEventDetail' ,  id: id},
+		dataType: "json",
+		async: false,
+		success: function(response) {
+			responseData = JSON.parse(response);
+		}
+		});
+		$scope.eventDetail = responseData[0];
+		// $scope.eventDetail.fromTime = new Date($scope.eventDetail.fromDate).format("h:mm:ss A");
+		// $scope.eventDetail.fromDate = new Date($scope.eventDetail.fromDate);
+		// $scope.eventDetail.toDate = new Date($scope.eventDetail.toDate);
+		 $scope.eventDetail.applicationDeadline = new Date($scope.eventDetail.applicationDeadline);
+		$scope.eventDetail.quota = Number($scope.eventDetail.quota);
+		$scope.getRegisteredList();
+	}
+
+	$scope.postEvent = function() {
+		$.ajax({
+		url: '../connectDB.php',
+		type: 'POST',
+		data : { action: 'postEvent' ,  id: $scope.eventDetail.id, name: $scope.eventDetail.name,},
+		dataType: "json",
+		async: false,
+		success: function(response) {
+			responseData = JSON.parse(response);
+		}
+		});
+		$scope.eventDetail = responseData;
+
+	}
+	$scope.getRegisteredList = function() {
+		$.ajax({
+		url: '../connectDB.php',
+		type: 'POST',
+		data : { action: 'getRegisteredList' ,  id: $scope.eventDetail.id},
+		dataType: "json",
+		async: false,
+		success: function(response) {
+			responseData = JSON.parse(response);
+		}
+		});
+		$scope.registeredList = responseData;
+	}
 
 });
 

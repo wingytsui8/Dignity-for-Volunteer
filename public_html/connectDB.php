@@ -20,6 +20,36 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( login($email, $password) );
 		exit;
+
+		case "postEvent":
+		 $id = (string)$_POST['id'];
+		 $name = (string)$_POST['name'];
+		// //$fromDate = (string)$_POST['fromDate'];
+		// //$toDate = (string)$_POST['toDate'];
+		// $venue = (string)$_POST['venue'];
+		// $location = (string)$_POST['location'];
+		// $contactName = (string)$_POST['contactName'];
+		// $contactEmail = (string)$_POST['contactEmail'];
+		// //$applicationDeadline = (string)$_POST['applicationDeadline'];
+		// $quota = (string)$_POST['quota'];
+
+		header('Content-type: application/json');
+		echo json_encode( postEvent($id, $name) );
+		exit;
+
+		case "getEventDetail":
+		$id = (string)$_POST['id'];
+
+		header('Content-type: application/json');
+		echo json_encode( getEventDetail($id) );
+		exit;
+
+		case "getRegisteredList":
+		$id = (string)$_POST['id'];
+
+		header('Content-type: application/json');
+		echo json_encode( getRegisteredList($id) );
+		exit;
 	}
 }
 
@@ -33,30 +63,38 @@ function login($email, $password){
 }
 
 function getEvent($orderBy, $active , $upcoming){
-	$sql= "SELECT name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota
+	$sql= "SELECT id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota
 	From event
 	where active = " . $active .
 	" and fromDate " . ($upcoming? " >= " : " <= ") . " CURDATE() " .
 	" order by fromDate " . $orderBy;
 	return runQuery($sql);
 }
+function getEventDetail($id){
+	$sql= "SELECT event.id as id, name, fromDate, Date(toDate) as toDate, TIME_FORMAT(toDate, '%H:%i') as toTime, venue, location, contactName, contactEmail, applicationDeadline, quota, event.active, count(event.id) as registered
+	From event, register
+	where event.id = " . $id . 
+	" and event.id = register.eventId 
+	and register.active = 1
+	group by event.id"
+	;
+	return runQuery($sql);
+}
 
-    function getUpcomingEvent(){ // e.date >= CURDATE() and e.status <> 'Ended' implies e.status = 'Upcoming'
-    $sql= "SELECT e.name as Name, Date, Venue, Location
-    From event e 
-    inner join `group` g on e.groupId = g.id and (g.name like 'WWS%' or g.name = 'Master')
-    where  e.date >= CURDATE() and e.status <> 'Ended'
-    order by date DESC";
+   function postEvent($id, $name){ 
+    $sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES ('". $id. "','" . $name."', '2020-10-10T01:00:00', '2020-11-11T01:01:01', 'test venue', 'test location' , 'contactName', 'contactEmail', '2019-01-01', '100', '1')
+
+ON DUPLICATE KEY UPDATE 
+  name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
 
     return runQuery($sql);
 }
 
-function getIsDrawingUpcomingEvent(){
-	$sql= "SELECT e.id as Id, e.name as Name
-	From event e 
-	inner join `group` g on e.groupId = g.id and (g.name like 'WWS%' or g.name = 'Master')
-	where  e.date >= CURDATE() and e.status <> 'Ended' and e.isDrawEvent = true
-	order by date DESC";
+function getRegisteredList($id){
+	$sql= "SELECT volunteer.id as volId, volunteer.name as name, volunteer.email as email, register.createDate as createDate, register.active as active FROM `volunteer`, `register` WHERE register.eventId = " . $id . 
+	" and register.active = 1 
+	and register.volId = volunteer.id 
+	order by register.createDate";
 
 	return runQuery($sql);
 }
