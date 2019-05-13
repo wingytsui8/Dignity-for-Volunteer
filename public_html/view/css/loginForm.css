@@ -14,33 +14,33 @@
   margin: 0 auto 30px;
 }
 
-#regbar {
+/*#regbar {
   height: 67px;
   background: #34495e;
-}
+}*/
 
-#navthing {
+/*#navthing {
   margin-left: 50px;
-}
+}*/
 
-.loginPanel {
+/*.loginPanel {
   position:absolute;
   top:12px;
   right:0;
   z-index: 5;
-}
+}*/
 
 .loginPanel button {
   background-color: #ffb835;
-  border: solid 1px #ffb835;
+  /*border: solid 1px #ffb835;*/
   border-radius: 30px;
   color: white;
-  padding: 10px 20px;
+  padding: 0px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+ /* font-size: 16px;*/
+/*  margin: 4px 2px;*/
   cursor: pointer;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -63,10 +63,10 @@ fieldset {
 }
 
 .login {
-  position: absolute;
+ /* position: absolute;
   top:80px;
   right:0;
-  width: 350px;
+  width: 350px;*/
   display: none;
 }
 

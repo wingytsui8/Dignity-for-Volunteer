@@ -10,17 +10,55 @@ var pages = [
 ];
 var title = document.getElementsByTagName("title")[0].innerHTML.replace("Dignity For Volunteer - ", "");
 
-var commonHeaderHtml = "<div><a href=\"http://dignityforchildren.org/\" target=\"1\"><img alt=\"gallery/dignity_logo\" src=\"gallery_gen/37c944c27b869908c211dea96575621f_190x60.png\"></a></div>";
-commonHeaderHtml += "<div><ul class=\"hmenu\">";
+var commonHeaderHtml = "<div><ul class=\"topnav\">" + 
+	// icon image
+	"<li><a href=\"http://dignityforchildren.org/\" target=\"1\"><img class=\"icon\" alt=\"gallery/dignity_logo\" src=\"gallery_gen/37c944c27b869908c211dea96575621f_190x60.png\"></a></li>";
+// menu
 for (var i = 0; i < pages.length; i++){
+	commonHeaderHtml += "<li>";
 	if (pages[i] == title){
-		commonHeaderHtml += "<li class=\"active\">";
+		commonHeaderHtml += "<a class=\"active\" ";
 	}else{
-		commonHeaderHtml += "<li>";
+		commonHeaderHtml += "<a ";
 	}
-	commonHeaderHtml += "<a href=\"" + pages[i] + "/\" target=\"_self\">" + pages[i] + "</a></li>";
+	commonHeaderHtml += "href=\"" + pages[i] + "/\" target=\"_self\">" + pages[i] + "</a></li>";
 }
-commonHeaderHtml += "</ul></div>"
+// login button
+commonHeaderHtml += "<li class=\"liLogin\">" +
+"<div id=\"wrap\" ng-controller=\"loginController\">" +
+	"<div id=\"regbar\">" +
+    	"<div id=\"navthing\">" +
+    		"<div ng-style=\"{visibility: (lEmail!=null && lEmail.length > 0)?'hidden':'visible'}\">" +
+    			"<div class = \"loginPanel\">" +
+    				"<button id=\"loginform\">Login</button> | <button>Sign up</button>" + 
+    			"</div>" +
+    			"<div class=\"login\">" +
+    				"<div class=\"arrow-up\"></div>" +
+    				"<div class=\"formholder\">" +
+    					"<div class=\"randompad\">" +
+    						"<fieldset>" +
+    							"<label name=\"email\">Email</label>" +
+    							"<input id=\"loginEmail\" type=\"email\" placeholder=\"example@example.com\" ng-model=\"email\"/>" +
+    							"<label name=\"password\">Password</label>" + 
+    							"<input id=\"loginPw\" placeholder = \"Initial password = date of birth (YYYMMDD)\" type=\"password\" ng-model=\"password\"/> " +
+    							"<input type=\"submit\" value=\"Login\" ng-click=\"loginSubmit()\"/>" +
+    						"</fieldset>" +
+    					"</div>" +
+    				"</div>" +
+    			"</div>" +
+    		"</div>" +
+    		"<div ng-style=\"{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}\">" + 
+    			"<div class=\"logged\">" +
+    				"<fieldset>" + 
+    					"<label name=\"loggedEmail\">{{lEmail}}</label>" + 
+    				"</fieldset>" +
+    			"</div>" +
+    		"</div>" +
+    	"</div>" +
+    "</div>" +
+"</div>"
+commonHeaderHtml += "</li></ul></div>"
+
 
 var responseData = [];
 
@@ -42,6 +80,7 @@ app.directive("commonfooter", function() {
 
 // Controller
 app.controller("CommonController", function($scope) {
+	$scope.loading = true;
 	$scope.menuStyle = {
 		"color" : "#e28a00",
 		"background-color" : "black",
@@ -82,10 +121,11 @@ app.controller("CommonController", function($scope) {
 		}
 		});
 		$scope.eventDetail = responseData[0];
-		// $scope.eventDetail.fromTime = new Date($scope.eventDetail.fromDate).format("h:mm:ss A");
-		// $scope.eventDetail.fromDate = new Date($scope.eventDetail.fromDate);
-		// $scope.eventDetail.toDate = new Date($scope.eventDetail.toDate);
-		 $scope.eventDetail.applicationDeadline = new Date($scope.eventDetail.applicationDeadline);
+		$scope.eventDetail.fromTime = new Date($scope.eventDetail.fromDate).toLocaleTimeString();
+		$scope.eventDetail.fromDate = new Date($scope.eventDetail.fromDate);
+		$scope.eventDetail.toTime = new Date($scope.eventDetail.toDate).toLocaleTimeString();
+		$scope.eventDetail.toDate = new Date($scope.eventDetail.toDate).toLocaleDateString();
+		$scope.eventDetail.applicationDeadline = new Date($scope.eventDetail.applicationDeadline);
 		$scope.eventDetail.quota = Number($scope.eventDetail.quota);
 		$scope.getRegisteredList();
 	}

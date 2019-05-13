@@ -21,12 +21,15 @@
 	<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="js/main.js?v=20190117142751" type="text/javascript"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 	<script src="../controller/ng-common.js" type="text/javascript"></script>
-	<script src="../controller/pages.js" type="text/javascript"></script>
+		<script src="../controller/loginController.js"></script>
+
 
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
 	<link href="css/common.css?ts=1556705653" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css/loginForm.css">
 	<!-- <link href="css/event.css?ts=1556705653" rel="stylesheet" type="text/css" /> -->
 	<ga-code/>
 	<script type="text/javascript">
@@ -90,10 +93,10 @@
 			<label>Active</label><br>
 			<select ng-model="eventDetail.active">
 				<option value="1">Active
-					<option value="0">Cancelled
-					</select><br>
-					<label >Registered: </label>{{eventDetail.registered}}<br>
-					<label >Remaing: </label>{{eventDetail.quota - eventDetail.registered}}<br>
+				<option value="0">Cancelled
+			</select><br>
+					<label >Registered Number: </label>{{eventDetail.registered}}
+					<label >Remaing Quota: </label>{{eventDetail.quota - eventDetail.registered}}<br>
 			<br><br><br>
 
 				<button ng-click="postEvent()">Save</button>
@@ -101,7 +104,7 @@
 				</div>
 
 					<div>
-			<h1>Registered List</h1>
+			<h1>Registered Volunteer</h1>
 			<table st-table="registered" class="table table-striped">
 				<thead>
 					<tr>
@@ -120,7 +123,7 @@
 						<td>{{row.name}}</td>
 						<td>{{row.email}}</td>
 						<td>{{row.createDate}}</td>
-						<td>{{row.active}}</td>
+						<td>{{row.active == "0"? 'inactive':'active'}}</td>
 						
 					</tr>
 				</tbody>
@@ -128,5 +131,6 @@
 			</div>
 		</div>
 		<commonfooter></commonfooter>
+		<script src="js/loginForm.js" type="text/javascript"></script>
 	</body>
 	</html>

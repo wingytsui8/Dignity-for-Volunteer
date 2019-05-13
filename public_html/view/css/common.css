@@ -70,20 +70,50 @@ ul.wb-stl-list3 li:before { content: "\2022"; font-size: 24px; font-family: ; di
 .wb-elm-line { font-size: 1px; overflow: hidden; line-height: 1px; padding: 0; background: transparent; float: none; position: relative; }
 
 
- 
-
-ul { 
-  display: inline-block;
-  list-style-type: disc;
-  margin-top: 1em;
-  margin-bottom: 1 em;
-  margin-left: 0;
-  margin-right: 0;
-  padding-left: 40px;
-  color: blue;
+ul.topnav {
+	vertical-align: middle;
+	background-color : black;
+	top: 0;
+	width: 100%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0px 15px;
+	overflow: hidden;
+	letter-spacing: 2px;
+	font-size: 16px;
+	font-weight : 700;
 }
 
+ul.topnav li {
+	float: left;
+	line-height: 48px;
+}
 
+ul.topnav li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {color: #ffb835; text-decoration: none;}
+
+ul.topnav li a.active {color: #ffb835; text-decoration: none;}
+
+ul.topnav li.right {float: right;}
+
+@media screen and (max-width: 600px) {
+  ul.topnav li.right, 
+  ul.topnav li {float: none;},
+  ul.topnav {position: none;},
+  ul.topnav li.liLogin {float: none;}
+}
+@media screen and (min-width: 600px) {
+  ul.topnav {position: fixed;}, 
+  ul.topnav li {float: none;}
+  ul.topnav li.liLogin {float: right;}
+}
 @media (min-width: 768px) {
 }
 
@@ -96,18 +126,19 @@ ul {
 commonheader {
 	display: block;
 	color : #ffb835;
-  	background-color : black;
-  	padding : 10px
+	background-color : black;
+	padding : 0px
 }
 
 commonfooter {
 	display: block;
 	color : #ffb835;
-  	background-color : black;
-  	padding : 10px
+	background-color : black;
+	padding : 10px
 }
 
 body {
+	font: normal 'Lucida Grande', Helvetica, Arial, sans-serif
 	color : #ffb835;
 	background-color : black;
 	padding :10px;
@@ -121,23 +152,23 @@ h1 {
 }
 
 th  {
- 	color : white;
- 	background-color: #e28a00;
-    border: 1px solid grey;
-    border-collapse: collapse;
-    padding: 5px;
- }
- 
- td {
-  	color : black;
-  	background-color: #ffefdd;
-    border: 1px solid grey;
-    border-collapse: collapse;
-    padding: 5px;
- }
+	color : white;
+	background-color: #e28a00;
+	border: 1px solid grey;
+	border-collapse: collapse;
+	padding: 5px;
+}
+
+td {
+	color : black;
+	background-color: #ffefdd;
+	border: 1px solid grey;
+	border-collapse: collapse;
+	padding: 5px;
+}
 
 
-input[type=date], [type=time],[type=select],   {
+input[type=date], [type=time]   {
 	width: 30%;
 	padding: 5px 0px;
 }
@@ -145,12 +176,43 @@ input[type=text], [type=number]  {
 	width: 80%;
 	padding: 5px 0px;
 }
+
 input:focus {
-  background-color: #ffefdd;
+	background-color: #ffefdd;
+}
+
+select {
+	width: 30%;
+	padding: 5px 0px;
 }
 
 label{
 	padding: 5px 0px;
+}
+
+img.icon {
+	max-height:35px;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 
