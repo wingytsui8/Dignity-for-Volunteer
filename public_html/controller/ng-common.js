@@ -80,12 +80,8 @@ app.directive("commonfooter", function() {
 
 // Controller
 app.controller("CommonController", function($scope) {
-	// $scope.loading = true;
- //    $scope.$apply();
-
- //    setTimeout(showPage, 5000);
- //    $scope.loading = false;
- //    $scope.$apply();
+	$scope.loading = true;
+    
 	$scope.menuStyle = {
 		"color" : "#e28a00",
 		"background-color" : "black",
@@ -163,6 +159,8 @@ app.controller("CommonController", function($scope) {
 		$scope.registeredList = responseData;
 	}
 
+		$scope.loading = false;
+    
 });
 
 app.controller("PastEventController", function($scope) {

@@ -10,14 +10,15 @@
   background: #2c3e50;
 }*/
 
-#wrap {
+/*#wrap {
   margin: 0 auto 30px;
-}
-
-/*#regbar {
-  height: 67px;
-  background: #34495e;
 }*/
+
+#regbar {
+  vertical-align: middle;
+  /*height: 67px;
+  background: #34495e;*/
+}
 
 /*#navthing {
   margin-left: 50px;

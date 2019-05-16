@@ -38,7 +38,8 @@
 	<link href="css/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body id="eventPage" ng-app="digVol" >
+<body id="eventPage" ng-app="digVol"  >
+	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
 	<div id="event" ng-app="digVol" ng-controller="CommonController" ng-style="bodyStyle"  ng-init="pageTitle='Event'">
 		<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventController">
@@ -131,6 +132,9 @@
 			</div>
 		</div>
 		<commonfooter></commonfooter>
+
 		<script src="js/loginForm.js" type="text/javascript"></script>
+
 	</body>
+
 	</html>
