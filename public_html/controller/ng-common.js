@@ -34,7 +34,7 @@ commonHeaderHtml += "<li class=\"liLogin\">" +
     			"</div>" +
     			"<div class=\"login\">" +
     				"<div class=\"arrow-up\"></div>" +
-    				"<div class=\"formholder\">" +
+    				"<div class=\"formholder\">" + 
     					"<div class=\"randompad\">" +
     						"<fieldset>" +
     							"<label name=\"email\">Email</label>" +
@@ -80,7 +80,12 @@ app.directive("commonfooter", function() {
 
 // Controller
 app.controller("CommonController", function($scope) {
-	$scope.loading = true;
+	// $scope.loading = true;
+ //    $scope.$apply();
+
+ //    setTimeout(showPage, 5000);
+ //    $scope.loading = false;
+ //    $scope.$apply();
 	$scope.menuStyle = {
 		"color" : "#e28a00",
 		"background-color" : "black",
