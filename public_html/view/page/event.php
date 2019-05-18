@@ -137,8 +137,6 @@
 		</div>
 		<commonfooter></commonfooter>
 
-		<script src="js/loginForm.js" type="text/javascript"></script>
-
 	</body>
 
 	</html>
