@@ -8,6 +8,8 @@ INSERT INTO `volunteer` (`id`, `name`, `dob`, `email`, `password`, `active`) VAL
 
 INSERT INTO `volunteer` (`id`, `name`, `dob`, `email`, `password`, `active`) VALUES (NULL, 'Testing 2', '1992-09-02', 'testing2@gmail.com', '9c547119a74092b81f6c07be2029dc64833b5eea176bfe740c75261c5b51e8a8', '1');
 
+INSERT INTO `volunteer` (`name`,`dob`,`email`,`password`,`active`) VALUES('Tony','1998-09-26','tony95148684@gmail.com','140ee5f33ebdc0571cffb04404bba15c3ffcfbf3745f462b2e4acbb45a499f95','1');
+
 INSERT INTO `register` (`id`, `eventId`, `volId`, `status`, `createDate`, `modifyDate`, `active`) VALUES (NULL, '1', '2', 'Confirmed', '2019-04-20', '2019-05-01', '1');
 
 INSERT INTO `register` (`id`, `eventId`, `volId`, `status`, `createDate`, `modifyDate`, `active`) VALUES (NULL, '1', '3', 'Cancelled', '2019-04-20', '2019-05-01', '1');
