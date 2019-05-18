@@ -34,7 +34,7 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
 		}
     }
     $scope.setLEmail = function(email) {
-    	$scope.lEmail = email;
+    	$rootScope.lEmail = email;
     	$scope.$apply();
     }
 
