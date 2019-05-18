@@ -17,13 +17,17 @@
 	<!-- Facebook Open Graph end -->
 
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	
 	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 	<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="js/main.js?v=20190117142751" type="text/javascript"></script>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+	<script src="js/ocLazyLoad.min.js" type="text/javascript"></script>
 	<script src="../controller/ng-common.js" type="text/javascript"></script>
-		<script src="../controller/loginController.js"></script>
+	<script src="../controller/loginController.js"></script>
 
 
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />

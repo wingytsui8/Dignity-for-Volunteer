@@ -1,7 +1,7 @@
 // MUST insert first before other controllers
 src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
 
-var app = angular.module("digVol", []);
+var app = angular.module("digVol", ["oc.lazyLoad"]);
 var pages = [
 "Home",
 "Event",
@@ -79,7 +79,7 @@ app.directive("commonfooter", function() {
 
 
 // Controller
-app.controller("CommonController", function($scope) {
+app.controller("CommonController", function($scope, $ocLazyLoad) {
 	$scope.loading = true;
     
 	$scope.menuStyle = {
@@ -159,7 +159,12 @@ app.controller("CommonController", function($scope) {
 		$scope.registeredList = responseData;
 	}
 
+		
+	setTimeout(function(){
 		$scope.loading = false;
+ 		$ocLazyLoad.load('js/loginForm.js');
+ 		$ocLazyLoad.load('js/sha256.js');
+ 	}, 1000);
     
 });
 
