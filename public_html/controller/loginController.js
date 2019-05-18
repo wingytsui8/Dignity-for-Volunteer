@@ -1,13 +1,14 @@
 var extScope;
 var extEmail;
 
-angular.module('digVol').controller('loginController', ['$scope', '$http', function($scope, $http){
+angular.module('digVol').controller('loginController', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope){
 
 	extScope = $scope;
 	$scope.email = "";
 	$scope.password = "";
 	$scope.isValid = true;
-	$scope.lEmail = "";
+	$rootScope.lEmail = "";
+
 
 	$scope.loginSubmit = function() {
 
@@ -23,8 +24,8 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', funct
 				success: function(response) {
 					responseData = JSON.parse(response);
 					if (responseData){
-						$scope.lEmail = $scope.email;
-						extEmail = $scope.lEmail;
+						$rootScope.lEmail = $scope.email;
+						extEmail = $rootScope.lEmail;
 					}
 				}
 			});

@@ -28,7 +28,7 @@ commonHeaderHtml += "<li class=\"liLogin\">" +
 "<div id=\"wrap\" ng-controller=\"loginController\">" +
 	"<div id=\"regbar\">" +
     	"<div id=\"navthing\">" +
-    		"<div ng-style=\"{visibility: (lEmail!=null && lEmail.length > 0)?'hidden':'visible'}\">" +
+    		"<div ng-style=\"{visibility: (root.lEmail!=null && root.lEmail.length > 0)?'hidden':'visible'}\">" +
     			"<div class = \"loginPanel\">" +
     				"<button id=\"loginform\">Login</button> | <button>Sign up</button>" + 
     			"</div>" +
@@ -47,10 +47,10 @@ commonHeaderHtml += "<li class=\"liLogin\">" +
     				"</div>" +
     			"</div>" +
     		"</div>" +
-    		"<div ng-style=\"{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}\">" + 
+    		"<div ng-style=\"{visibility: (root.lEmail!=null && root.lEmail.length > 0)?'visible':'hidden'}\">" + 
     			"<div class=\"logged\">" +
     				"<fieldset>" + 
-    					"<label name=\"loggedEmail\">{{lEmail}}</label>" + 
+    					"<label name=\"loggedEmail\">{{root.lEmail}}</label>" + 
     				"</fieldset>" +
     			"</div>" +
     		"</div>" +
@@ -79,7 +79,7 @@ app.directive("commonfooter", function() {
 
 
 // Controller
-app.controller("CommonController", function($scope, $ocLazyLoad) {
+app.controller("CommonController", function($scope, $ocLazyLoad, $rootScope) {
 	$scope.loading = true;
     
 	$scope.menuStyle = {
