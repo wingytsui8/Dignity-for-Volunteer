@@ -25,3 +25,5 @@ INSERT INTO `register` (`id`, `eventId`, `volId`, `status`, `createDate`, `modif
 INSERT INTO `register` (`id`, `eventId`, `volId`, `status`, `createDate`, `modifyDate`, `active`) VALUES (NULL, '2', '3', 'Cancelled', '2019-04-20', '2019-05-01', '1');
 
 INSERT INTO `register` (`id`, `eventId`, `volId`, `status`, `createDate`, `modifyDate`, `active`) VALUES (NULL, '2', '4', 'Confirmed', '2019-03-20', '2019-05-01', '1');
+
+ALTER TABLE `volunteer` ADD `loginDate` datetime;
