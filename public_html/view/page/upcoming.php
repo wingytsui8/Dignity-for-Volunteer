@@ -22,7 +22,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-	<script src="js/sha256.js" type="text/javascript"></script>
+
+	<script src="js/ocLazyLoad.min.js" type="text/javascript"></script>
 	<script src="../controller/ng-common.js"></script>
 	<script src="../controller/loginController.js"></script>
 
@@ -44,7 +45,7 @@
 </head>
 
 <body ng-style="mainStyle">
-	<div class="loader" ng-show="loading"> 
+	<div class="loader" ng-show="loading"> </div>
 		<div ng-style="bodyStyle">
 			<div class="vbox wb_container" id="wb_header">
 				<div class="wb_cont_inner">
@@ -128,7 +129,5 @@
 			</div>
 		</div>
 		<commonfooter></commonfooter>
-		<script src="js/loginForm.js" type="text/javascript"></script>
-	</div>
 </body>
 </html>
