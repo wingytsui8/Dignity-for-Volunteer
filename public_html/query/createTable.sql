@@ -5,7 +5,8 @@ CREATE TABLE `volunteer` (
   `dob` date Not Null,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `active` tinyint(1) NOT NULL
+  `active` tinyint(1) NOT NULL,
+  `loginTime` datetime Null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `volunteer`

@@ -59,7 +59,18 @@ function login($email, $password){
 	$sql= "SELECT 1
 	From volunteer
 	where email = '". $email . "' and password = '". $pwHash . "'";
-	return validate($sql);
+	$val =  validate($sql);
+	if ($val){
+	 updateLoginTime($email);
+	}
+
+	return $val;
+}
+
+function updateLoginTime($email){
+	$sql= "UPDATE `volunteer` set `loginTime` = Now() WHERE email = '". $email ."';";
+	runNonQuery($sql);
+
 }
 
 function getEvent($orderBy, $active , $upcoming){
@@ -107,6 +118,13 @@ function getToDrawList($upcomingEId){
 	return runQuery($sql);
 }
 
+function checkLogin($email){
+	$sql= "SELECT 1
+	 From volunteer 
+	 where `email` ='" . $email . 
+	 "' and `loginTime`is not null and ADDTIME(`loginTime`, '0 0:30:0') > NOW() ";	
+	 return validate($sql);
+}
 
 function runQuery($sql){
 	$result = connectDB($sql);
@@ -118,6 +136,10 @@ function runQuery($sql){
 		}
 		return json_encode($resArr);
 	}
+}
+
+function runNonQuery($sql){
+	 connectDB($sql);
 }
 
 function validate($sql){
@@ -147,4 +169,5 @@ function connectDB($sql){
 		echo "Connection failed: " . $e->getMessage();
 	}
 }
+
 ?>
