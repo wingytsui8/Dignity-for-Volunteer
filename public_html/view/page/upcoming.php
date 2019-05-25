@@ -22,7 +22,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-
 	<script src="js/ocLazyLoad.min.js" type="text/javascript"></script>
 	<script src="../controller/ng-common.js"></script>
 	<script src="../controller/loginController.js"></script>
@@ -102,26 +101,35 @@
 			<div id="upcomingEvent">
 				<h1>Upcoming Event</h1>
 				<div id="upcomingEventTable" ng-app="digVol" ng-controller="UpcomingEventController">
-					<h1>Past Event</h1>
 					<table st-table="upcommingEvents" class="table table-striped">
 						<thead>
 							<tr>
-								<th>Event Name</th>
-								<th>Period</th>
-								<th>Venue</th>
-								<th>Contact Person</th>
-								<th>Application Deadline</th>
-								<th>Quota</th>
+								<th>Event</th>
+								<th>Register</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="row in upcomingEvents">
-								<td>{{row.name}}</td>
+								<!-- <td>{{row.name}}</td>
 								<td>{{row.fromDate}} - {{row.toDate}}</td>
 								<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
 								<td><strong>{{row.contactName}}</strong>:<br> {{row.contactEmail}}</td>
 								<td>{{row.applicationDeadline}}</td>
 								<td>{{row.quota}}</td>
+								<td ng-style="{visibility: (root.lEmail!=null && root.lEmail.length > 0)?'visible':'hidden'}"> register?</th> -->
+								<td>
+								<strong>{{row.name}}</strong><br>
+								{{row.fromDate}} - {{row.toDate}}<br>
+								{{row.venue}}<br>
+								{{row.location}}<br><br>
+								Contact: <br>
+								<strong>{{row.contactName}}</strong><br> 
+								{{row.contactEmail}}<br>
+								<br>
+								Deadline: {{row.applicationDeadline}} <br>
+								Quota : {{row.quota}}</td>
+
+								<td> register?</td>
 							</tr>
 						</tbody>
 					</table>

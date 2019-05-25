@@ -74,13 +74,31 @@ function updateLoginTime($email){
 }
 
 function getEvent($orderBy, $active , $upcoming){
-	$sql= "SELECT id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota
+	$sql= "SELECT id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
 	From event
 	where active = " . $active .
 	" and fromDate " . ($upcoming? " >= " : " <= ") . " CURDATE() " .
 	" order by fromDate " . $orderBy;
 	return runQuery($sql);
 }
+
+function getRegisterEventDetails($email){
+	$sql= "SELECT name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, 
+!(r.eventId is null) as registered
+From event as e
+left outer join  
+(
+    Select r2.eventId
+    from volunteer as vol
+    inner join register as r2 on r2.active = 1 and r2.status <> \"Cancelled\" AND vol.id = r2.volId 
+    where vol.email = '" . $email . "'
+) as r on e.id = r.eventId
+where active = 1 and fromDate >= CURDATE()
+order by fromDate";
+	return runQuery($sql);
+}
+
+
 function getEventDetail($id){
 	$sql= "SELECT event.id as id, name, fromDate, Date(toDate) as toDate, TIME_FORMAT(toDate, '%H:%i') as toTime, venue, location, contactName, contactEmail, applicationDeadline, quota, event.active, count(event.id) as registered
 	From event, register
