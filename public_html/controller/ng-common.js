@@ -23,6 +23,7 @@ for (var i = 0; i < pages.length; i++){
 	}
 	commonHeaderHtml += "href=\"" + pages[i] + "/\" target=\"_self\">" + pages[i] + "</a></li>";
 }
+commonHeaderHtml += "</ul></div><div><ul class=\"loginNav\">";
 // login button
 commonHeaderHtml += "<li class=\"liLogin\">" +
 "<div id=\"wrap\" ng-controller=\"loginController\">" +
@@ -30,10 +31,10 @@ commonHeaderHtml += "<li class=\"liLogin\">" +
     	"<div id=\"navthing\">" +
     		"<div ng-style=\"{visibility: (root.lEmail!=null && root.lEmail.length > 0)?'hidden':'visible'}\">" +
     			"<div class = \"loginPanel\">" +
-    				"<button id=\"loginform\">Login</button> | <button>Sign up</button>" + 
+    				"<button>Sign up</button><button id=\"loginform\">Login</button>" + 
     			"</div>" +
     			"<div class=\"login\">" +
-    				"<div class=\"arrow-up\"></div>" +
+    			//\\\\\\	"<div class=\"arrow-up\"></div>" +
     				"<div class=\"formholder\">" + 
     					"<div class=\"randompad\">" +
     						"<fieldset>" +

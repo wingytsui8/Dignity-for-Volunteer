@@ -45,6 +45,9 @@
   cursor: pointer;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
+  float: right;
+  margin: 10px;
+  z-index: 1000;
 }
 
 .loginPanel button:hover { /*when mouse moves to there*/

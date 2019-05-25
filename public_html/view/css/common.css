@@ -70,11 +70,27 @@ ul.wb-stl-list3 li:before { content: "\2022"; font-size: 24px; font-family: ; di
 .wb-elm-line { font-size: 1px; overflow: hidden; line-height: 1px; padding: 0; background: transparent; float: none; position: relative; }
 
 
+ul.loginNav {
+	z-index: 1000;
+	float: right;
+	vertical-align: middle;
+	background-color : red;
+	top: 0;
+	width: 30%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0px 15px;
+	overflow: hidden;
+	letter-spacing: 2px;
+	font-size: 16px;
+	font-weight : 700;
+}
+
 ul.topnav {
 	vertical-align: middle;
 	background-color : black;
 	top: 0;
-	width: 100%;
+	width: 70%;
 	list-style-type: none;
 	margin: 0;
 	padding: 0px 15px;
@@ -103,16 +119,18 @@ ul.topnav li a.active {color: #ffb835; text-decoration: none;}
 
 ul.topnav li.right {float: right;}
 
-@media screen and (max-width: 600px) {
+@media only screen and (max-width: 600px) {
   ul.topnav li.right, 
   ul.topnav li {float: none;},
   ul.topnav {position: none;},
   ul.topnav li.liLogin {float: none;}
+  ul.loginNav { width: 100%; }
 }
-@media screen and (min-width: 600px) {
+@media only screen and (min-width: 600px) {
   ul.topnav {position: fixed;}, 
   ul.topnav li {float: none;}
   ul.topnav li.liLogin {float: right;}
+  ul.loginNav li {float: right;}
 }
 @media (min-width: 768px) {
 }
@@ -126,7 +144,7 @@ ul.topnav li.right {float: right;}
 commonheader {
 	display: block;
 	color : #ffb835;
-	background-color : black;
+	/*background-color : black;*/
 	padding : 0px
 }
 
