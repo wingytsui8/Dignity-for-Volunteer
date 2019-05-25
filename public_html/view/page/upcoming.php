@@ -45,71 +45,71 @@
 
 <body ng-style="mainStyle">
 	<div class="loader" ng-show="loading"> </div>
-		<div ng-style="bodyStyle">
-			<div class="vbox wb_container" id="wb_header">
-				<div class="wb_cont_inner">
-					<div id="wb_element_instance15" class="wb_element wb-menu">
-						<ul class="hmenu">
-							<li><a href="Home" target="_self">Home</a></li>
-							<li><a href="Event/" target="_self">Event</a></li>
-							<li class="active"><a href="Upcoming/" target="_self">Upcoming</a></li>
-							<li><a href="Register/" target="_self">Register</a></li>
-						</ul>
-						<div class="clearfix"></div>
-					</div>
-					<div id="wb_element_instance16" class="wb_element wb_element_picture" title="">
-						<a href="http://dignityforchildren.org/" target="1"><img alt="gallery/dignity_logo" src="gallery_gen/37c944c27b869908c211dea96575621f_190x60.png"></a>
-					</div>
-					<div id="wrap" ng-controller="loginController">
-						<div id="regbar">
-							<div id="navthing">
-								<div ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'hidden':'visible'}">
-									<div class = "loginPanel">
-										<button id="loginform">Login</button> | <button>Sign up</button>
-									</div>
-									<div class="login">
-										<div class="arrow-up"></div>
-										<div class="formholder">
-											<div class="randompad">
-												<fieldset>
-													<label name="email">Email</label>
-													<input id="loginEmail" type="email" placeholder="example@example.com" ng-model="email"/>
-													<label name="password">Password</label>
-													<input id="loginPw" placeholder = "Initial password = date of birth (YYYMMDD)" type="password" ng-model="password"/>
-													<input type="submit" value="Login" ng-click="loginSubmit()"/>
-												</fieldset>
-											</div>
+	<div ng-style="bodyStyle">
+		<div class="vbox wb_container" id="wb_header">
+			<div class="wb_cont_inner">
+				<div id="wb_element_instance15" class="wb_element wb-menu">
+					<ul class="hmenu">
+						<li><a href="Home" target="_self">Home</a></li>
+						<li><a href="Event/" target="_self">Event</a></li>
+						<li class="active"><a href="Upcoming/" target="_self">Upcoming</a></li>
+						<li><a href="Register/" target="_self">Register</a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div id="wb_element_instance16" class="wb_element wb_element_picture" title="">
+					<a href="http://dignityforchildren.org/" target="1"><img alt="gallery/dignity_logo" src="gallery_gen/37c944c27b869908c211dea96575621f_190x60.png"></a>
+				</div>
+				<div id="wrap" ng-controller="loginController">
+					<div id="regbar">
+						<div id="navthing">
+							<div ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'hidden':'visible'}">
+								<div class = "loginPanel">
+									<button id="loginform">Login</button> | <button>Sign up</button>
+								</div>
+								<div class="login">
+									<div class="arrow-up"></div>
+									<div class="formholder">
+										<div class="randompad">
+											<fieldset>
+												<label name="email">Email</label>
+												<input id="loginEmail" type="email" placeholder="example@example.com" ng-model="email"/>
+												<label name="password">Password</label>
+												<input id="loginPw" placeholder = "Initial password = date of birth (YYYMMDD)" type="password" ng-model="password"/>
+												<input type="submit" value="Login" ng-click="loginSubmit()"/>
+											</fieldset>
 										</div>
 									</div>
 								</div>
-								<div ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">
-									<div class="logged">
-										<fieldset>
-											<label name="loggedEmail">{{lEmail}}</label>
-										</fieldset>
-									</div>
+							</div>
+							<div ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">
+								<div class="logged">
+									<fieldset>
+										<label name="loggedEmail">{{lEmail}}</label>
+									</fieldset>
 								</div>
 							</div>
-
 						</div>
-					</div>
 
+					</div>
 				</div>
-				<div class="wb_cont_outer"></div>
-				<div class="wb_cont_bg"></div>
+
 			</div>
-			<div id="upcomingEvent">
-				<h1>Upcoming Event</h1>
-				<div id="upcomingEventTable" ng-app="digVol" ng-controller="UpcomingEventController">
-					<table st-table="upcommingEvents" class="table table-striped">
-						<thead>
-							<tr>
-								<th>Event</th>
-								<th>Register</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="row in upcomingEvents">
+			<div class="wb_cont_outer"></div>
+			<div class="wb_cont_bg"></div>
+		</div>
+		<div id="upcomingEvent">
+			<h1>Upcoming Event</h1>
+			<div id="upcomingEventTable" ng-app="digVol" ng-controller="UpcomingEventController">
+				<table st-table="upcommingEvents" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Event</th>
+							<th>Register</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in upcomingEvents">
 								<!-- <td>{{row.name}}</td>
 								<td>{{row.fromDate}} - {{row.toDate}}</td>
 								<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
@@ -117,25 +117,28 @@
 								<td>{{row.applicationDeadline}}</td>
 								<td>{{row.quota}}</td>
 								<td ng-style="{visibility: (root.lEmail!=null && root.lEmail.length > 0)?'visible':'hidden'}"> register?</th> -->
-								<td>
-								<strong>{{row.name}}</strong><br>
-								{{row.fromDate}} - {{row.toDate}}<br>
-								{{row.venue}}<br>
-								{{row.location}}<br><br>
-								Contact: <br>
-								<strong>{{row.contactName}}</strong><br> 
-								{{row.contactEmail}}<br>
-								<br>
-								Deadline: {{row.applicationDeadline}} <br>
-								Quota : {{row.quota}}</td>
+									<td>
+										<strong>{{row.name}}</strong><br>
+										{{row.fromDate}} - {{row.toDate}}<br>
+										{{row.venue}}<br>
+										{{row.location}}<br><br>
+										Contact: <br>
+										<strong>{{row.contactName}}</strong><br> 
+										{{row.contactEmail}}<br>
+										<br>
+										Deadline: {{row.applicationDeadline}} <br>
+										Quota : {{row.quota}}
+										<br>
+										{{row.remarks}}
+									</td>
 
-								<td> register?</td>
-							</tr>
-						</tbody>
-					</table>
+									<td> register?</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
-		</div>
-		<commonfooter></commonfooter>
-</body>
-</html>
+			<commonfooter></commonfooter>
+		</body>
+		</html>
