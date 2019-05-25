@@ -23,13 +23,16 @@ for (var i = 0; i < pages.length; i++){
 	}
 	commonHeaderHtml += "href=\"" + pages[i] + "/\" target=\"_self\">" + pages[i] + "</a></li>";
 }
-commonHeaderHtml += "</ul></div><div><ul class=\"loginNav\">";
 // login button
-commonHeaderHtml += "<li class=\"liLogin\">" +
+commonHeaderHtml += "</ul><ul class=\"loginNav\">" ;
+commonHeaderHtml += "<li class=\"liLogin\">" ;
+//commonHeaderHtml += "<button>Sign up</button><button id=\"loginform\">Login</button>";
+
+commonHeaderHtml += 
 "<div id=\"wrap\" ng-controller=\"loginController\">" +
 	"<div id=\"regbar\">" +
     	"<div id=\"navthing\">" +
-    		"<div ng-style=\"{visibility: (root.lEmail!=null && root.lEmail.length > 0)?'hidden':'visible'}\">" +
+    		"<div ng-style=\"{visibility: (lEmail!=null && lEmail.length > 0)?'hidden':'visible'}\">" +
     			"<div class = \"loginPanel\">" +
     				"<button>Sign up</button><button id=\"loginform\">Login</button>" + 
     			"</div>" +
@@ -48,17 +51,20 @@ commonHeaderHtml += "<li class=\"liLogin\">" +
     				"</div>" +
     			"</div>" +
     		"</div>" +
-    		"<div ng-style=\"{visibility: (root.lEmail!=null && root.lEmail.length > 0)?'visible':'hidden'}\">" + 
+    		"<div ng-style=\"{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}\">" + 
     			"<div class=\"logged\">" +
     				"<fieldset>" + 
-    					"<label name=\"loggedEmail\">{{root.lEmail}}</label>" + 
+    					"<label name=\"loggedEmail\">{{lEmail}}</label>" + 
     				"</fieldset>" +
     			"</div>" +
     		"</div>" +
     	"</div>" +
     "</div>" +
 "</div>"
-commonHeaderHtml += "</li></ul></div>"
+    			
+commonHeaderHtml += "</li>";
+
+commonHeaderHtml += "</ul></div>";
 
 
 var responseData = [];

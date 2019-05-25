@@ -76,7 +76,7 @@ ul.loginNav {
 	vertical-align: middle;
 	background-color : red;
 	top: 0;
-	width: 30%;
+	width: auto;
 	list-style-type: none;
 	margin: 0;
 	padding: 0px 15px;
@@ -84,13 +84,17 @@ ul.loginNav {
 	letter-spacing: 2px;
 	font-size: 16px;
 	font-weight : 700;
+	position: fixed;
+	right: 0px;
+
 }
 
 ul.topnav {
+	z-index: 10;
 	vertical-align: middle;
 	background-color : black;
 	top: 0;
-	width: 70%;
+	width: 100%;
 	list-style-type: none;
 	margin: 0;
 	padding: 0px 15px;
@@ -113,27 +117,46 @@ ul.topnav li a {
 	text-decoration: none;
 }
 
+
+ul.topnav li.liLogin button {
+  background-color: #ffb835;
+  border-radius: 30px;
+  color: white;
+  padding: 0px 10px;
+/*  text-align: center;
+  text-decoration: none;
+  display: inline-block;*/
+ /* font-size: 16px;*/
+/*  margin: 4px 2px;*/
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  margin: 10px;
+  line-height: 48px;
+}
+
 ul.topnav li a:hover:not(.active) {color: #ffb835; text-decoration: none;}
 
 ul.topnav li a.active {color: #ffb835; text-decoration: none;}
 
 ul.topnav li.right {float: right;}
 
-@media only screen and (max-width: 600px) {
+@media (min-width: 600px) {
+}
+
+@media only screen and (max-width: 768px) {
   ul.topnav li.right, 
   ul.topnav li {float: none;},
   ul.topnav {position: none;},
-  ul.topnav li.liLogin {float: none;}
-  ul.loginNav { width: 100%; }
+  ul.loginNav {width: 100%;}
+  ul.loginNav li.liLogin {float: none;}
 }
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 768px) {
   ul.topnav {position: fixed;}, 
   ul.topnav li {float: none;}
-  ul.topnav li.liLogin {float: right;}
-  ul.loginNav li {float: right;}
+  ul.loginNav li.liLogin {float: right;}
 }
-@media (min-width: 768px) {
-}
+
 
 @media (min-width: 992px) {
 }
