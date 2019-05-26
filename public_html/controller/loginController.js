@@ -26,6 +26,7 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
 					if (responseData){
 						$rootScope.lEmail = $scope.email;
 						extEmail = $rootScope.lEmail;
+                        $scope.reloadPage();
 					}
 				}
 			});
@@ -51,7 +52,6 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
     		extScope.setLEmail(email);
     	}
     });
-
-  }]);
+}]);
 
 

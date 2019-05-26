@@ -1,7 +1,7 @@
 // MUST insert first before other controllers
 src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
 
-var app = angular.module("digVol", ["oc.lazyLoad"]);
+var app = angular.module("digVol", ["oc.lazyLoad", "ngRoute"]);
 var pages = [
 "Home",
 "Event",
@@ -37,14 +37,14 @@ commonHeaderHtml +=
     				"<button>Sign up</button><button id=\"loginform\">Login</button>" + 
     			"</div>" +
     			"<div class=\"login\">" +
-    			//\\\\\\	"<div class=\"arrow-up\"></div>" +
+    			"<div class=\"arrow-up\"></div>" +
     				"<div class=\"formholder\">" + 
     					"<div class=\"randompad\">" +
     						"<fieldset>" +
     							"<label name=\"email\">Email</label>" +
     							"<input id=\"loginEmail\" type=\"email\" placeholder=\"example@example.com\" ng-model=\"email\"/>" +
     							"<label name=\"password\">Password</label>" + 
-    							"<input id=\"loginPw\" placeholder = \"Initial password = date of birth (YYYMMDD)\" type=\"password\" ng-model=\"password\"/> " +
+    							"<input id=\"loginPw\" placeholder = \"Date of birth (YYYMMDD)\" type=\"password\" ng-model=\"password\"/> " +
     							"<input type=\"submit\" value=\"Login\" ng-click=\"loginSubmit()\"/>" +
     						"</fieldset>" +
     					"</div>" +
@@ -86,8 +86,12 @@ app.directive("commonfooter", function() {
 
 
 // Controller
-app.controller("CommonController", function($scope, $ocLazyLoad, $rootScope) {
+app.controller("CommonController", function($scope, $ocLazyLoad, $rootScope, $route) {
 	$scope.loading = true;
+
+	$scope.reloadPage = function() {
+		$route.reload();
+	}
     
 	$scope.menuStyle = {
 		"color" : "#e28a00",
@@ -193,20 +197,36 @@ app.controller("PastEventController", function($scope) {
 	$scope.init();
 });
 
-app.controller("UpcomingEventController", function($scope) {
+app.controller("UpcomingEventController", function($scope, $rootScope) {
 	$scope.upcomingEvents = [];
-	$scope.init = function(){
-		$.ajax({
-		url: '../connectDB.php',
-		type: 'POST',
-		data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 0 },
-		dataType: "json",
-		async: false,
-		success: function(response) {
-			responseData = JSON.parse(response);
+	if ($rootScope.lEmail != "undefined" && $rootScope.lEmail != null && $rootScope.lEmail.length > 0 ){
+		$scope.init = function(){
+			$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getRegisterEventDetails' ,  email: $rootScope.lEmail },
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+			});
+			$scope.upcomingEvents = responseData;
 		}
-		});
-		$scope.upcomingEvents = responseData;
+	}else{
+		$scope.init = function(){
+			$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 0 },
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+			});
+			$scope.upcomingEvents = responseData;
+		}
 	}
 	$scope.init();
 });

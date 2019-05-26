@@ -25,6 +25,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
+	<script src="js/angular-route.min.js" type="text/javascript"></script>
 	<script src="js/ocLazyLoad.min.js" type="text/javascript"></script>
 	<script src="../controller/ng-common.js" type="text/javascript"></script>
 	<script src="../controller/loginController.js"></script>

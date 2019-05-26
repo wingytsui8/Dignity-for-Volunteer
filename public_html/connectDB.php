@@ -83,7 +83,7 @@ function getEvent($orderBy, $active , $upcoming){
 }
 
 function getRegisterEventDetails($email){
-	$sql= "SELECT name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, 
+	$sql= "SELECT e.id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, 
 !(r.eventId is null) as registered
 From event as e
 left outer join  
@@ -143,6 +143,9 @@ function checkLogin($email){
 	 "' and `loginTime`is not null and ADDTIME(`loginTime`, '0 0:30:0') > NOW() ";	
 	 return validate($sql);
 }
+
+
+//--------------------------------------^^^^^^ Common Connect Functions ^^^^^^^^^^^^---------------------------------
 
 function runQuery($sql){
 	$result = connectDB($sql);
