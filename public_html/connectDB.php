@@ -13,6 +13,12 @@ if(isset($_POST['action'])){
 		echo json_encode( getEvent($orderBy, $active, $upcoming) );
 		exit;
 
+		case "getRegisterEventDetails":
+		$email = (string)$_POST['email'];
+		header('Content-type: application/json');
+		echo json_encode( getRegisterEventDetails($email) );
+		exit;
+
 		case "login":
 		$password = (string)$_POST['password'];
 		$email = (string)$_POST['email'];
@@ -22,8 +28,8 @@ if(isset($_POST['action'])){
 		exit;
 
 		case "postEvent":
-		 $id = (string)$_POST['id'];
-		 $name = (string)$_POST['name'];
+		$id = (string)$_POST['id'];
+		$name = (string)$_POST['name'];
 		// //$fromDate = (string)$_POST['fromDate'];
 		// //$toDate = (string)$_POST['toDate'];
 		// $venue = (string)$_POST['venue'];
@@ -61,7 +67,7 @@ function login($email, $password){
 	where email = '". $email . "' and password = '". $pwHash . "'";
 	$val =  validate($sql);
 	if ($val){
-	 updateLoginTime($email);
+		updateLoginTime($email);
 	}
 
 	return $val;
@@ -84,17 +90,17 @@ function getEvent($orderBy, $active , $upcoming){
 
 function getRegisterEventDetails($email){
 	$sql= "SELECT e.id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, 
-!(r.eventId is null) as registered
-From event as e
-left outer join  
-(
-    Select r2.eventId
-    from volunteer as vol
-    inner join register as r2 on r2.active = 1 and r2.status <> \"Cancelled\" AND vol.id = r2.volId 
-    where vol.email = '" . $email . "'
-) as r on e.id = r.eventId
-where active = 1 and fromDate >= CURDATE()
-order by fromDate";
+	!(r.eventId is null) as registered
+	From event as e
+	left outer join  
+	(
+	Select r2.eventId
+	from volunteer as vol
+	inner join register as r2 on r2.active = 1 and r2.status <> \"Cancelled\" AND vol.id = r2.volId 
+	where vol.email = '" . $email . "'
+	) as r on e.id = r.eventId
+	where active = 1 and fromDate >= CURDATE()
+	order by fromDate;";
 	return runQuery($sql);
 }
 
@@ -110,13 +116,13 @@ function getEventDetail($id){
 	return runQuery($sql);
 }
 
-   function postEvent($id, $name){ 
-    $sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES ('". $id. "','" . $name."', '2020-10-10T01:00:00', '2020-11-11T01:01:01', 'test venue', 'test location' , 'contactName', 'contactEmail', '2019-01-01', '100', '1')
+function postEvent($id, $name){ 
+	$sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES ('". $id. "','" . $name."', '2020-10-10T01:00:00', '2020-11-11T01:01:01', 'test venue', 'test location' , 'contactName', 'contactEmail', '2019-01-01', '100', '1')
 
-ON DUPLICATE KEY UPDATE 
-  name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
+	ON DUPLICATE KEY UPDATE 
+	name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
 
-    return runQuery($sql);
+	return runQuery($sql);
 }
 
 function getRegisteredList($id){
@@ -138,10 +144,10 @@ function getToDrawList($upcomingEId){
 
 function checkLogin($email){
 	$sql= "SELECT 1
-	 From volunteer 
-	 where `email` ='" . $email . 
-	 "' and `loginTime`is not null and ADDTIME(`loginTime`, '0 0:30:0') > NOW() ";	
-	 return validate($sql);
+	From volunteer 
+	where `email` ='" . $email . 
+	"' and `loginTime`is not null and ADDTIME(`loginTime`, '0 0:30:0') > NOW() ";	
+	return validate($sql);
 }
 
 
@@ -160,7 +166,7 @@ function runQuery($sql){
 }
 
 function runNonQuery($sql){
-	 connectDB($sql);
+	connectDB($sql);
 }
 
 function validate($sql){
