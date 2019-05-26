@@ -233,7 +233,7 @@ app.controller("UpcomingEventController", ["$scope", "$rootScope", function($sco
 		$.ajax({
 			url: '../connectDB.php',
 			type: 'POST',
-			data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 0 },
+			data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 1 },
 			dataType: "json",
 			async: false,
 			success: function(response) {
