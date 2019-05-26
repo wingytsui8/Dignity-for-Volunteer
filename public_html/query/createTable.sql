@@ -54,4 +54,15 @@ ALTER TABLE `register`
 ALTER TABLE `register`
   MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
-  
+Create Table `Photo` (
+`PID` mediumint(9) NOT NULL AUTO_INCREMENT,
+`EID` int(11) NOT NULL,
+`path` varchar(128) NOT NULL,
+PRIMARY KEY (`PID`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+Create Table `Poster` (
+`EID` int(11) NOT NULL,
+`path` varchar(128) NOT NULL,
+PRIMARY KEY (`EID`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
