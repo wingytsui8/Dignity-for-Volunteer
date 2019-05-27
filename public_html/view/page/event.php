@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Event'">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Dignity For Volunteer - Event</title>
+	<title>Dignity For Volunteer - {{pageTitle}}</title>
 	<base href="{{base_url}}" />
 	<meta name="viewport" content="width=1200" />
 	<meta name="description" content="" />
@@ -43,10 +42,10 @@
 	<link href="css/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body id="eventPage" ng-app="digVol"  >
+<body >
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
-	<div id="event" ng-app="digVol" ng-controller="CommonController" ng-style="bodyStyle"  ng-init="pageTitle='Event'">
+	<div ng-style="bodyStyle"  >
 		<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventController">
 			<h1>Past Event</h1>
 			<table st-table="pastEvents" class="table table-striped">

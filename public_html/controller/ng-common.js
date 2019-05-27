@@ -211,7 +211,6 @@ app.controller("UpcomingEventController", ["$scope", "$rootScope", function($sco
 			}
 		});
 		$scope.upcomingEvents = responseData;
-		$scope.apply();
 	}
 	var email = sessionStorage.getItem("lEmail");
 	if (email!= null && email != "undefined" && email.length > 0){
