@@ -28,7 +28,7 @@
 	<script src="js/ocLazyLoad.min.js" type="text/javascript"></script>
 	<script src="../controller/ng-common.js" type="text/javascript"></script>
 	<script src="../controller/loginController.js"></script>
-
+<script src="../controller/slideController.js" type="text/javascript"></script>
 
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
@@ -45,8 +45,47 @@
 <body >
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
+	<div id="container">
+  <ul id="slides">
+    <li class="slide">
+      <div class="slide-partial slide-left"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/forest-left.jpg"/></div>
+      <h1 class="title"><span class="title-text">Forest</span></h1>
+    </li>
+    <li class="slide">
+      <div class="slide-partial slide-left"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/mountain-left.jpg"/></div>
+      <h1 class="title"><span class="title-text">Forest</span></h1>
+    </li>
+    <li class="slide">
+      <div class="slide-partial slide-left"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/ocean-left.jpg"/></div>
+      <h1 class="title"><span class="title-text">Forest</span></h1>
+    </li>
+    <li class="slide">
+      <div class="slide-partial slide-left"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/canyon-left.jpg"/></div>
+     <h1 class="title"><span class="title-text">Forest</span></h1>
+    </li>
+    <li class="slide">
+      <div class="slide-partial slide-left"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/lake-left.jpg"/></div>
+      <h1 class="title"><span class="title-text">Forest</span></h1>
+    </li>
+  </ul>
+  <ul id="slide-select">
+    <li class="btn prev"><</li>
+    <li class="selector"></li>
+    <li class="selector"></li>
+    <li class="selector"></li>
+    <li class="selector"></li>
+    <li class="selector"></li>
+    <li class="btn next">></li>
+  </ul>
+</div>
+<div id='slide_backgroup'></div>
 	<div ng-style="bodyStyle"  >
+
+
 		<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventController">
+
+
+
 			<h1>Past Event</h1>
 			<table st-table="pastEvents" class="table table-striped">
 				<thead>

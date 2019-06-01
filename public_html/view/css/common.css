@@ -70,12 +70,18 @@ ul.wb-stl-list3 li:before { content: "\2022"; font-size: 24px; font-family: ; di
 .wb-elm-line { font-size: 1px; overflow: hidden; line-height: 1px; padding: 0; background: transparent; float: none; position: relative; }
 
 
+:root {
+  --main-color-input:#F0F8FF;
+  --main-color-light: #00CCFF;
+  --main-color: #00BFFF;
+  --main-color-dark: #0000CD;
+}
 ul.loginNav {
 	z-index: 1000;
 	float: right;
 	vertical-align: middle;
 	top: 0;
-	width: : auto;
+	width: auto;
 	list-style-type: none;
 	margin: 0;
 	padding: 0px 15px;
@@ -99,6 +105,7 @@ ul.topnav {
 	letter-spacing: 2px;
 	font-size: 16px;
 	font-weight : 700;
+	z-index: 10
 }
 
 li {
@@ -116,7 +123,7 @@ li a {
 
 
 ul.loginNav li.liLogin button {
-  background-color: #ffb835;
+  background-color: var(--main-color);
   border-radius: 30px;
   color: white;
   padding: 0px 10px;
@@ -134,9 +141,9 @@ ul.loginNav li.liLogin button {
 }
 ul.loginNav li.liLogin {float: right;}
 
-ul.topnav li a:hover:not(.active) {color: #ffb835; text-decoration: none;}
+ul.topnav li a:hover:not(.active) {color: var(--main-color); text-decoration: none;}
 
-ul.topnav li a.active {color: #ffb835; text-decoration: none;}
+ul.topnav li a.active {color: var(--main-color); text-decoration: none;}
 
 /*ul.topnav li.right {float: right;}*/
 
@@ -168,48 +175,65 @@ ul.topnav li a.active {color: #ffb835; text-decoration: none;}
 
 commonheader {
 	display: block;
-	color : #ffb835;
+	color : var(--main-color);
 	/*background-color : black;*/
 	padding : 0px
 }
 
 commonfooter {
 	display: block;
-	color : #ffb835;
+	color : var(--main-color);
 	background-color : black;
 	padding : 10px
 }
 
 body {
 	font: normal 'Lucida Grande', Helvetica, Arial, sans-serif
-	color : #ffb835;
+	color : var(--main-color);
 	background-color : black;
 	padding :10px;
 }
 
 h1 {
-	color : #e28a00;
+	color : var(--main-color-dark);
 	font-weight : 700;
 	letter-spacing: 2px;
 	font-size: 25px;
 }
 
+table {
+	border: 1px solid var(--main-color);
+}
 th  {
 	color : white;
-	background-color: #e28a00;
-	border: 1px solid grey;
-	border-collapse: collapse;
+	background-color: var(--main-color);
+	/*border-collapse: collapse;*/
 	padding: 5px;
 }
 
 td {
 	color : black;
-	background-color: #ffefdd;
-	border: 1px solid grey;
-	border-collapse: collapse;
+	background-color: white;
+	border-bottom: 1px solid var(--main-color);
+	/*border-collapse: collapse;*/
 	padding: 5px;
 }
 
+button {
+color: var(--main-color);
+background: white;
+padding: 10px;
+border: 2px solid var(--main-color) ;
+border-radius: 6px;
+display: inline-block;
+}
+
+button:hover {
+color: white;
+background: var(--main-color);
+border-color: var(--main-color);
+transition: all 0.4s ease 0s;
+}
 
 input[type=date], [type=time]   {
 	width: 30%;
@@ -221,7 +245,7 @@ input[type=text], [type=number]  {
 }
 
 input:focus {
-	background-color: #ffefdd;
+	background-color: var(--main-color-input);
 }
 
 select {
@@ -270,4 +294,139 @@ img.icon {
     animation: spin .8s linear infinite;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+#slide_backgroup {
+  padding: 0;
+  top:65px;
+  border: 10px black solid;
+  background-color: black;
+  width: 100%;
+  height: 400px;
+}
+#container {
+  padding: 0;
+  top: 65px;
+  left: 0px;
+  border: 10px black solid;
+  background-color: black;
+  position: absolute;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+#slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#slides .slide {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height:100%;
+}
+#slides .slide .title {
+  position: absolute;
+  top: calc(50% - 0.5em);
+  left: 20px;
+  z-index: 2;
+  padding-top: 5px;
+  font-size: 5em;
+  color: white;
+  overflow: hidden;
+}
+#slides .slide .title .title-text {
+  display: block;
+  -webkit-transform: translateY(1.2em);
+          transform: translateY(1.2em);
+  transition: -webkit-transform 1s ease-in-out;
+  transition: transform 1s ease-in-out;
+  transition: transform 1s ease-in-out, -webkit-transform 1s ease-in-out;
+}
+#slides .slide .slide-partial {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: -webkit-transform 1s ease-in-out;
+  transition: transform 1s ease-in-out;
+  transition: transform 1s ease-in-out, -webkit-transform 1s ease-in-out;
+}
+#slides .slide .slide-partial img {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: -webkit-transform 1s ease-in-out;
+  transition: transform 1s ease-in-out;
+  transition: transform 1s ease-in-out, -webkit-transform 1s ease-in-out;
+}
+#slides .slide .slide-left {
+  top: 0;
+  left: 0;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+#slides .slide .slide-left img {
+  top: 0;
+  right: 0;
+  -o-object-position: 100% 50%;
+     object-position: 100% 50%;
+  -webkit-transform: translateX(50%);
+          transform: translateX(50%);
+}
+
+#slides .slide.active .title .title-text {
+  -webkit-transform: translate(0);
+          transform: translate(0);
+  transition-delay: 0.3s;
+}
+#slides .slide.active .slide-partial, #slides .slide.active .slide-partial img {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+}
+
+#slide-select {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-family: "Reem Kufi", sans-serif;
+  font-size: 1.5em;
+  font-weight: lighter;
+  color: white;
+  list-style-type: none;
+}
+#slide-select li {
+  position: relative;
+  cursor: pointer;
+  margin: 0 5px;
+}
+#slide-select li.prev:hover {
+  -webkit-transform: translateX(-2px);
+          transform: translateX(-2px);
+}
+#slide-select li.next:hover {
+  -webkit-transform: translateX(2px);
+          transform: translateX(2px);
+}
+#slide-select .selector {
+  height: 14px;
+  width: 14px;
+  border: 2px solid white;
+  background-color: transparent;
+  transition: background-color 0.5s ease-in-out;
+}
+#slide-select .selector.current {
+  background-color: white;
+}
 
