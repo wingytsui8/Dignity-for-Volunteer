@@ -76,13 +76,13 @@ fieldset {
 
 .arrow-up {
   width: 0;
-  height: 0;
+  height: 20px;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
   border-bottom: 15px solid #ECF0F1;
-  left: 50%;
-  position: absolute;
-  top: -10px;
+  right: 136px;
+  position: fixed;
+  top: 60px;
 }
 
 .formholder {
@@ -90,19 +90,25 @@ fieldset {
   width: 350px;
   border-radius: 5px;
   padding-top: 5px;
+  top: 80px;
+  position: fixed;
+  right: 10px;
+  line-height: 30px;
 }
 .formholder input[type="email"], .formholder input[type="password"] {
-  padding: 7px 5px;
-  margin: 10px 0;
+/*  padding: 7px 5px;
+  margin: 10px 0;*/
   width: 96%;
   display: block;
-  font-size: 18px;
+/*  font-size: 18px;*/
   border-radius: 5px;
   border: none;
   -webkit-transition: 0.3s linear;
   -moz-transition: 0.3s linear;
   -o-transition: 0.3s linear;
   transition: 0.3s linear;
+  margin: 0px 0px 10px 0px;
+  color: black;
 }
 .formholder input[type="email"]:focus, .formholder input[type="password"]:focus {
   outline: none;
@@ -113,10 +119,11 @@ fieldset {
   padding: 10px;
   font-size: 20px;
   display: block;
-  width: 100%;
+  width: 96%;
   border: none;
   color: #fff;
   border-radius: 5px;
+  margin: 0px 0px 10px 0px;
 }
 .formholder input[type="submit"]:hover {
   background: #1bc6a4;
@@ -140,10 +147,11 @@ a:hover {
 
 .logged {
   position: absolute;
-  font-size: 18px;
+  font-size: 14px;
   top:26px;
-  right:0;
+  right:10px;
   color: #ffb835;
+  letter-spacing:0px;
 }
 
 

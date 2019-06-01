@@ -66,13 +66,13 @@
 								{{row.fromDate}} - {{row.toDate}}<br>
 								{{row.venue}}<br>
 								{{row.location}}<br><br>
-								Contact: <br>
+								Contact Person: <br>
 								<strong>{{row.contactName}}</strong><br> 
 								{{row.contactEmail}}<br>
 								<br>
 								Deadline: {{row.applicationDeadline}} <br>
 								Quota : {{row.quota}}
-								<br>
+								<br><br>
 								{{row.remarks}}
 							</td>
 

@@ -5,13 +5,13 @@
 #wb_main > .wb_cont_bg { background: transparent none repeat scroll left top; }
 #wb_footer { height: 74px; }
 #wb_footer > .wb_cont_bg { background: transparent none repeat-x scroll left top; }
-body { background: transparent none repeat-x scroll left top; }
+/*body { background: transparent none repeat-x scroll left top; }
 .wb_sbg { background: transparent url("../gallery_gen/1aa65be81ca706afc7f0fa6bdac38dda.jpg") repeat-x scroll center top; }
 body, .wb_sbg { min-width: 1200px; min-height: 905px; }
 .wb_cont_inner { width: 1200px; }
 .wb_cont_bg { width: 1200px; margin-left: -600px; }
 .root { height: 875px; overflow: visible; min-height: 905px; }
-#wb_element_instance15 { top: 12px; left: 420px; min-width: 510px; width: 510px; min-height: 56px; height: 56px; display: block; z-index: 400; }
+*/#wb_element_instance15 { top: 12px; left: 420px; min-width: 510px; width: 510px; min-height: 56px; height: 56px; display: block; z-index: 400; }
 #wb_element_instance15 > ul { display: block; }
 #wb_element_instance15 ul { background: transparent none repeat scroll right top; border: 1px none #000000; }
 #wb_element_instance15, #wb_element_instance15 ul { text-align: right; }
