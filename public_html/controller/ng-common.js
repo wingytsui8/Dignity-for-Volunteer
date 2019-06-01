@@ -223,8 +223,16 @@ app.controller("UpcomingEventController", ["$scope", "$rootScope", function($sco
 			async: false,
 			success: function(response) {
 				responseData = JSON.parse(response);
+				for (var i = 0 ;i<responseData.length;i++){
+					if (responseData[i].registered == "1"){
+						responseData[i].isRegistered = true;
+					}else if(responseData[i].registered == "0"){
+						responseData[i].isRegistered = false;
+					}
+				}
 			}
 		});
+
 		$scope.upcomingEvents = responseData;
 	}
 	}else{

@@ -77,7 +77,7 @@
 							</td>
 
 							<td ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}"> 
-								<input type="checkbox" ng-model="row.registered">
+								<input type="checkbox" ng-model="row.isRegistered">
 							</td>
 						</tr>
 					</tbody>
