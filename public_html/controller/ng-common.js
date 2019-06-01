@@ -199,22 +199,7 @@ app.controller("PastEventController", function($scope) {
 
 app.controller("UpcomingEventController", ["$scope", "$rootScope", function($scope, $rootScope) {
 	$scope.upcomingEvents = [];
-	$rootScope.upcomingInitChange = function(){
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'getRegisterEventDetails' ,  email: $rootScope.lEmail },
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.upcomingEvents = responseData;
-	}
-	var email = sessionStorage.getItem("lEmail");
-	if (email!= null && email != "undefined" && email.length > 0){
-		$scope.init = function(){
+	$rootScope.upcomingInitChange = function(email){
 		$.ajax({
 			url: '../connectDB.php',
 			type: 'POST',
@@ -235,20 +220,43 @@ app.controller("UpcomingEventController", ["$scope", "$rootScope", function($sco
 
 		$scope.upcomingEvents = responseData;
 	}
+	var email = sessionStorage.getItem("lEmail");
+	if (email!= null && email != "undefined" && email.length > 0){
+		$scope.init = function(){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'getRegisterEventDetails' ,  email: email },
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+					for (var i = 0 ;i<responseData.length;i++){
+						if (responseData[i].registered == "1"){
+							responseData[i].isRegistered = true;
+						}else if(responseData[i].registered == "0"){
+							responseData[i].isRegistered = false;
+						}
+					}
+				}
+			});
+
+			$scope.upcomingEvents = responseData;
+		}
 	}else{
-	$scope.init = function(){
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 1 },
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.upcomingEvents = responseData;
+		$scope.init = function(){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 1 },
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+				}
+			});
+			$scope.upcomingEvents = responseData;
+		}
 	}
-}
 	$scope.init();
 }]);
