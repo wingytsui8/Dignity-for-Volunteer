@@ -11,9 +11,9 @@ let cycle = index => {
   $nextSlide = $($slides.get(nextIndex));
   $nextSelector = $($selectors.get(nextIndex));
 
-  $currentSlide.removeClass("active").css("z-index", "0");
+  $currentSlide.removeClass("active").css("opacity", "0");
 
-  $nextSlide.addClass("active").css("z-index", "1");
+  $nextSlide.addClass("active").css("opacity", "1");
 
   $currentSelector.removeClass("current");
   $nextSelector.addClass("current");

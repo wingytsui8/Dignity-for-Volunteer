@@ -2,7 +2,7 @@
 <html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Event'">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Dignity For Volunteer - {{pageTitle}}</title>
+	<title>Dignity For Volunteer - Event</title>
 	<base href="{{base_url}}" />
 	<meta name="viewport" content="width=1200" />
 	<meta name="description" content="" />
@@ -47,25 +47,25 @@
 	<commonheader></commonheader>
 	<div id="container">
   <ul id="slides">
-    <li class="slide">
-      <div class="slide-partial slide-left"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/forest-left.jpg"/></div>
-      <h1 class="title"><span class="title-text">Forest</span></h1>
+    <li class="slide active">
+      <div class="slide-img"><img src="https://wallpapercave.com/wp/wp2438853.jpg"/></div>
+      <h1 class="title"><span class="title-text">11111</span></h1>
     </li>
     <li class="slide">
-      <div class="slide-partial slide-left"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/mountain-left.jpg"/></div>
-      <h1 class="title"><span class="title-text">Forest</span></h1>
+      <div class="slide-img"><img src="https://wallpapercave.com/wp/wp3285738.jpg"/></div>
+      <h1 class="title"><span class="title-text">22222</span></h1>
     </li>
     <li class="slide">
-      <div class="slide-partial slide-left"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/ocean-left.jpg"/></div>
-      <h1 class="title"><span class="title-text">Forest</span></h1>
+      <div class="slide-img"><img src="https://wallpapercave.com/wp/wp3285747.jpg"/></div>
+      <h1 class="title"><span class="title-text">33333</span></h1>
     </li>
     <li class="slide">
-      <div class="slide-partial slide-left"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/canyon-left.jpg"/></div>
-     <h1 class="title"><span class="title-text">Forest</span></h1>
+      <div class="slide-img"><img src="https://wallpapercave.com/wp/wp2686919.jpg"/></div>
+     <h1 class="title"><span class="title-text">44444</span></h1>
     </li>
     <li class="slide">
-      <div class="slide-partial slide-left"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/lake-left.jpg"/></div>
-      <h1 class="title"><span class="title-text">Forest</span></h1>
+      <div class="slide-img"><img src="https://en.bcdn.biz/Images/2016/10/28/e68fb895-9ba1-4400-badf-d6741c1bb197.jpg"/></div>
+      <h1 class="title"><span class="title-text">55555</span></h1>
     </li>
   </ul>
   <ul id="slide-select">
@@ -78,8 +78,8 @@
     <li class="btn next">></li>
   </ul>
 </div>
-<div id='slide_backgroup'></div>
-	<div ng-style="bodyStyle"  >
+
+	<div class="textbody below_slide">
 
 
 		<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventController">
@@ -113,7 +113,7 @@
 		<div>
 			<h1>Create Event</h1>
 			<label >Id</label> <br>
-			{{eventDetail.id}} <br>
+			{{eventDetail.id}}<br>
 			<label >Name</label><br>
 			<input id="name" type="text" ng-model="eventDetail.name"/><br>
 			<label >From </label><br>
@@ -139,8 +139,8 @@
 				<option value="1">Active
 				<option value="0">Cancelled
 			</select><br>
-					<label >Registered Number: </label>{{eventDetail.registered}}
-					<label >Remaing Quota: </label>{{eventDetail.quota - eventDetail.registered}}<br>
+					<label >Registered Number:  {{eventDetail.registered}}</label><br>
+					<label >Remaing Quota:  {{eventDetail.quota - eventDetail.registered}}<br></label>
 			<br><br><br>
 
 				<button ng-click="postEvent()">Save</button>

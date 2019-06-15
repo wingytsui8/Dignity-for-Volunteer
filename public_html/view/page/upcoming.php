@@ -56,7 +56,7 @@
 					<thead>
 						<tr>
 							<th>Event</th>
-							<th ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">Registration</th>
+							<th><text ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">Registration</text></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -76,9 +76,9 @@
 								{{row.remarks}}
 							</td>
 
-							<td ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}"> 
+							<td><text ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}"> 
 								<input type="checkbox" ng-model="row.isRegistered">
-							</td>
+							</text></td>
 						</tr>
 					</tbody>
 				</table>
