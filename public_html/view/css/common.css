@@ -170,11 +170,19 @@ ul.topnav li a.active {
   ul.loginNav {
   	position: absolute;
   }
+  .textbody {
+	padding: 10px;
+}
 
 }
 @media (min-width: 768px) {
   ul.topnav {position: fixed;}
-  #container {top:65px;}
+  #container {
+  	top: 76px;
+  }
+   .textbody {
+	padding: 50px;
+}
 
 }
 
@@ -217,7 +225,9 @@ h1 {
 }
 
 table {
+	display: block;
 	border: 1px solid var(--main-color);
+	overflow-x: auto;
 }
 th  {
 	color : white;
@@ -347,7 +357,7 @@ img.icon {
 .textbody {
 	color : black;
 	background-color : white;
-	padding: 50px;
+
 }
 .below_slide {
   padding-top: 60vw;
@@ -379,11 +389,11 @@ img.icon {
 }
 #slides .slide .title {
   position: absolute;
-  top: calc(50% - 0.5em);
+  top: calc(50% - 36px);
   left: 20px;
   z-index: 2;
   padding-top: 5px;
-  font-size: 5em;
+  font-size: 36px;
   color: white;
   overflow: hidden;
 }
@@ -427,8 +437,8 @@ img.icon {
 
 #slide-select {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  bottom: 0px;
+  left: calc(50% - 100px);
   z-index: 5;
   display: flex;
   align-items: center;

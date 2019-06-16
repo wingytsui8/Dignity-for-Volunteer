@@ -4,7 +4,8 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Dignity For Volunteer - Event</title>
 	<base href="{{base_url}}" />
-	<meta name="viewport" content="width=1200" />
+	<!-- <meta name="viewport" content="width=1200" /> -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<!-- Facebook Open Graph -->
@@ -174,8 +175,6 @@
 			</table>
 			</div>
 		</div>
-		<commonfooter></commonfooter>
-
-	</body>
+		<commonfooter></commonfooter></body>
 
 	</html>
