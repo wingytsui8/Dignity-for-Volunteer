@@ -2,9 +2,10 @@
 <html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Upcoming'">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Dignity For Volunteer - {{pageTitle}}</title>
+	<title>Dignity For Volunteer - Upcoming</title>
 	<base href="{{base_url}}" />
-	<meta name="viewport" content="width=1200" />
+	<!-- <meta name="viewport" content="width=1200" /> -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<!-- Facebook Open Graph -->
@@ -48,7 +49,8 @@
 	<commonheader></commonheader>
 	<div class="loader" ng-show="loading"> 
 	</div>
-	<div ng-app="digVol" ng-style="bodyStyle" ng-controller="UpcomingEventController">
+	<div class="textbody">
+	<div ng-app="digVol" >
 		<!-- <div id="upcomingEvent"> -->
 			<h1>Upcoming Event</h1>
 			<div id="upcomingEventTable">
@@ -56,7 +58,7 @@
 					<thead>
 						<tr>
 							<th>Event</th>
-							<th ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">Registration</th>
+							<th><text ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">Registration</text></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -76,15 +78,14 @@
 								{{row.remarks}}
 							</td>
 
-							<td ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}"> 
+							<td><text ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}"> 
 								<input type="checkbox" ng-model="row.isRegistered">
-							</td>
+							</text></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<button ng-click="myFunc()">OK</button>
-		<!-- </div> -->
+		</div>
 	</div>
 	<commonfooter></commonfooter>
 </body>
