@@ -60,24 +60,8 @@ if(isset($_POST['action'])){
 }
 
 
-function login($email, $password){
-	$pwHash = hash("sha256", $password);
-	$sql= "SELECT 1
-	From volunteer
-	where email = '". $email . "' and password = '". $pwHash . "'";
-	$val =  validate($sql);
-	if ($val){
-		updateLoginTime($email);
-	}
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Get functions ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-	return $val;
-}
-
-function updateLoginTime($email){
-	$sql= "UPDATE `volunteer` set `loginTime` = Now() WHERE email = '". $email ."';";
-	runNonQuery($sql);
-
-}
 
 function getEvent($orderBy, $active , $upcoming){
 	$sql= "SELECT id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
@@ -116,14 +100,6 @@ function getEventDetail($id){
 	return runQuery($sql);
 }
 
-function postEvent($id, $name){ 
-	$sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES ('". $id. "','" . $name."', '2020-10-10T01:00:00', '2020-11-11T01:01:01', 'test venue', 'test location' , 'contactName', 'contactEmail', '2019-01-01', '100', '1')
-
-	ON DUPLICATE KEY UPDATE 
-	name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
-
-	return runQuery($sql);
-}
 
 function getRegisteredList($id){
 	$sql= "SELECT volunteer.id as volId, volunteer.name as name, volunteer.email as email, register.createDate as createDate, register.active as active FROM `volunteer`, `register` WHERE register.eventId = " . $id . 
@@ -142,16 +118,83 @@ function getToDrawList($upcomingEId){
 	return runQuery($sql);
 }
 
-function checkLogin($email){
+
+function getVolunteerId($email){
+	$sql= "SELECT id
+		From volunteer
+		where email = '". $email . "'";
+	return runQuickQuery($sql);
+}
+
+
+// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  Get functions   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ others ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+function postEvent($id, $name){ 
+	$sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES ('". $id. "','" . $name."', '2020-10-10T01:00:00', '2020-11-11T01:01:01', 'test venue', 'test location' , 'contactName', 'contactEmail', '2019-01-01', '100', '1')
+
+	ON DUPLICATE KEY UPDATE 
+	name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
+
+	return runQuery($sql);
+}
+
+
+function registerEvents($email, $registerData){
+	if (checkLoginSession($email)){
+		$dbChange = "";
+		$volId = getVolunteerId($email);
+		foreach($record as $registerData){
+			$sql = "select 1 from register where volId = ". $volId. " And eventId = ". $record.eventId . " And active = 1";
+			$result = runQuickQuery($sql);
+			if ($result->num_rows > 0){
+				$dbChange += "UPDATE register Set modifyDate = Now(), status = ". $record.isRegistered? "Confirmed" : "Cancelled" .";";
+			}else{
+				$dbChange += "INSERT INTO register (eventId, volId, createDate, modifyDate, status, active)
+				VALUES (".$record.eventId.", ". $volId .",  Now(),  Now(), 'Confirmed', 1 );";
+			}
+		}
+
+		runNonQuery($dbChange);
+
+		return true;
+	}else{
+		return false;
+	}
+}
+
+
+function login($email, $password){
+	$pwHash = hash("sha256", $password);
 	$sql= "SELECT 1
-	From volunteer 
-	where `email` ='" . $email . 
+		From volunteer
+		where email = '". $email . "' and password = '". $pwHash . "'";
+	$val =  validate($sql);
+	if ($val){
+		updateLoginTime($email);
+	}
+	return $val;
+}
+
+function updateLoginTime($email){
+	$sql= "UPDATE `volunteer` set `loginTime` = Now() WHERE email = '". $email ."';";
+	runNonQuery($sql);
+}
+
+function checkLoginSession($email){
+	$sql= "SELECT 1
+		From volunteer 
+		where `email` ='" . $email . 
 	"' and `loginTime`is not null and ADDTIME(`loginTime`, '0 0:30:0') > NOW() ";	
 	return validate($sql);
 }
 
+// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv others vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-//--------------------------------------^^^^^^ Common Connect Functions ^^^^^^^^^^^^---------------------------------
+
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Common Connecter Functions ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 function runQuery($sql){
 	$result = connectDB($sql);
@@ -163,6 +206,10 @@ function runQuery($sql){
 		}
 		return json_encode($resArr);
 	}
+}
+
+function runQuickQuery($sql){
+	return connectDB($sql);
 }
 
 function runNonQuery($sql){
@@ -196,5 +243,5 @@ function connectDB($sql){
 		echo "Connection failed: " . $e->getMessage();
 	}
 }
-
+//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv Common Connecter Functions vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 ?>

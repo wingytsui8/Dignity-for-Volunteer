@@ -48,10 +48,10 @@
 	<commonheader></commonheader>
 	<div class="loader" ng-show="loading"> 
 	</div>
-	<div ng-app="digVol" ng-style="bodyStyle">
+	<div ng-app="digVol" ng-style="bodyStyle" ng-controller="UpcomingEventController">
 		<!-- <div id="upcomingEvent"> -->
 			<h1>Upcoming Event</h1>
-			<div id="upcomingEventTable" ng-app="digVol" ng-controller="UpcomingEventController">
+			<div id="upcomingEventTable">
 				<table st-table="upcommingEvents" class="table table-striped">
 					<thead>
 						<tr>
@@ -83,8 +83,18 @@
 					</tbody>
 				</table>
 			</div>
+			<button ng-click="myFunc()">OK</button>
 		<!-- </div> -->
 	</div>
 	<commonfooter></commonfooter>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

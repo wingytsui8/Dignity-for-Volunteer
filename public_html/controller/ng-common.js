@@ -169,8 +169,6 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		});
 		$scope.registeredList = responseData;
 	}
-
-
 	setTimeout(function(){
 		$rootScope.loading = false;
 		$ocLazyLoad.load('js/loginForm.js');
@@ -259,4 +257,57 @@ app.controller("UpcomingEventController", ["$scope", "$rootScope", function($sco
 		}
 	}
 	$scope.init();
+
+// ----------------------------------^^^ init ^^^^------------------
+
+	$scope.confirmRegister = function(){
+		var registerData = [];
+		for(var i = 0 ; i < $scope.upcomingEvents.length ; i++){
+			if ($scope.upcomingEvents[i].ischanged){
+				registerData.push([{
+					"EventId" : scope.upcomingEvents[i].EventId,
+					"isRegistered" : $scope.upcomingEvents[i].isRegistered
+				});
+			}
+		}
+
+	}
+
+	$scope.init = function(){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 1 },
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+				}
+			});
+		}
+
 }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
