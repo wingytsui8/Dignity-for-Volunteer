@@ -2,9 +2,10 @@
 <html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Upcoming'">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Dignity For Volunteer - {{pageTitle}}</title>
+	<title>Dignity For Volunteer - Upcoming</title>
 	<base href="{{base_url}}" />
-	<meta name="viewport" content="width=1200" />
+	<!-- <meta name="viewport" content="width=1200" /> -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<!-- Facebook Open Graph -->
@@ -48,7 +49,8 @@
 	<commonheader></commonheader>
 	<div class="loader" ng-show="loading"> 
 	</div>
-	<div ng-app="digVol" ng-style="bodyStyle">
+	<div class="textbody">
+	<div ng-app="digVol" >
 		<!-- <div id="upcomingEvent"> -->
 			<h1>Upcoming Event</h1>
 			<div id="upcomingEventTable" ng-app="digVol" ng-controller="UpcomingEventController">
@@ -83,7 +85,7 @@
 					</tbody>
 				</table>
 			</div>
-		<!-- </div> -->
+		</div>
 	</div>
 	<commonfooter></commonfooter>
 </body>

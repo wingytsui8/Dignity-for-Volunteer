@@ -147,10 +147,10 @@ a:hover {
 .logged {
   position: absolute;
   font-size: 14px;
-  top:26px;
-  right:10px;
+  top: 10px;
+  right: 10px;
   color: var(--main-color);
-  letter-spacing:0px;
+  letter-spacing: 0px;
 }
 
 

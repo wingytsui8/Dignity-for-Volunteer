@@ -99,11 +99,10 @@ ul.loginNav {
 ul.topnav {
 	vertical-align: middle;
 	background-color : black;
-	top: 0;
+	top: 0px;
 	width: 100%;
 	list-style-type: none;
 	margin: 0;
-	padding: 0px 15px;
 	overflow: hidden;
 	letter-spacing: 2px;
 	font-size: 16px;
@@ -120,7 +119,7 @@ li a {
 	display: block;
 	color: white;
 	text-align: left;
-	padding: 14px 16px;
+	padding: 10px 16px;
 	text-decoration: none;
 }
 
@@ -165,6 +164,7 @@ ul.topnav li a.active {
   li {float: none;}
   ul.topnav {
   	position: none;
+  	padding: 0px 15px;
   /*	top: 48px;*/
   }
   ul.loginNav {
@@ -176,7 +176,10 @@ ul.topnav li a.active {
 
 }
 @media (min-width: 768px) {
-  ul.topnav {position: fixed;}
+  ul.topnav {
+  	position: fixed;
+  	padding: 10px 15px;
+  }
   #container {
   	top: 76px;
   }
@@ -261,7 +264,7 @@ transition: all 0.4s ease 0s;
 }
 
 input[type=date], [type=time]   {
-	width: 30%;
+	width: 40%;
 	padding: 10px;
 	 border-radius: 5px;
 }
@@ -303,7 +306,7 @@ input:focus {
 }
 
 select {
-	width: 30%;
+	width: 80%;
 	border: 5px solid #f8f8f8
 }
 
