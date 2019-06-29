@@ -258,17 +258,36 @@ app.controller("UpcomingEventController", ["$scope", "$rootScope", function($sco
 	}
 	$scope.init();
 
-// ----------------------------------^^^ init ^^^^------------------
+// ----------------------------------vvvv init ^vvvv------------------
 
 	$scope.confirmRegister = function(){
-		var registerData = [];
-		for(var i = 0 ; i < $scope.upcomingEvents.length ; i++){
-			if ($scope.upcomingEvents[i].ischanged){
-				registerData.push([{
-					"EventId" : scope.upcomingEvents[i].EventId,
+		if (confirm("Are you sure?")){
+			var registerData = [];
+			for(var i = 0 ; i < $scope.upcomingEvents.length ; i++){
+				registerData.push({
+					"EventId" : $scope.upcomingEvents[i].EventId,
 					"isRegistered" : $scope.upcomingEvents[i].isRegistered
 				});
 			}
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'registerEvents' ,  email: $rootScope.lEmail , registerData:registerData },
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+					if (responseData){
+						alert("change applied");
+					}else{
+						alert("Login session has passed. Please login again");
+						sessionStorage.setItem("lEmail", "");
+						$rootScope.lEmail = "";
+						extEmail = "";
+						location.reload();
+					}
+				}
+			});
 		}
 
 	}

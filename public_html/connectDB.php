@@ -56,6 +56,14 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( getRegisteredList($id) );
 		exit;
+
+		case "registerEvents":
+		$email = (string)$_POST['email'];
+		$registerData = $_POST['registerData'];
+
+		header('Content-type: application/json');
+		echo json_encode( registerEvents($email, $registerData) );
+		exit;
 	}
 }
 
@@ -122,7 +130,8 @@ function getToDrawList($upcomingEId){
 function getVolunteerId($email){
 	$sql= "SELECT id
 		From volunteer
-		where email = '". $email . "'";
+		where email = '". $email . "';";
+	return $sql;
 	return runQuickQuery($sql);
 }
 
@@ -145,7 +154,8 @@ function registerEvents($email, $registerData){
 	if (checkLoginSession($email)){
 		$dbChange = "";
 		$volId = getVolunteerId($email);
-		foreach($record as $registerData){
+		return $volId;
+		foreach($registerData as $record){
 			$sql = "select 1 from register where volId = ". $volId. " And eventId = ". $record.eventId . " And active = 1";
 			$result = runQuickQuery($sql);
 			if ($result->num_rows > 0){
@@ -155,9 +165,7 @@ function registerEvents($email, $registerData){
 				VALUES (".$record.eventId.", ". $volId .",  Now(),  Now(), 'Confirmed', 1 );";
 			}
 		}
-
 		runNonQuery($dbChange);
-
 		return true;
 	}else{
 		return false;

@@ -50,7 +50,7 @@
 	<div class="loader" ng-show="loading"> 
 	</div>
 	<div class="textbody">
-	<div ng-app="digVol" >
+	<div ng-app="digVol" ng-style="bodyStyle" ng-controller="UpcomingEventController">
 		<!-- <div id="upcomingEvent"> -->
 			<h1>Upcoming Event</h1>
 			<div id="upcomingEventTable">
@@ -84,6 +84,7 @@
 						</tr>
 					</tbody>
 				</table>
+				<button type="button" ng-click="confirmRegister()">Save</button>
 			</div>
 		</div>
 	</div>
