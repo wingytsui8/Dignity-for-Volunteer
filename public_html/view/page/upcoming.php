@@ -84,7 +84,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<button type="button" ng-click="confirmRegister()">Save</button>
+				<button type="button" ng-click="confirmRegister()">Save</button> 
 			</div>
 		</div>
 	</div>
