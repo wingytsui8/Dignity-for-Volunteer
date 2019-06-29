@@ -43,7 +43,7 @@
 	<link href="css/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body >
+<body>
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
 	<div id="container">
