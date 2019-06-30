@@ -131,8 +131,8 @@ function getVolunteerId($email){
 	$sql= "SELECT id
 		From volunteer
 		where email = '". $email . "';";
-	return $sql;
-	return runQuickQuery($sql);
+	$result = runQuickQuery($sql);
+	return $result->fetch_assoc()["id"];
 }
 
 
@@ -154,7 +154,6 @@ function registerEvents($email, $registerData){
 	if (checkLoginSession($email)){
 		$dbChange = "";
 		$volId = getVolunteerId($email);
-		return $volId;
 		foreach($registerData as $record){
 			$sql = "select 1 from register where volId = ". $volId. " And eventId = ". $record.eventId . " And active = 1";
 			$result = runQuickQuery($sql);
