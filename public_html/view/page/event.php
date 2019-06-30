@@ -153,12 +153,12 @@
 			<table st-table="registered" class="table table-striped">
 				<thead>
 					<tr>
-						<th>No.</th>
-						<th>Volunteer id</th>
-						<th>Name</th>
-						<th>Email</th>
-						<th>Registered Date</th>
-						<th>Active</th>
+						<th style="min-width: 5vw;">No.</th>
+						<th style="min-width: 10vw;">Volunteer id</th>
+						<th style="min-width: 20vw;">Name</th>
+						<th style="min-width: 25vw;">Email</th>
+						<th style="min-width: 20vw;">Registered Date</th>
+						<th style="min-width: 10vw;">Active</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Management'">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Dignity For Volunteer - management</title>
 	<base href="{{base_url}}" />
-	<meta name="viewport" content="width=1200" />
+	<!-- <meta name="viewport" content="width=1200" />
+	 -->
+	 <meta name=viewport content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<!-- Facebook Open Graph -->
@@ -24,7 +25,7 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
+	<script src="js/angular-route.min.js" type="text/javascript"></script>
 	<script src="js/ocLazyLoad.min.js" type="text/javascript"></script>
 	<script src="../controller/ng-common.js" type="text/javascript"></script>
 	<script src="../controller/loginController.js"></script>
@@ -42,10 +43,10 @@
 	<link href="css/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body id="eventPage" ng-app="digVol"  >
+<body id="eventPage" ng-app="digVol" >
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
-	<div id="event" ng-app="digVol" ng-controller="CommonController" ng-style="bodyStyle"  ng-init="pageTitle='Event'">
+	<div class="textbody">
 		<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventController">
 			<h1>Past Event</h1>
 			<table st-table="pastEvents" class="table table-striped">
@@ -110,8 +111,8 @@
 
 					<div>
 			<h1>Registered Volunteer</h1>
-			<table st-table="registered" class="table table-striped">
-				<thead>
+			<table st-table="registered" ><!-- class="table table-striped">
+				<thead> -->
 					<tr>
 						<th>No.</th>
 						<th>Volunteer id</th>
@@ -120,7 +121,7 @@
 						<th>Registered Date</th>
 						<th>Active</th>
 					</tr>
-				</thead>
+				<!-- </thead> -->
 				<tbody>
 					<tr ng-repeat="row in registeredList">
 						<td>{{$index + 1}}</td>

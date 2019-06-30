@@ -57,8 +57,8 @@
 				<table st-table="upcommingEvents" class="table table-striped">
 					<thead>
 						<tr>
-							<th>Event</th>
-							<th><text ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">Registration</text></th>
+							<th style="min-width: 70vw;">Event</th>
+							<th style="min-width: 10vw;"><text ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">Registration</text></th>
 						</tr>
 					</thead>
 					<tbody>
