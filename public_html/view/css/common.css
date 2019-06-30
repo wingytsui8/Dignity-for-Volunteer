@@ -229,13 +229,13 @@ h1 {
 
 table {
 	display: block;
-	border: 1px solid var(--main-color);
-	overflow-x: auto;
+	/*border: 1px solid var(--main-color);*/
+	overflow-x: scroll;
 }
 th  {
 	color : white;
 	background-color: var(--main-color);
-	/*border-collapse: collapse;*/
+	border-collapse: collapse;
 	padding: 5px;
 }
 
@@ -243,7 +243,7 @@ td {
 	color : black;
 	background-color: white;
 	border-bottom: 1px solid var(--main-color);
-	/*border-collapse: collapse;*/
+	border-collapse: collapse;
 	padding: 5px;
 }
 
@@ -360,6 +360,7 @@ img.icon {
 .textbody {
 	color : black;
 	background-color : white;
+  margin: 48px 0px 0px 0px;
 
 }
 .below_slide {

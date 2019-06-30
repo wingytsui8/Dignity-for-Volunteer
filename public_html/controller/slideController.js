@@ -38,14 +38,14 @@ $(() => {
   $slides.first().addClass("active");
   $selectors.first().addClass("current");
 
-  interval = window.setInterval(cycle, 6000);
+  interval = window.setInterval(cycle, 15000);
 
   $selectors.on("click", e => {
     let target = $selectors.index(e.target);
     if (target !== currentIndex) {
       window.clearInterval(interval);
       cycle(target);
-      interval = window.setInterval(cycle, 6000);
+      interval = window.setInterval(cycle, 15000);
     }
   });
 
@@ -57,7 +57,7 @@ $(() => {
     } else if ($(e.target).hasClass("next")) {
       cycle();
     }
-    interval = window.setInterval(cycle, 6000);
+    interval = window.setInterval(cycle, 15000);
   });
 });
 
