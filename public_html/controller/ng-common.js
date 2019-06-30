@@ -265,14 +265,14 @@ app.controller("UpcomingEventController", ["$scope", "$rootScope", function($sco
 			var registerData = [];
 			for(var i = 0 ; i < $scope.upcomingEvents.length ; i++){
 				registerData.push({
-					"EventId" : $scope.upcomingEvents[i].EventId,
-					"isRegistered" : $scope.upcomingEvents[i].isRegistered
+					"eventId" : $scope.upcomingEvents[i].id,
+					"isRegistered" : $scope.upcomingEvents[i].isRegistered?1:0
 				});
 			}
 			$.ajax({
 				url: '../connectDB.php',
 				type: 'POST',
-				data : { action: 'registerEvents' ,  email: $rootScope.lEmail , registerData:registerData },
+				data : { action: 'registerEvents' ,  email: $rootScope.lEmail , registerData: registerData },
 				dataType: "json",
 				async: false,
 				success: function(response) {

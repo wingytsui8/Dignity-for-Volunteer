@@ -155,13 +155,13 @@ function registerEvents($email, $registerData){
 		$dbChange = "";
 		$volId = getVolunteerId($email);
 		foreach($registerData as $record){
-			$sql = "select 1 from register where volId = ". $volId. " And eventId = ". $record.eventId . " And active = 1";
+			$sql = "select 1 from register where volId = ". $volId. " And eventId = ". $record['eventId'] . " And active = 1 ";
 			$result = runQuickQuery($sql);
 			if ($result->num_rows > 0){
-				$dbChange += "UPDATE register Set modifyDate = Now(), status = ". $record.isRegistered? "Confirmed" : "Cancelled" .";";
+				$dbChange = $dbChange . " UPDATE register Set modifyDate = Now(), status = ". ($record['isRegistered']==1? "'Confirmed'" : "'Cancelled'" )." where volId = ". $volId. " And eventId = ". $record['eventId'] . " And active = 1 ; ";
 			}else{
-				$dbChange += "INSERT INTO register (eventId, volId, createDate, modifyDate, status, active)
-				VALUES (".$record.eventId.", ". $volId .",  Now(),  Now(), 'Confirmed', 1 );";
+				$dbChange = $dbChange  . " INSERT INTO register (eventId, volId, createDate, modifyDate, status, active)
+				VALUES (".$record['eventId'].", ". $volId .",  Now(),  Now(), 'Confirmed', 1 ); ";
 			}
 		}
 		runNonQuery($dbChange);
