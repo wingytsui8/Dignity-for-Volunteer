@@ -50,7 +50,7 @@
 	<div class="loader" ng-show="loading"> 
 	</div>
 	<div class="textbody">
-	<div ng-app="digVol" ng-style="bodyStyle" ng-controller="UpcomingEventController">
+	<div ng-app="digVol" ng-controller="UpcomingEventController">
 		<!-- <div id="upcomingEvent"> -->
 			<h1>Upcoming Event</h1>
 			<div id="upcomingEventTable">

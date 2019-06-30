@@ -241,7 +241,7 @@ th  {
 
 td {
 	color : black;
-	background-color: white;
+	background-color: aliceblue;
 	border-bottom: 1px solid var(--main-color);
 	border-collapse: collapse;
 	padding: 5px;
