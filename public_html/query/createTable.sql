@@ -58,13 +58,13 @@ DROP TABLE IF EXISTS `photo`;
 Create Table `photo` (
 `id` mediumint(9) NOT NULL AUTO_INCREMENT,
 `eventId` int(11) NOT NULL,
-`path` varchar(128) NOT NULL,
+`path` varchar(1024) NOT NULL,
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `poster`;
 Create Table `poster` (
 `eventId` int(11) NOT NULL,
-`path` varchar(128) NOT NULL,
+`path` varchar(1024) NOT NULL,
 PRIMARY KEY (`eventId`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
