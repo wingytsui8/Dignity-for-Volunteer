@@ -10,7 +10,7 @@ $('#loginform').click(function(){
   $(this).toggleClass('green');
 });
 
-$(document).mouseup(function (e)
+$(document).mousedown(function (e)
 {
     var container = $(".login");
 
