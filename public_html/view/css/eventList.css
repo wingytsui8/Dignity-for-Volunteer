@@ -40,15 +40,28 @@ div {
 }*/
 
 article {
-    display: block;
+    display: inline-block;
 }
 
 .site-container {
-    max-width: 1170px;
+    /*max-width: 1170px;*/
+   /* The image used */
+  background-image: url("../gallery/event_list_bg.jpg"), linear-gradient(white 0px, #99955d 1200px, black 100%);;
+
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+
+  /* Center and scale the image nicely */
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+
     -ms-flex: 1 0 auto;
     flex: 1 0 auto;
     position: relative;
     width: 100%;
+     text-align: center;
 }
 .events-list_event {
 	margin: 10px;
