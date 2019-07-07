@@ -133,10 +133,8 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 			}
 		});
 		$scope.eventDetail = responseData[0];
-		$scope.eventDetail.fromTime = new Date($scope.eventDetail.fromDate).toLocaleTimeString();
 		$scope.eventDetail.fromDate = new Date($scope.eventDetail.fromDate);
-		$scope.eventDetail.toTime = new Date($scope.eventDetail.toDate).toLocaleTimeString();
-		$scope.eventDetail.toDate = new Date($scope.eventDetail.toDate).toLocaleDateString();
+		$scope.eventDetail.toDate = new Date($scope.eventDetail.toDate);
 		$scope.eventDetail.applicationDeadline = new Date($scope.eventDetail.applicationDeadline);
 		$scope.eventDetail.quota = Number($scope.eventDetail.quota);
 		$scope.getRegisteredList();
@@ -146,14 +144,27 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		$.ajax({
 			url: '../connectDB.php',
 			type: 'POST',
-			data : { action: 'postEvent' ,  id: $scope.eventDetail.id, name: $scope.eventDetail.name,},
+			data : { 
+				action: 'postEvent' ,  
+				id: $scope.eventDetail.id, 
+				name: $scope.eventDetail.name,
+				fromDate: $scope.eventDetail.fromDate.toISOString().split('T')[0] + " " + $scope.eventDetail.fromDate.getHours() + ":" + $scope.eventDetail.fromDate.getMinutes() + ":" + $scope.eventDetail.fromDate.getSeconds() , 
+				toDate: $scope.eventDetail.toDate.toISOString().split('T')[0] + " " + $scope.eventDetail.toDate.getHours() + ":" + $scope.eventDetail.toDate.getMinutes() + ":" + $scope.eventDetail.toDate.getSeconds() , 
+				venue: $scope.eventDetail.venue, 
+				location: $scope.eventDetail.location,
+				contactName: $scope.eventDetail.contactName, 
+				contactEmail: $scope.eventDetail.contactEmail,
+				applicationDeadline: $scope.eventDetail.applicationDeadline.toISOString().split('T')[0], 
+				quota: $scope.eventDetail.quota,
+				active: $scope.eventDetail.active
+			},
 			dataType: "json",
 			async: false,
 			success: function(response) {
 				responseData = JSON.parse(response);
 			}
 		});
-		$scope.eventDetail = responseData;
+		$scope.sql = responseData;
 
 	}
 	$scope.getRegisteredList = function() {

@@ -118,11 +118,13 @@
 			<label >Name</label><br>
 			<input id="name" type="text" ng-model="eventDetail.name"/><br>
 			<label >From </label><br>
-			<input id="formDate" type="date" ng-model="eventDetail.formDate"/>  
-			<input id="formDate" type="time" ng-model="eventDetail.formTime"/><br>
+			<input id="fromDate" type="date" ng-model="eventDetail.fromDate"/>  
+			<input id="fromTime" type="time" ng-model="eventDetail.fromDate"/><br>
+			<input id="fromDate1" type="text" ng-model="eventDetail.fromDate"/><br>
 			<label >To</label><br>
-			<input id="toDate" type="date" ng-model="eventDetail.toDate | date:'dd/mm/YYYY'"/>
-			<input id="toTime" type="time" ng-model="eventDetail.toTime"/><br>
+			<input id="toDate" type="date" ng-model="eventDetail.toDate"/>
+			<input id="toTime" type="time" ng-model="eventDetail.toDate"/><br>
+			<input id="toDate1" type="text" ng-model="eventDetail.toDate"/><br>
 			<label >Venue</label><br>
 			<input id="venue" type="text" ng-model="eventDetail.venue"/><br>
 			<label >Location</label><br>
@@ -133,6 +135,7 @@
 			<input id="loginEmail" type="text" ng-model="eventDetail.contactEmail"/><br>
 			<label >Application Deadline</label><br>
 			<input id="applictionDeadline" type="date" ng-model="eventDetail.applicationDeadline"/><br>
+			<input id="applictionDeadline1" type="text" ng-model="eventDetail.applicationDeadline"/><br>
 			<label >Quota</label><br>
 			<input id="quota" type="number" ng-model="eventDetail.quota"/><br>
 			<label>Active</label><br>

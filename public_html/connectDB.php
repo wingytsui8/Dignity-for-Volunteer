@@ -30,17 +30,18 @@ if(isset($_POST['action'])){
 		case "postEvent":
 		$id = (string)$_POST['id'];
 		$name = (string)$_POST['name'];
-		// //$fromDate = (string)$_POST['fromDate'];
-		// //$toDate = (string)$_POST['toDate'];
-		// $venue = (string)$_POST['venue'];
-		// $location = (string)$_POST['location'];
-		// $contactName = (string)$_POST['contactName'];
-		// $contactEmail = (string)$_POST['contactEmail'];
-		// //$applicationDeadline = (string)$_POST['applicationDeadline'];
-		// $quota = (string)$_POST['quota'];
+		$fromDate = (string)$_POST['fromDate'];
+		$toDate = (string)$_POST['toDate'];
+		$venue = (string)$_POST['venue'];
+		$location = (string)$_POST['location'];
+		$contactName = (string)$_POST['contactName'];
+		$contactEmail = (string)$_POST['contactEmail'];
+		$applicationDeadline = (string)$_POST['applicationDeadline'];
+		$quota = (int)$_POST['quota'];
+		$active = (int)$_POST['active'];
 
 		header('Content-type: application/json');
-		echo json_encode( postEvent($id, $name) );
+		echo json_encode( postEvent($id, $name,$fromDate, $toDate, $venue, $location, $contactName, $contactEmail, $applicationDeadline, $quota, $active) );
 		exit;
 
 		case "getEventDetail":
@@ -98,7 +99,7 @@ function getRegisterEventDetails($email){
 
 
 function getEventDetail($id){
-	$sql= "SELECT event.id as id, name, fromDate, Date(toDate) as toDate, TIME_FORMAT(toDate, '%H:%i') as toTime, venue, location, contactName, contactEmail, applicationDeadline, quota, event.active, count(event.id) as registered
+	$sql= "SELECT event.id as id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks, event.active, count(event.id) as registered
 	From event, register
 	where event.id = " . $id . 
 	" and event.id = register.eventId 
@@ -140,8 +141,8 @@ function getVolunteerId($email){
 
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ others ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-function postEvent($id, $name){ 
-	$sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES ('". $id. "','" . $name."', '2020-10-10T01:00:00', '2020-11-11T01:01:01', 'test venue', 'test location' , 'contactName', 'contactEmail', '2019-01-01', '100', '1')
+function postEvent($id, $name, $fromDate, $toDate, $venue, $location, $contactName, $contactEmail, $applicationDeadline, $quota, $active){ 
+	$sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES ('". $id. "','" . $name."', '".$fromDate."', '".$toDate."', '" .$venue."', '" .$location. "' , '" . $contactName . "', '" . $contactEmail. "', '".$applicationDeadline."', '". $quota. "', '".$active."')
 
 	ON DUPLICATE KEY UPDATE 
 	name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
