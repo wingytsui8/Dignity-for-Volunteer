@@ -39,7 +39,7 @@ commonHeaderHtml +=
 "<div id=\"navthing\">" +
 "<div ng-style=\"{visibility: (lEmail!=null && lEmail.length > 0)?'hidden':'visible'}\">" +
 "<div class = \"loginPanel\">" +
-"<button>Sign up</button><button id=\"loginform\">Login</button>" + 
+"<button onclick=\"location.href='https://dignityforchildren.org/join-us/#volunteers'\">Sign up</button><button id=\"loginform\">Login</button>" + 
 "</div>" +
 "<div class=\"login\">" +
 "<div class=\"arrow-up\"></div>" +
