@@ -1,0 +1,19 @@
+.events-list_event>* {
+    background-color: #fff;
+    box-shadow: 0 4px 7px rgba(0,0,0,0.16);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+/*@media (min-width: 812px)
+.events-list__event>* {
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}*/
+a {
+    color: #44696C;
+    text-decoration: none;
+}
