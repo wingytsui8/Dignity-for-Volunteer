@@ -76,6 +76,45 @@
 						</div>
 					</a>
 				</div>
+				<div class="events-list_event">
+					<a href="https://pokemongolive.com/dortmund/" class="ng-scope" style="">
+						<div class="events-list__event__left">
+							<div class="events-list__event__image">
+								<img ng-src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg" src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg">
+							</div>
+						</div>
+						<div class="events-list__event__content">
+							<div class="events-list__event__title" style="">Event002</div>
+							<div class="events-list__event__body" style="">Hello World</div>
+						</div>
+					</a>
+				</div>
+				<div class="events-list_event">
+					<a href="https://pokemongolive.com/dortmund/" class="ng-scope" style="">
+						<div class="events-list__event__left">
+							<div class="events-list__event__image">
+								<img ng-src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg" src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg">
+							</div>
+						</div>
+						<div class="events-list__event__content">
+							<div class="events-list__event__title" style="">Event002</div>
+							<div class="events-list__event__body" style="">Hello World</div>
+						</div>
+					</a>
+				</div>
+				<div class="events-list_event">
+					<a href="https://pokemongolive.com/dortmund/" class="ng-scope" style="">
+						<div class="events-list__event__left">
+							<div class="events-list__event__image">
+								<img ng-src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg" src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg">
+							</div>
+						</div>
+						<div class="events-list__event__content">
+							<div class="events-list__event__title" style="">Event002</div>
+							<div class="events-list__event__body" style="">Hello World</div>
+						</div>
+					</a>
+				</div>
 			</div>
 		</article>
 	</main>
