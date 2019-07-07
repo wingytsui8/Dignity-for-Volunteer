@@ -6,7 +6,8 @@ var pages = [
 "Home",
 "List",
 "Upcoming",
-"Register"
+"Register",
+"Management"
 ];
 var title = document.getElementsByTagName("title")[0].innerHTML.replace("Dignity For Volunteer - ", "");
 
@@ -21,7 +22,11 @@ for (var i = 0; i < pages.length; i++){
 	}else{
 		commonHeaderHtml += "<a ";
 	}
-	commonHeaderHtml += "href=\"" + pages[i] + "/\" target=\"_self\">" + pages[i] + "</a></li>";
+	commonHeaderHtml += "href=\"" + pages[i] + "/\" target=\"_self\""
+	if (pages[i] == "Management"){
+		commonHeaderHtml += " ng-show=\"(lEmail!=null && lEmail.length > 0 && lEmail=='DignityforVolunteer@gmail.com')\""
+	}
+	commonHeaderHtml += ">" + pages[i] + "</a></li>";
 }
 // login button
 commonHeaderHtml += "</ul><ul class=\"loginNav\">" ;
