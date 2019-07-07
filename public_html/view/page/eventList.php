@@ -33,6 +33,7 @@
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
 	<link href="css/common.css?ts=1556705653" rel="stylesheet" type="text/css" />
+	<link href="css/eventList.css?ts=1556705653" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="css/loginForm.css">
 	<!-- <link href="css/event.css?ts=1556705653" rel="stylesheet" type="text/css" /> -->
 	<ga-code/>
@@ -44,11 +45,40 @@
 
 <body>
 	<div class="loader" ng-show="loading"> </div>
-	<commonheader></commonheader>
-	<div>
-		<a href="http:www.Google.com"/>
-	</div>
-	
+	<main class="site-container">
+		<commonheader></commonheader>
+		<article class="sections">
+			<div class="events-list">
+				<div class="events-list_event">
+					<a href="https://pokemongolive.com/dortmund/" class="ng-scope" style="">
+						<div class="events-list__event__left">
+							<div class="events-list__event__image">
+								<img ng-src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg" src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg">
+							</div>
+						</div>
+						<div class="events-list__event__content">
+							<div class="events-list__event__title" style="">Event001</div>
+							<div class="events-list__event__body" style="">Explore Pokémon Habitats at Westfalen Park, and conduct research with thousands of Trainers from around the world. Can't make it to Dortmund? Stay tuned for details on how to participate in Pokémon GO Fest from your home town.</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="events-list_event">
+					<a href="https://pokemongolive.com/dortmund/" class="ng-scope" style="">
+						<div class="events-list__event__left">
+							<div class="events-list__event__image">
+								<img ng-src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg" src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg">
+							</div>
+						</div>
+						<div class="events-list__event__content">
+							<div class="events-list__event__title" style="">Event002</div>
+							<div class="events-list__event__body" style="">Hello World</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</article>
+	</main>
 	<commonfooter></commonfooter>
 </body>
 
