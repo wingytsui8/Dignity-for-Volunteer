@@ -133,8 +133,8 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 			}
 		});
 		$scope.eventDetail = responseData[0];
-		$scope.eventDetail.fromDate = new Date($scope.eventDetail.fromDate);
-		$scope.eventDetail.toDate = new Date($scope.eventDetail.toDate);
+		$scope.eventDetail.fromDate = new Date($scope.eventDetail.fromDate.replace("Z", ""));
+		$scope.eventDetail.toDate = new Date($scope.eventDetail.toDate.replace("Z", ""));
 		$scope.eventDetail.applicationDeadline = new Date($scope.eventDetail.applicationDeadline);
 		$scope.eventDetail.quota = Number($scope.eventDetail.quota);
 		$scope.getRegisteredList();
@@ -194,7 +194,7 @@ app.controller("PastEventController", function($scope) {
 		$.ajax({
 			url: '../connectDB.php',
 			type: 'POST',
-			data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '1' ,  upcoming: 1 },
+			data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '1' ,  upcoming: 0 },
 			dataType: "json",
 			async: false,
 			success: function(response) {
