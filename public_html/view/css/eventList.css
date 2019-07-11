@@ -9,7 +9,7 @@ body {
     overflow-x: hidden;
     padding: 0;
     display: block;
-    margin: 8px;
+   /* margin: 8px;*/
 }
 main {
 	min-height: 100vh;
@@ -17,16 +17,34 @@ main {
 div {
     display: block;
 }
-@media (min-width: 812px){}
+@media (min-width: 812px){
     .events-list {
-        padding: 0;
+        padding: 100px 20px 0px 20px;
+        position: relative;
+        background-color: transparent;
+        margin-bottom: 60px;
     }
+    .events-list_event>* {
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+    .events-list__event__left {
+        max-width: 20vw; 
+    }
+
 }
-.events-list {
-    padding: 100px 20px 0px 20px;
-    position: relative;
-    background-color: transparent;
-    margin-bottom: 60px;
+@media (max-width: 812px){
+    .events-list {
+        padding: 100px 0px 0px 0px;
+        position: relative;
+        background-color: transparent;
+        margin-bottom: 60px;
+    }
+
+    .events-list_event>* {
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
 }
 
 /*@media (min-width: 812px)*/
@@ -47,7 +65,7 @@ article {
 .site-container {
     /*max-width: 1170px;*/
    /* The image used */
-  background-image:  linear-gradient( rgba(0,0,0,0) 0px, rgba(0,0,0,0) 45vw, #99955d 75vw, black 100%), url("../gallery/event_list_bg.jpg")
+  background-image:  linear-gradient( rgba(0,0,0,0) 0px, rgba(0,0,0,0) 45vw, #99955d 75vw, black 100%), url("../gallery/event_list_bg.jpg");
   /* Add the blur effect */
   /*filter: blur(8px);
   -webkit-filter: blur(8px);
@@ -72,8 +90,7 @@ article {
     box-shadow: 0 4px 7px rgba(0,0,0,0.16);
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-direction: row;
-    flex-direction: row;
+
 }
 /*@media (min-width: 812px)
 .events-list__event>* {
@@ -96,7 +113,6 @@ a {
     position: relative;
     width: 100%;
     height: 228px;
-    max-width: 20vw; 
 }
 
 .events-list__event__image {
@@ -163,7 +179,7 @@ a {
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
-    max-height: 90px;
+    height: 90px;
     -webkit-line-clamp: 3;
 }
 
