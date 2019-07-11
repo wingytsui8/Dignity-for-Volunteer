@@ -27,6 +27,7 @@ CREATE TABLE `event` (
   `location` varchar(1000) DEFAULT NULL,
   `quota` mediumint(9) NOT NULL,
   `applicationDeadline` date NOT NULL,
+  `display` tinyint(1) DEFAULT 0,
   `active` tinyint(1) NOT NULL,
   `remarks` text NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -58,6 +59,7 @@ DROP TABLE IF EXISTS `photo`;
 Create Table `photo` (
 `id` mediumint(9) NOT NULL AUTO_INCREMENT,
 `eventId` int(11) NOT NULL,
+`type` varchar(50) NULL,
 `path` varchar(1024) NOT NULL,
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

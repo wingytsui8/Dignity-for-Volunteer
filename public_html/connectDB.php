@@ -44,11 +44,18 @@ if(isset($_POST['action'])){
 		echo json_encode( postEvent($id, $name,$fromDate, $toDate, $venue, $location, $contactName, $contactEmail, $applicationDeadline, $quota, $active) );
 		exit;
 
-		case "getEventDetail":
+		case "getEventManageDetail":
 		$id = (string)$_POST['id'];
 
 		header('Content-type: application/json');
-		echo json_encode( getEventDetail($id) );
+		echo json_encode( getEventManageDetail($id) );
+		exit;
+
+		case "getEventDisplayDetail":
+		$id = (string)$_POST['id'];
+
+		header('Content-type: application/json');
+		echo json_encode( getEventDisplayDetail($id) );
 		exit;
 
 		case "getRegisteredList":
@@ -74,59 +81,37 @@ if(isset($_POST['action'])){
 
 function getEvent($orderBy, $active , $upcoming){
 	$sql= "SELECT id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
-	From event
-	where active = " . $active .
-	" and fromDate " . ($upcoming? " >= " : " <= ") . " CURDATE() " .
-	" order by fromDate " . $orderBy;
+		From event
+		where active = " . $active .
+		" and fromDate " . ($upcoming? " >= " : " <= ") . " CURDATE() " .
+		" order by fromDate " . $orderBy;
 	return runQuery($sql);
 }
 
 function getRegisterEventDetails($email){
 	$sql= "SELECT e.id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, 
-	!(r.eventId is null) as registered
-	From event as e
-	left outer join  
-	(
-	Select r2.eventId
-	from volunteer as vol
-	inner join register as r2 on r2.active = 1 and r2.status <> \"Cancelled\" AND vol.id = r2.volId 
-	where vol.email = '" . $email . "'
-	) as r on e.id = r.eventId
-	where active = 1 and fromDate >= CURDATE()
-	order by fromDate;";
+		!(r.eventId is null) as registered
+		From event as e
+		left outer join  
+		(
+		Select r2.eventId
+		from volunteer as vol
+		inner join register as r2 on r2.active = 1 and r2.status <> \"Cancelled\" AND vol.id = r2.volId 
+		where vol.email = '" . $email . "'
+		) as r on e.id = r.eventId
+		where active = 1 and fromDate >= CURDATE()
+		order by fromDate;";
 	return runQuery($sql);
 }
-
-
-function getEventDetail($id){
-	$sql= "SELECT event.id as id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks, event.active, count(event.id) as registered
-	From event, register
-	where event.id = " . $id . 
-	" and event.id = register.eventId 
-	and register.active = 1
-	group by event.id"
-	;
-	return runQuery($sql);
-}
-
 
 function getRegisteredList($id){
 	$sql= "SELECT volunteer.id as volId, volunteer.name as name, volunteer.email as email, register.createDate as createDate, register.active as active FROM `volunteer`, `register` WHERE register.eventId = " . $id . 
-	" and register.active = 1 
-	and register.volId = volunteer.id 
-	order by register.createDate";
+		" and register.active = 1 
+		and register.volId = volunteer.id 
+		order by register.createDate";
 
 	return runQuery($sql);
 }
-
-function getToDrawList($upcomingEId){
-	$sql= "SELECT e.name as Name, Date, Venue, Location
-	From event  e 
-	inner join `participant` p on e.id = p.eventId and p.eventId = upcomingEId and p.notDrawing = 0;";
-
-	return runQuery($sql);
-}
-
 
 function getVolunteerId($email){
 	$sql= "SELECT id
@@ -136,6 +121,36 @@ function getVolunteerId($email){
 	return $result->fetch_assoc()["id"];
 }
 
+function getEventManageDetail($id){
+	$sql= "SELECT event.id as id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks, event.active, count(event.id) as registered
+		From event, register
+		where event.id = " . $id . 
+		" and event.id = register.eventId 
+		and register.active = 1
+		group by event.id"
+		;
+	return runQuery($sql);
+}
+
+function getRecentEventsList($start){
+	$sql= "SELECT event.id, name, fromDate, toDate, remarks, photo.path
+		From event 
+		left outer join photo on event.id = photo.eventId and photo.type = 'profile'
+		where active = 1 and toDate < CURDATE() and display = 1 
+		order by fromDate DESC 
+		Start " . $start . " Limit 5";
+	return runQuery($sql);
+}
+
+function getEventDisplayDetail($id){
+	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, remarks, poster.path as Poster, 
+		From event, 
+		inner join register on event.id = register.eventId and register.active = 1
+		left outer join poster on event.id = poster.eventId
+		left outer join photo on event.id = photo.eventId and photo.type <> "profile"
+		where event.id = " . $id;
+	return runQuery($sql);
+}
 
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  Get functions   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
@@ -197,6 +212,7 @@ function checkLoginSession($email){
 	"' and `loginTime`is not null and ADDTIME(`loginTime`, '0 0:30:0') > NOW() ";	
 	return validate($sql);
 }
+
 
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv others vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 

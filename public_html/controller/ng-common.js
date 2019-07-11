@@ -130,7 +130,7 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		$.ajax({
 			url: '../connectDB.php',
 			type: 'POST',
-			data : { action: 'getEventDetail' ,  id: id},
+			data : { action: 'getEventManageDetail' ,  id: id},
 			dataType: "json",
 			async: false,
 			success: function(response) {
