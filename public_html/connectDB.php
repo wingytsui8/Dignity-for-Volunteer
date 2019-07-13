@@ -150,26 +150,26 @@ function getRecentEventsList($start){
 }
 
 function getEventDisplayDetail($id){
-	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, remarks
+	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as `To`, venue as Place, remarks
 		From event 
 		where event.id = " . $id;
 	$result = runQuickQuery($sql);
 
-	$sql= "SELECT photo.path as Photos, type as PhotoType
+	$sql= "SELECT photo.path as Photo, type as Type
 		From photo  
-		where event.id = " . $id ;
+		where eventId = " . $id ;
 
 	$photosRet = runQuickQuery($sql);
 	
 	$photos = [];
 
 	if($photosRet->num_rows > 0){
-		while($p = $result->fetch_assoc()) {
+		while($p = $photosRet->fetch_assoc()) {
 			$photos[] = $p;
 		}
 	}
 	if ($result->num_rows > 0) {
-		$resArr[] = array_merge($result->fetch_assoc(), $photos);
+		$resArr[] = array_merge($result->fetch_assoc(), ["photos" => $photos]);
 		return json_encode($resArr);
 	}
 }

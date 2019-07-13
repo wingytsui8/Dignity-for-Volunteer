@@ -46,45 +46,33 @@
 <body>
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
-	<div id="container">
-		<ul id="slides">
-			<li class="slide active">
-				<div class="slide-img"><img src="https://wallpapercave.com/wp/wp2438853.jpg"/></div>
-				<h1 class="title"><span class="title-text">11111</span></h1>
-			</li>
-			<li class="slide">
-				<div class="slide-img"><img src="https://wallpapercave.com/wp/wp3285738.jpg"/></div>
-				<h1 class="title"><span class="title-text">22222</span></h1>
-			</li>
-			<li class="slide">
-				<div class="slide-img"><img src="https://wallpapercave.com/wp/wp3285747.jpg"/></div>
-				<h1 class="title"><span class="title-text">33333</span></h1>
-			</li>
-			<li class="slide">
-				<div class="slide-img"><img src="https://wallpapercave.com/wp/wp2686919.jpg"/></div>
-				<h1 class="title"><span class="title-text">44444</span></h1>
-			</li>
-			<li class="slide">
-				<div class="slide-img"><img src="https://en.bcdn.biz/Images/2016/10/28/e68fb895-9ba1-4400-badf-d6741c1bb197.jpg"/></div>
-				<h1 class="title"><span class="title-text">55555</span></h1>
+	<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventDetailsController">
+		<div id="container">
+		<ul id="slides" >
+			<li class="slide active" ng-repeat="row in eventDetails[0].photos">
+				<a href="{{row.Photo}}" target=1>
+				<div class="slide-img"><img src={{row.Photo}}></div>
+				<h1 class="title"><span class="title-text">{{row.Type}}</span></h1>
+			</a>
 			</li>
 		</ul>
 		<ul id="slide-select">
 			<li class="btn prev"><</li>
-			<li class="selector"></li>
-			<li class="selector"></li>
-			<li class="selector"></li>
-			<li class="selector"></li>
-			<li class="selector"></li>
+			<li class="selector" ng-repeat="row in eventDetails[0].photos"></li>
 			<li class="btn next">></li>
 		</ul>
 	</div>
-
 	<div class="textbody below_slide">
 
+		<h1> {{eventDetails[0].Name}}</h1>
 
-		<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventDetailsController">
-		</div>
+		{{eventDetails[0].From}} - {{eventDetails[0].To}}
+			{{eventDetails[0].Place}} <br>
+			{{eventDetails[0].remarks}}
+
+	</div>
+	
+
 		<commonfooter></commonfooter></body>
 	</div>
 </body>
