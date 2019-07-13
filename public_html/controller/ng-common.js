@@ -212,37 +212,37 @@ app.controller("PastEventController", function($scope) {
 });
 
 app.controller("PastEventDetailsController", ["$scope", "$rootScope", function($scope, $rootScope) {
-		$rootScope.loading = true;
-		$scope.id = 0;
-		$scope.eventDetails = [];
-		var queryString = window.location.href.split('/');
-		for (var i = queryString.length-1;i >=0 ; i--){
-			if(queryString[i] != null && queryString[i].length>0){
-				if(queryString[i] == "Event"){
-					return;
-				}else{
-					$scope.id = queryString[i];
+	$rootScope.loading = true;
+	$scope.id = 0;
+	$scope.eventDetails = [];
+	var queryString = window.location.href.split('/');
+	for (var i = queryString.length-1;i >=0 ; i--){
+		if(queryString[i] != null && queryString[i].length>0){
+			if(queryString[i] == "Event"){
+				return;
+			}else{
+				$scope.id = queryString[i];
+			}
+		}
+	}
+	if ($scope.id > 0){
+		$scope.init = function(){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'getEventDisplayDetail' ,  id: $scope.id },
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
 				}
-			}
+			});
+			$scope.eventDetails = responseData;
 		}
-		if ($scope.id > 0){
-			$scope.init = function(){
-				$.ajax({
-					url: '../connectDB.php',
-					type: 'POST',
-					data : { action: 'getEventDisplayDetail' ,  id: $scope.id },
-					dataType: "json",
-					async: false,
-					success: function(response) {
-						responseData = JSON.parse(response);
-					}
-				});
-				$scope.eventDetails = responseData;
-			}
-			$scope.init();
-			$rootScope.loading = false;
-		}
-});
+		$scope.init();
+		$rootScope.loading = false;
+	}
+}]);
 
 app.controller("RecentEventsController", function($scope) {
 	$scope.recentEvents = [];
@@ -329,50 +329,50 @@ app.controller("UpcomingEventController", ["$scope", "$rootScope", function($sco
 
 // ----------------------------------vvvv init ^vvvv------------------
 
-	$scope.confirmRegister = function(){
-		if (confirm("Are you sure?")){
-			var registerData = [];
-			for(var i = 0 ; i < $scope.upcomingEvents.length ; i++){
-				registerData.push({
-					"eventId" : $scope.upcomingEvents[i].id,
-					"isRegistered" : $scope.upcomingEvents[i].isRegistered?1:0
-				});
-			}
-			$.ajax({
-				url: '../connectDB.php',
-				type: 'POST',
-				data : { action: 'registerEvents' ,  email: $rootScope.lEmail , registerData: registerData },
-				dataType: "json",
-				async: false,
-				success: function(response) {
-					responseData = JSON.parse(response);
-					if (responseData){
-						alert("change applied");
-					}else{
-						alert("Login session has passed. Please login again");
-						sessionStorage.setItem("lEmail", "");
-						$rootScope.lEmail = "";
-						extEmail = "";
-						location.reload();
-					}
-				}
+$scope.confirmRegister = function(){
+	if (confirm("Are you sure?")){
+		var registerData = [];
+		for(var i = 0 ; i < $scope.upcomingEvents.length ; i++){
+			registerData.push({
+				"eventId" : $scope.upcomingEvents[i].id,
+				"isRegistered" : $scope.upcomingEvents[i].isRegistered?1:0
 			});
 		}
-
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'registerEvents' ,  email: $rootScope.lEmail , registerData: registerData },
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					alert("change applied");
+				}else{
+					alert("Login session has passed. Please login again");
+					sessionStorage.setItem("lEmail", "");
+					$rootScope.lEmail = "";
+					extEmail = "";
+					location.reload();
+				}
+			}
+		});
 	}
 
-	$scope.init = function(){
-			$.ajax({
-				url: '../connectDB.php',
-				type: 'POST',
-				data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 1 },
-				dataType: "json",
-				async: false,
-				success: function(response) {
-					responseData = JSON.parse(response);
-				}
-			});
+}
+
+$scope.init = function(){
+	$.ajax({
+		url: '../connectDB.php',
+		type: 'POST',
+		data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 1 },
+		dataType: "json",
+		async: false,
+		success: function(response) {
+			responseData = JSON.parse(response);
 		}
+	});
+}
 
 }]);
 
