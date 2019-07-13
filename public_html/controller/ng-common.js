@@ -264,24 +264,24 @@ app.controller("RecentEventsController", function($scope) {
 		$scope.recentEvents = responseData;
 		for (var i =0;i<$scope.recentEvents.length; i++){
 			var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEPT','OCT','NOV','DEC'];
-			$from = new Date($scope.recentEvents.fromDate);
+			$from = new Date($scope.recentEvents[i].fromDate);
 			$fromDay = $from.getDate();
 			$fromMonth = months[$from.getMonth()];
 			
-			$to = new Date($scope.recentEvents.toDate);
+			$to = new Date($scope.recentEvents[i].toDate);
 			$toDay = $to.getDate();
 			$toMonth = months[$to.getMonth()];
 
 			if ($fromDay!=$toDay){
-				$scope.dayStr = $fromDay + "-" + $toDay;
+				$scope.recentEvents[i].dayStr = $fromDay + "-" + $toDay;
 			}else{
-				$scope.dayStr = $fromDay;
+				$scope.recentEvents[i].dayStr = $fromDay;
 			}
 
 			if ($fromMonth!=$toMonth){
-				$scope.monthStr = $fromMonth + "/" + $fromMonth;
+				$scope.recentEvents[i].monthStr = $fromMonth + "/" + $fromMonth;
 			}else{
-				$scope.monthStr = $fromMonth;
+				$scope.recentEvents[i].monthStr = $fromMonth;
 			}
 
 		}
