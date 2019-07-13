@@ -65,6 +65,13 @@ if(isset($_POST['action'])){
 		echo json_encode( getRegisteredList($id) );
 		exit;
 
+		case "getRecentEventsList":
+		$start = (int)$_POST['start'];
+
+		header('Content-type: application/json');
+		echo json_encode( getRecentEventsList($start) );
+		exit;
+
 		case "registerEvents":
 		$email = (string)$_POST['email'];
 		$registerData = $_POST['registerData'];
@@ -138,7 +145,7 @@ function getRecentEventsList($start){
 		left outer join photo on event.id = photo.eventId and photo.type = 'profile'
 		where active = 1 and toDate < CURDATE() and display = 1 
 		order by fromDate DESC 
-		Start " . $start . " Limit 5";
+	    Limit " . $start . " , 5";
 	return runQuery($sql);
 }
 
@@ -147,7 +154,7 @@ function getEventDisplayDetail($id){
 		From event, 
 		inner join register on event.id = register.eventId and register.active = 1
 		left outer join poster on event.id = poster.eventId
-		left outer join photo on event.id = photo.eventId and photo.type <> "profile"
+		left outer join photo on event.id = photo.eventId and photo.type <> \"profile\"
 		where event.id = " . $id;
 	return runQuery($sql);
 }
