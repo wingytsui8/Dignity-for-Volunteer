@@ -48,70 +48,22 @@
 	<main class="site-container">
 		<commonheader></commonheader>
 		<article class="sections">
-			<div class="events-list">
-				<div class="events-list_event">
-					<a href="https://pokemongolive.com/dortmund/" class="ng-scope" style="">
-						<div class="events-list__event__left">
-							<div class="events-list__event__image">
-								<img ng-src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg" src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg">
-							</div>
-						</div>
-						<div class="events-list__event__content">
-							<div class="events-list__event__title" style="">Event001</div>
-							<div class="events-list__event__body" style="">Explore Pokémon Habitats at Westfalen Park, and conduct research with thousands of Trainers from around the world. Can't make it to Dortmund? Stay tuned for details on how to participate in Pokémon GO Fest from your home town.</div>
-						</div>
-					</a>
-				</div>
+			<div class="events-list" ng-app="digVol" ng-controller="RecentEventController">
+				<div class="events-list_event" ng-repeat="row in recentEvents">
 
-				<div class="events-list_event">
-					<a href="https://pokemongolive.com/dortmund/" class="ng-scope" style="">
+					<a href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}" class="ng-scope" style="">
 						<div class="events-list__event__left">
 							<div class="events-list__event__image">
-								<img ng-src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg" src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg">
+								<img ng-src={{row.path}} src={{row.path}}>
+							</div>
+							<div class="events-list__event__date">
+								<span class="events-list__event__date__day">7</span>
+								<span class="events-list__event__date__month">7</span>
 							</div>
 						</div>
 						<div class="events-list__event__content">
-							<div class="events-list__event__title" style="">Event002</div>
-							<div class="events-list__event__body" style="">Hello World</div>
-						</div>
-					</a>
-				</div>
-				<div class="events-list_event">
-					<a href="https://pokemongolive.com/dortmund/" class="ng-scope" style="">
-						<div class="events-list__event__left">
-							<div class="events-list__event__image">
-								<img ng-src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg" src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg">
-							</div>
-						</div>
-						<div class="events-list__event__content">
-							<div class="events-list__event__title" style="">Event002</div>
-							<div class="events-list__event__body" style="">Hello World</div>
-						</div>
-					</a>
-				</div>
-				<div class="events-list_event">
-					<a href="https://pokemongolive.com/dortmund/" class="ng-scope" style="">
-						<div class="events-list__event__left">
-							<div class="events-list__event__image">
-								<img ng-src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg" src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg">
-							</div>
-						</div>
-						<div class="events-list__event__content">
-							<div class="events-list__event__title" style="">Event002</div>
-							<div class="events-list__event__body" style="">Hello World</div>
-						</div>
-					</a>
-				</div>
-				<div class="events-list_event">
-					<a href="https://pokemongolive.com/dortmund/" class="ng-scope" style="">
-						<div class="events-list__event__left">
-							<div class="events-list__event__image">
-								<img ng-src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg" src="https://storage.googleapis.com/pokemongolive/events/058_170916_MAQ_084.jpg">
-							</div>
-						</div>
-						<div class="events-list__event__content">
-							<div class="events-list__event__title" style="">Event002</div>
-							<div class="events-list__event__body" style="">Hello World</div>
+							<div class="events-list__event__title" style="">{{row.name}}</div>
+							<div class="events-list__event__body" style="">{{row.remarks}}</div>
 						</div>
 					</a>
 				</div>

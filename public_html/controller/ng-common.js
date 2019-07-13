@@ -210,7 +210,26 @@ app.controller("PastEventController", function($scope) {
 	}
 	$scope.init();
 });
-
+app.controller("RecentEventController", function($scope) {
+	$scope.recentEvents = [];
+	$scope.init = function(){
+		$scope.getMoreRecentEvent(0);
+	}
+	$scope.getMoreRecentEvent = function($start){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getRecentEventsList' ,  start: $start },
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.recentEvents = responseData;
+	}
+	$scope.init();
+});
 app.controller("UpcomingEventController", ["$scope", "$rootScope", function($scope, $rootScope) {
 	$scope.upcomingEvents = [];
 	$rootScope.upcomingInitChange = function(email){
