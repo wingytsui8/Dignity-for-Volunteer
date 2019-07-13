@@ -222,6 +222,7 @@ app.controller("PastEventDetailsController", ["$scope", "$rootScope", function($
 				return;
 			}else{
 				$scope.id = queryString[i];
+				break;
 			}
 		}
 	}
