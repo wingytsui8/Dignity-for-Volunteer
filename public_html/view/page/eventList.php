@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='List'">
+<html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Events'">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Dignity For Volunteer - Past Events</title>
+	<title>Dignity For Volunteer - Events</title>
 	<base href="{{base_url}}" />
 	<!-- <meta name="viewport" content="width=1200" /> -->
 	<meta name=viewport content="width=device-width, initial-scale=1">

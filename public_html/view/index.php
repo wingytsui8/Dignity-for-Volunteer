@@ -9,7 +9,7 @@
 		'2'	=> array('id' => '2', 'alias' => 'Upcoming', 'file' => 'page/upcoming.php','controllers' => array()),
 		'3'	=> array('id' => '3', 'alias' => 'Register', 'file' => 'page/register.php','controllers' => array()),
 		'4'	=> array('id' => '5', 'alias' => 'Management', 'file' => 'page/manage.php','controllers' => array()),
-		'5'	=> array('id' => '6', 'alias' => 'List', 'file' => 'page/eventList.php','controllers' => array())
+		'5'	=> array('id' => '6', 'alias' => 'Events', 'file' => 'page/eventList.php','controllers' => array())
 	);
 	$forms = array(
 		'3'	=> array(
