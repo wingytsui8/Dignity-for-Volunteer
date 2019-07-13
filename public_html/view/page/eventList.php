@@ -48,7 +48,7 @@
 	<main class="site-container">
 		<commonheader></commonheader>
 		<article class="sections">
-			<div class="events-list" ng-app="digVol" ng-controller="RecentEventController">
+			<div class="events-list" ng-app="digVol" ng-controller="RecentEventsController">
 				<div class="events-list_event" ng-repeat="row in recentEvents">
 
 					<a href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}" class="ng-scope" style="">

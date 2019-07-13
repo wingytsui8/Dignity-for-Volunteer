@@ -210,7 +210,41 @@ app.controller("PastEventController", function($scope) {
 	}
 	$scope.init();
 });
-app.controller("RecentEventController", function($scope) {
+
+app.controller("PastEventDetailsController", ["$scope", "$rootScope", function($scope, $rootScope) {
+		$rootScope.loading = true;
+		$scope.id = 0;
+		$scope.eventDetails = [];
+		var queryString = window.location.href.split('/');
+		for (var i = queryString.length-1;i >=0 ; i--){
+			if(queryString[i] != null && queryString[i].length>0){
+				if(queryString[i] == "Event"){
+					return;
+				}else{
+					$scope.id = queryString[i];
+				}
+			}
+		}
+		if ($scope.id > 0){
+			$scope.init = function(){
+				$.ajax({
+					url: '../connectDB.php',
+					type: 'POST',
+					data : { action: 'getEventDisplayDetail' ,  id: $scope.id },
+					dataType: "json",
+					async: false,
+					success: function(response) {
+						responseData = JSON.parse(response);
+					}
+				});
+				$scope.eventDetails = responseData;
+			}
+			$scope.init();
+			$rootScope.loading = false;
+		}
+});
+
+app.controller("RecentEventsController", function($scope) {
 	$scope.recentEvents = [];
 	$scope.init = function(){
 		$scope.getMoreRecentEvent(0);
