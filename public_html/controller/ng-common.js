@@ -273,15 +273,15 @@ app.controller("RecentEventsController", function($scope) {
 			$toMonth = months[$to.getMonth()];
 
 			if ($fromDay!=$toDay){
-				$scope.dayStr = $fromDay + "-" + $toDay;
+				$scope.recentEvents[i].dayStr = $fromDay + "-" + $toDay;
 			}else{
-				$scope.dayStr = $fromDay;
+				$scope.recentEvents[i].dayStr = $fromDay;
 			}
 
 			if ($fromMonth!=$toMonth){
-				$scope.monthStr = $fromMonth + "/" + $fromMonth;
+				$scope.recentEvents[i].monthStr = $fromMonth + "/" + $fromMonth;
 			}else{
-				$scope.monthStr = $fromMonth;
+				$scope.recentEvents[i].monthStr = $fromMonth;
 			}
 
 		}
