@@ -315,8 +315,12 @@ label{
 	padding: 20px 0px 5px 0px;
 }
 
-img.icon {
+img.logoIcon {
 	max-height:35px;
+}
+img.icon {
+  height:20px;
+  margin: 0px 10px;
 }
 
 .loader {
@@ -361,6 +365,7 @@ img.icon {
 	color : black;
 	background-color : white;
   margin: 48px 0px 0px 0px;
+  line-height: 25px;
 
 }
 .below_slide {

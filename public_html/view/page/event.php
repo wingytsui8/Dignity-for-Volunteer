@@ -66,7 +66,8 @@
 
 		<h1> {{eventDetails[0].Name}}</h1>
 
-		{{eventDetails[0].From}} - {{eventDetails[0].To}}
+		<img class="icon" ng-src="gallery/when.png" src="gallery/when.png">{{eventDetails[0].From}} - {{eventDetails[0].To}} <br>
+		<img class="icon" ng-src="gallery/where.png" src="gallery/where.png">
 			{{eventDetails[0].Place}} <br>
 			{{eventDetails[0].remarks}}
 

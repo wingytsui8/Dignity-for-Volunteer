@@ -13,7 +13,7 @@ var title = document.getElementsByTagName("title")[0].innerHTML.replace("Dignity
 
 var commonHeaderHtml = "<div><ul class=\"topnav\">" + 
 	// icon image
-	"<li><a href=\"http://dignityforchildren.org/\" target=\"1\"><img class=\"icon\" alt=\"gallery/dignity_logo\" src=\"gallery_gen/37c944c27b869908c211dea96575621f_190x60.png\"></a></li>";
+	"<li><a href=\"http://dignityforchildren.org/\" target=\"1\"><img class=\"logoIcon\" alt=\"gallery/dignity_logo\" src=\"gallery_gen/37c944c27b869908c211dea96575621f_190x60.png\"></a></li>";
 // menu
 for (var i = 0; i < pages.length; i++){
 	commonHeaderHtml += "<li>";

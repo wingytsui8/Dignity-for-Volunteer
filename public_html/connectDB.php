@@ -150,7 +150,7 @@ function getRecentEventsList($start){
 }
 
 function getEventDisplayDetail($id){
-	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as `To`, venue as Place, remarks
+	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%d %T') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%d %T') as `To`, venue as Place, remarks
 		From event 
 		where event.id = " . $id;
 	$result = runQuickQuery($sql);
