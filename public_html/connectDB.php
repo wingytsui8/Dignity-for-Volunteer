@@ -130,10 +130,9 @@ function getVolunteerId($email){
 
 function getEventManageDetail($id){
 	$sql= "SELECT event.id as id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks, event.active, count(event.id) as registered
-		From event, register
-		where event.id = " . $id . 
-		" and event.id = register.eventId 
-		and register.active = 1
+		From event
+		inner join register on event.id = register.eventId and register.active = 1
+		where event.id = " . $id . " 
 		group by event.id"
 		;
 	return runQuery($sql);
@@ -146,17 +145,47 @@ function getRecentEventsList($start){
 		where active = 1 and toDate < CURDATE() and display = 1 
 		order by fromDate DESC 
 	    Limit " . $start . " , 5";
+
 	return runQuery($sql);
 }
 
 function getEventDisplayDetail($id){
-	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, remarks, poster.path as Poster, 
-		From event, 
-		inner join register on event.id = register.eventId and register.active = 1
-		left outer join poster on event.id = poster.eventId
-		left outer join photo on event.id = photo.eventId and photo.type <> \"profile\"
-		where event.id = " . $id;
-	return runQuery($sql);
+
+	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, remarks, photo.path as Photos, type as PhotoType
+		From event 
+		left outer join photo  on event.id = photo.eventId
+		where event.id = " . $id . "
+		group by Name, `From`, `To`, Place, remarks"
+		;
+	$result = runQuickQuery($sql);
+
+	$sql= "SELECT photo.path as Photos, type as PhotoType
+		From photo  
+		where event.id = " . $id ;
+		
+	$photos = runQuickQuery($sql);
+
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			$resArr[] = $row;
+		}
+		if($photos->num_rows > 0){
+			while($p = $result->fetch_assoc()) {
+				$photos[] = $p;
+			}
+			$resArr
+		}
+		return json_encode($resArr);
+	}
+	return null;
+
+
+}
+
+
+function getEventPhotos($id){
+
+
 }
 
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  Get functions   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
