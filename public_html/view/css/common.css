@@ -119,7 +119,7 @@ li a {
 	display: block;
 	color: white;
 	text-align: left;
-	padding: 10px 16px;
+	padding: 0px 10px;
 	text-decoration: none;
 }
 
@@ -138,8 +138,8 @@ ul.loginNav li.liLogin button {
   cursor: pointer;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-  margin: 10px;
-  line-height: 48px;
+  margin: 12px;
+  line-height: 35px;
   float: right;
 }
 
@@ -181,7 +181,7 @@ ul.topnav li a.active {
   	padding: 10px 15px;
   }
   #container {
-  	top: 76px;
+  	top: 65px;
   }
    .textbody {
 	padding: 50px;
@@ -364,7 +364,7 @@ img.icon {
 
 }
 .below_slide {
-  padding-top: 60vw;
+  padding-top: 55vw;
 
 }
 #container {
@@ -383,6 +383,7 @@ img.icon {
   position: relative;
   width: 100%;
   height: 100%;
+  padding: 0px;
 }
 #slides .slide {
   z-index: 0;
@@ -390,6 +391,10 @@ img.icon {
   display: flex;
   width: 100%;
   height:100%;
+}
+
+#slides a {
+  padding: 0px;
 }
 #slides .slide .title {
   position: absolute;
@@ -400,6 +405,7 @@ img.icon {
   font-size: 36px;
   color: white;
   overflow: hidden;
+  text-shadow: 0px 0px 10px #000000;
 }
 #slides .slide .title .title-text {
   display: block;
