@@ -150,42 +150,28 @@ function getRecentEventsList($start){
 }
 
 function getEventDisplayDetail($id){
-
-	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, remarks, photo.path as Photos, type as PhotoType
+	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, remarks
 		From event 
-		left outer join photo  on event.id = photo.eventId
-		where event.id = " . $id . "
-		group by Name, `From`, `To`, Place, remarks"
-		;
+		where event.id = " . $id;
 	$result = runQuickQuery($sql);
 
 	$sql= "SELECT photo.path as Photos, type as PhotoType
 		From photo  
 		where event.id = " . $id ;
-		
-	$photos = runQuickQuery($sql);
 
+	$photosRet = runQuickQuery($sql);
+	
+	$photos = [];
+
+	if($photosRet->num_rows > 0){
+		while($p = $result->fetch_assoc()) {
+			$photos[] = $p;
+		}
+	}
 	if ($result->num_rows > 0) {
-		while($row = $result->fetch_assoc()) {
-			$resArr[] = $row;
-		}
-		if($photos->num_rows > 0){
-			while($p = $result->fetch_assoc()) {
-				$photos[] = $p;
-			}
-			$resArr
-		}
+		$resArr[] = array_merge($result->fetch_assoc(), $photos);
 		return json_encode($resArr);
 	}
-	return null;
-
-
-}
-
-
-function getEventPhotos($id){
-
-
 }
 
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  Get functions   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
