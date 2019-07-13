@@ -57,8 +57,8 @@
 								<img ng-src={{row.path}} src={{row.path}}>
 							</div>
 							<div class="events-list__event__date">
-								<span class="events-list__event__date__day">7</span>
-								<span class="events-list__event__date__month">7</span>
+								<span class="events-list__event__date__day">{{row.dayStr}}</span>
+								<span class="events-list__event__date__month">{{row.monthStr}}</span>
 							</div>
 						</div>
 						<div class="events-list__event__content">

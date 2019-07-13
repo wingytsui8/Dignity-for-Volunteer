@@ -236,12 +236,12 @@ app.controller("PastEventDetailsController", ["$scope", "$rootScope", function($
 				async: false,
 				success: function(response) {
 					responseData = JSON.parse(response);
+					$rootScope.loading = false;
 				}
 			});
 			$scope.eventDetails = responseData;
 		}
 		$scope.init();
-		$rootScope.loading = false;
 	}
 }]);
 
@@ -262,6 +262,29 @@ app.controller("RecentEventsController", function($scope) {
 			}
 		});
 		$scope.recentEvents = responseData;
+		for (var i =0;i<$scope.recentEvents.length; i++){
+			var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEPT','OCT','NOV','DEC'];
+			$from = new Date($scope.recentEvents.fromDate);
+			$fromDay = $from.getDate();
+			$fromMonth = months[$from.getMonth()];
+			
+			$to = new Date($scope.recentEvents.toDate);
+			$toDay = $to.getDate();
+			$toMonth = months[$to.getMonth()];
+
+			if ($fromDay!=$toDay){
+				$scope.dayStr = $fromDay + "-" + $toDay;
+			}else{
+				$scope.dayStr = $fromDay;
+			}
+
+			if ($fromMonth!=$toMonth){
+				$scope.monthStr = $fromMonth + "/" + $fromMonth;
+			}else{
+				$scope.monthStr = $fromMonth;
+			}
+
+		}
 	}
 	$scope.init();
 });
