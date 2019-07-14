@@ -129,7 +129,7 @@ function getVolunteerId($email){
 }
 
 function getEventManageDetail($id){
-	$sql= "SELECT event.id as id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks, event.active, count(event.id) as registered
+	$sql= "SELECT event.id as id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks, event.active, count(event.id) as registered
 		From event
 		inner join register on event.id = register.eventId and register.active = 1
 		where event.id = " . $id . " 
@@ -139,7 +139,7 @@ function getEventManageDetail($id){
 }
 
 function getRecentEventsList($start){
-	$sql= "SELECT event.id, name, fromDate, toDate, remarks, photo.path
+	$sql= "SELECT event.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') AS toDate, remarks, photo.path
 		From event 
 		left outer join photo on event.id = photo.eventId and photo.type = 'profile'
 		where active = 1 and toDate < CURDATE() and display = 1 
@@ -150,7 +150,7 @@ function getRecentEventsList($start){
 }
 
 function getEventDisplayDetail($id){
-	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%d %T') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%d %T') as `To`, venue as Place, remarks
+	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as `To`, venue as Place, remarks
 		From event 
 		where event.id = " . $id;
 	$result = runQuickQuery($sql);

@@ -138,8 +138,8 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 			}
 		});
 		$scope.eventDetail = responseData[0];
-		$scope.eventDetail.fromDate = new Date($scope.eventDetail.fromDate.replace("Z", ""));
-		$scope.eventDetail.toDate = new Date($scope.eventDetail.toDate.replace("Z", ""));
+		$scope.eventDetail.fromDate = new Date($scope.eventDetail.fromDate);
+		$scope.eventDetail.toDate = new Date($scope.eventDetail.toDate);
 		$scope.eventDetail.applicationDeadline = new Date($scope.eventDetail.applicationDeadline);
 		$scope.eventDetail.quota = Number($scope.eventDetail.quota);
 		$scope.getRegisteredList();
