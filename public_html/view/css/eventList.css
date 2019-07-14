@@ -1,4 +1,4 @@
-
+/*
 body {
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
@@ -9,14 +9,14 @@ body {
     overflow-x: hidden;
     padding: 0;
     display: block;
-   /* margin: 8px;*/
-}
-main {
+    margin: 8px;
+}*/
+/*main {
 	min-height: 100vh;
-}
-div {
+}*/
+/*div {
     display: block;
-}
+}*/
 @media (min-width: 812px){
     .events-list {
         padding: 100px 20px 0px 20px;
@@ -72,7 +72,8 @@ article {
    /* The image used */
   background-image:  linear-gradient( rgba(0,0,0,0) 0px, rgba(0,0,0,0) 45vw, #99955d 75vw, black 100%), url("../gallery/event_list_bg.jpg");
   /* Add the blur effect */
-  /*filter: blur(8px);
+  /*filter: blur(8p
+  x);
   -webkit-filter: blur(8px);
 */
   /* Center and scale the image nicely */
@@ -139,7 +140,7 @@ a {
 }
 
 .events-list__event__date {
-    color: #fff;
+    color: white;
     top: 0;
     left: 0;
     width: 100%;
@@ -156,7 +157,7 @@ a {
     align-items: center;
     z-index: 2;
     text-transform: uppercase;
-
+    text-shadow: 0px 0px 2px #000000;
 }
 
 .events-list__event__date__day {
@@ -191,7 +192,7 @@ a {
     padding: 20px 20px 40px;
 }
 
-.events-list__event__title {
+/*.events-list__event__title {
     color: #2B4D86;
     font-family: "Lato",sans-serif;
     font-size: 24px;
@@ -199,7 +200,7 @@ a {
     letter-spacing: .5px;
     line-height: 35px;
     margin-bottom: 10px;
-}
+}*/
 
 /*@media (min-width: 812px)
 .events-list__event__body {
@@ -208,10 +209,10 @@ a {
     margin: 0;
 }*/
 .events-list__event__body {
-    color: #3F4847;
-    font-family: "Lato",sans-serif;
-    font-size: 17px;
-    line-height: 30px;
+    /*color: #3F4847;*/
+    /*font-family: "Lato",sans-serif;*/
+    /*font-size: 17px;*/
+    /*line-height: 30px;*/
     margin: 0 auto;
     text-overflow: ellipsis;
     overflow: hidden;

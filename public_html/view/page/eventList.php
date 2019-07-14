@@ -62,7 +62,7 @@
 							</div>
 						</div>
 						<div class="events-list__event__content">
-							<div class="events-list__event__title" style="">{{row.name}}</div>
+							<h1>{{row.name}}</h1>
 							<div class="events-list__event__body" style="">{{row.remarks}}</div>
 						</div>
 					</a>

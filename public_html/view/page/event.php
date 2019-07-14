@@ -49,7 +49,7 @@
 	<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventDetailsController">
 		<div id="container">
 		<ul id="slides" >
-			<li class="slide active" ng-repeat="row in eventDetails[0].photos">
+			<li class="slide" ng-repeat="row in eventDetails[0].photos">
 				<a href="{{row.Photo}}" target=1>
 				<div class="slide-img"><img src={{row.Photo}}></div>
 				<h1 class="title"><span class="title-text">{{row.Type}}</span></h1>
