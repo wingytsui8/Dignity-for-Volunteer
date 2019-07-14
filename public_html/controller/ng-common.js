@@ -214,7 +214,7 @@ app.controller("PastEventController", function($scope) {
 app.controller("PastEventDetailsController", ["$scope", "$rootScope", function($scope, $rootScope) {
 	$rootScope.loading = true;
 	$scope.id = 0;
-	$scope.eventDetails = [];
+	// $scope.eventDetail = null;
 	var queryString = window.location.href.split('/');
 	for (var i = queryString.length-1;i >=0 ; i--){
 		if(queryString[i] != null && queryString[i].length>0){
@@ -239,7 +239,9 @@ app.controller("PastEventDetailsController", ["$scope", "$rootScope", function($
 					$rootScope.loading = false;
 				}
 			});
-			$scope.eventDetails = responseData;
+			$scope.eventDetail = responseData[0];
+			$scope.eventDetail.fromDate = new Date($scope.eventDetail.From).toLocaleString();
+			$scope.eventDetail.toDate = new Date($scope.eventDetail.To).toLocaleString();
 		}
 		$scope.init();
 	}
@@ -247,43 +249,50 @@ app.controller("PastEventDetailsController", ["$scope", "$rootScope", function($
 
 app.controller("RecentEventsController", function($scope) {
 	$scope.recentEvents = [];
+	$scope.start = 0;
+	$scope.eol = false;
 	$scope.init = function(){
-		$scope.getMoreRecentEvent(0);
+		$scope.getMoreRecentEvent();
 	}
-	$scope.getMoreRecentEvent = function($start){
+	$scope.getMoreRecentEvent = function(){
 		$.ajax({
 			url: '../connectDB.php',
 			type: 'POST',
-			data : { action: 'getRecentEventsList' ,  start: $start },
+			data : { action: 'getRecentEventsList' ,  start: $scope.recentEvents.length },
 			dataType: "json",
 			async: false,
 			success: function(response) {
 				responseData = JSON.parse(response);
 			}
 		});
-		$scope.recentEvents = responseData;
-		for (var i =0;i<$scope.recentEvents.length; i++){
-			var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEPT','OCT','NOV','DEC'];
-			$from = new Date($scope.recentEvents[i].fromDate);
+		var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEPT','OCT','NOV','DEC'];		
+		for (var i =0;i<responseData.length; i++){
+			$from = new Date(responseData[i].fromDate);
 			$fromDay = $from.getDate();
 			$fromMonth = months[$from.getMonth()];
 			
-			$to = new Date($scope.recentEvents[i].toDate);
+			$to = new Date(responseData[i].toDate);
 			$toDay = $to.getDate();
 			$toMonth = months[$to.getMonth()];
 
 			if ($fromDay!=$toDay){
-				$scope.recentEvents[i].dayStr = $fromDay + "-" + $toDay;
+				responseData[i].dayStr = $fromDay + "-" + $toDay;
 			}else{
-				$scope.recentEvents[i].dayStr = $fromDay;
+				responseData[i].dayStr = $fromDay;
 			}
 
 			if ($fromMonth!=$toMonth){
-				$scope.recentEvents[i].monthStr = $fromMonth + "/" + $fromMonth;
+				responseData[i].monthStr = $fromMonth + "/" + $fromMonth;
 			}else{
-				$scope.recentEvents[i].monthStr = $fromMonth;
+				responseData[i].monthStr = $fromMonth;
 			}
 
+
+			$scope.recentEvents.push(responseData[i]);
+
+		}
+		if (responseData.length < 5){
+			$scope.eol = true;
 		}
 	}
 	$scope.init();

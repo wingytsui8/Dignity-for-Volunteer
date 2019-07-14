@@ -49,7 +49,7 @@
 	<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventDetailsController">
 		<div id="container">
 		<ul id="slides" >
-			<li class="slide" ng-repeat="row in eventDetails[0].photos">
+			<li class="slide" ng-repeat="row in eventDetail.photos">
 				<a href="{{row.Photo}}" target=1>
 				<div class="slide-img"><img src={{row.Photo}}></div>
 				<h1 class="title"><span class="title-text">{{row.Type}}</span></h1>
@@ -58,18 +58,18 @@
 		</ul>
 		<ul id="slide-select">
 			<li class="btn prev"><</li>
-			<li class="selector" ng-repeat="row in eventDetails[0].photos"></li>
+			<li class="selector" ng-repeat="row in eventDetail.photos"></li>
 			<li class="btn next">></li>
 		</ul>
 	</div>
 	<div class="textbody below_slide">
 
-		<h1> {{eventDetails[0].Name}}</h1>
+		<h1> {{eventDetail.Name}}</h1>
 
-		<img class="icon" ng-src="gallery/when.png" src="gallery/when.png">{{eventDetails[0].From}} - {{eventDetails[0].To}} <br>
+		<img class="icon" ng-src="gallery/when.png" src="gallery/when.png">{{eventDetail.fromDate}} - {{eventDetail.toDate}} <br>
 		<img class="icon" ng-src="gallery/where.png" src="gallery/where.png">
-			{{eventDetails[0].Place}} <br>
-			{{eventDetails[0].remarks}}
+			{{eventDetail.Place}} <br>
+			{{eventDetail.remarks}}
 
 	</div>
 	

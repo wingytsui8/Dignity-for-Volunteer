@@ -50,7 +50,6 @@
 		<article class="sections">
 			<div class="events-list" ng-app="digVol" ng-controller="RecentEventsController">
 				<div class="events-list_event" ng-repeat="row in recentEvents">
-
 					<a href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}" class="ng-scope" style="">
 						<div class="events-list__event__left">
 							<div class="events-list__event__image">
@@ -67,6 +66,7 @@
 						</div>
 					</a>
 				</div>
+				<button ng-click="getMoreRecentEvent()" ng-show="!eol">More</button>
 			</div>
 		</article>
 	</main>
