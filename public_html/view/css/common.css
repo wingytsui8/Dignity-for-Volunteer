@@ -254,7 +254,7 @@ td {
 button {
 color: var(--main-color);
 background: white;
-padding: 10px;
+padding: 10px 100px;
 border: 2px solid var(--main-color) ;
 border-radius: 6px;
 display: inline-block;
@@ -323,8 +323,9 @@ img.logoIcon {
 	max-height:35px;
 }
 img.icon {
-  height:20px;
-  margin: 0px 10px;
+  height: 20px;
+  width: 20px;
+  margin: 0px 20px;
 }
 
 .loader {
@@ -373,7 +374,7 @@ img.icon {
 
 }
 .below_slide {
-  padding-top: 55vw;
+  padding-top: 40vw;
 
 }
 #container {
@@ -384,7 +385,7 @@ img.icon {
   background-color: black;
   position: absolute;
   width: 100%;
-  height: 50vw;
+  height: 40vw;
   overflow: hidden;
 }
 

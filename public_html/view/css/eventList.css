@@ -33,11 +33,14 @@ body {
         min-width: 20vw; 
         max-width: 20vw; 
     }
+    .site-container {
+        background-image:  linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 40vw, #666666 75vw, black 100%), url("../gallery/event_list_bg.jpg");
+    }
 
 }
 @media (max-width: 812px){
     .events-list {
-        padding: 100px 0px 0px 0px;
+        padding: 30px 0px 0px 0px;
         position: relative;
         background-color: transparent;
         margin-bottom: 60px;
@@ -49,6 +52,9 @@ body {
     }
     .events-list__event__left {
         width: 100%; 
+    }
+    .site-container {
+        background-image:  linear-gradient(#666666 , black );
     }
 }
 
@@ -70,7 +76,7 @@ article {
 .site-container {
     /*max-width: 1170px;*/
    /* The image used */
-  background-image:  linear-gradient( rgba(0,0,0,0) 0px, rgba(0,0,0,0) 45vw, #99955d 75vw, black 100%), url("../gallery/event_list_bg.jpg");
+  /*background-image:  linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 40vw, #666666 75vw, black 100%), url("../gallery/event_list_bg.jpg");*/
   /* Add the blur effect */
   /*filter: blur(8p
   x);
