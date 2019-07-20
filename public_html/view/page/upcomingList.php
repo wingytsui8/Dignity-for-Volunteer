@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Events'">
+<html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Upcoming'">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Dignity For Volunteer - Events</title>
+	<title>Dignity For Volunteer - Upcoming</title>
 	<base href="{{base_url}}" />
 	<!-- <meta name="viewport" content="width=1200" /> -->
 	<meta name=viewport content="width=device-width, initial-scale=1">
@@ -48,9 +48,9 @@
 	<main class="site-container">
 		<commonheader></commonheader>
 		<article class="sections">
-			<div class="events-list" ng-app="digVol" ng-controller="RecentEventsController">
-				<div class="events-list_event" ng-repeat="row in recentEvents">
-					<a href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}" style="">
+			<div class="events-list" ng-app="digVol" ng-controller="UpcomingListController">
+				<div class="events-list_event" ng-repeat="row in upcomingEvents">
+					<a href="https://dignityforvolunteer.000webhostapp.com/Upcoming/{{row.id}}" style="">
 						<div class="events-list__event__left">
 							<div class="events-list__event__image">
 								<img ng-src={{row.path}} src={{row.path}}>
@@ -66,7 +66,6 @@
 						</div>
 					</a>
 				</div>
-				<button ng-click="getMoreRecentEvent()" ng-show="!eol">More</button>
 			</div>
 		</article>
 	</main>

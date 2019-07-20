@@ -72,6 +72,12 @@ if(isset($_POST['action'])){
 		echo json_encode( getRecentEventsList($start) );
 		exit;
 
+		case "getUpcomingList":
+
+		header('Content-type: application/json');
+		echo json_encode( getUpcomingList() );
+		exit;		
+
 		case "registerEvents":
 		$email = (string)$_POST['email'];
 		$registerData = $_POST['registerData'];
@@ -149,6 +155,7 @@ function getRecentEventsList($start){
 	return runQuery($sql);
 }
 
+
 function getEventDisplayDetail($id){
 	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as `To`, venue as Place, remarks
 		From event 
@@ -173,6 +180,16 @@ function getEventDisplayDetail($id){
 		return json_encode($resArr);
 	}
 }
+
+function getUpcomingList(){
+	$sql= "SELECT event.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') AS toDate, remarks, photo.path
+		From event 
+		left outer join photo on event.id = photo.eventId and photo.type = 'profile'
+		where active = 1 and fromDate > CURDATE() and display = 1 
+		order by fromDate DESC";
+	return runQuery($sql);
+}
+
 
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  Get functions   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 

@@ -297,6 +297,50 @@ app.controller("RecentEventsController", function($scope) {
 	}
 	$scope.init();
 });
+
+app.controller("UpcomingListController", ["$scope", "$rootScope", function($scope, $rootScope) {
+	$scope.init = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getUpcomingList'},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+
+		var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEPT','OCT','NOV','DEC'];		
+		for (var i =0;i<responseData.length; i++){
+			$from = new Date(responseData[i].fromDate);
+			$fromDay = $from.getDate();
+			$fromMonth = months[$from.getMonth()];
+			
+			$to = new Date(responseData[i].toDate);
+			$toDay = $to.getDate();
+			$toMonth = months[$to.getMonth()];
+
+			if ($fromDay!=$toDay){
+				responseData[i].dayStr = $fromDay + "-" + $toDay;
+			}else{
+				responseData[i].dayStr = $fromDay;
+			}
+
+			if ($fromMonth!=$toMonth){
+				responseData[i].monthStr = $fromMonth + "/" + $fromMonth;
+			}else{
+				responseData[i].monthStr = $fromMonth;
+			}
+
+		}
+		$scope.upcomingEvents = responseData;
+	}
+	$scope.init();
+}]);
+
+
+
 app.controller("UpcomingEventController", ["$scope", "$rootScope", function($scope, $rootScope) {
 	$scope.upcomingEvents = [];
 	$rootScope.upcomingInitChange = function(email){
