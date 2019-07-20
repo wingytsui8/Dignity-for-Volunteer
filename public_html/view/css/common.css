@@ -337,6 +337,14 @@ img.icon {
   height: 40vw;
   overflow: hidden;
 }
+.poster {
+  padding: 0;
+  border: 2px black solid;
+  width: 100%;
+    height: auto;
+    box-shadow: 5px 5px grey;
+    margin-bottom: 30px;
+}
 
 #slides {
   position: relative;
