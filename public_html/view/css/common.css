@@ -89,7 +89,7 @@ ul.loginNav {
 	list-style-type: none;
 	margin: 0;
 	padding: 0px 15px;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	letter-spacing: 2px;
 	font-size: 16px;
 	font-weight : 700;
