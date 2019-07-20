@@ -34,6 +34,7 @@
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
 	<link href="css/common.css?ts=1556705653" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="css/loginForm.css">
+	<link rel="stylesheet" href="css/home.css">
 	<!-- <link href="css/event.css?ts=1556705653" rel="stylesheet" type="text/css" /> -->
 	<ga-code/>
 	<script type="text/javascript">
@@ -45,11 +46,9 @@
 <body>
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
-	<div class="textbody" >
-		<div class="home_login">
-		</div>
+	<main class="textbody" >
 		1234567890
-	</div>
+	</main>
 
 	<commonfooter></commonfooter>
 </body>

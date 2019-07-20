@@ -310,16 +310,6 @@ img.icon {
 	background-color : white;
   margin: 48px 0px 0px 0px;
   /*line-height: 25px;*/
-
-}
-.home_login {
-  background-image: url("../gallery/home_bg.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 50vw;
-    border: 2px solid var(--navigation-color) ;
-    border-radius: 50px;
-    box-shadow: 5px 5px grey;
 }
    
 .below_slide {
