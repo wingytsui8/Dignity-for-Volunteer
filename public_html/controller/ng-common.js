@@ -240,8 +240,23 @@ app.controller("PastEventDetailsController", ["$scope", "$rootScope", function($
 				}
 			});
 			$scope.eventDetail = responseData[0];
-			$scope.eventDetail.fromDate = new Date($scope.eventDetail.From).toLocaleString();
-			$scope.eventDetail.toDate = new Date($scope.eventDetail.To).toLocaleString();
+			$scope.eventDetail.fromDate = new Date($scope.eventDetail.From);
+			$scope.eventDetail.toDate = new Date($scope.eventDetail.To);
+
+			
+			$fromDate = $scope.eventDetail.fromDate .toDateString();
+			$fromHour = String($scope.eventDetail.fromDate.getHours()).padStart(2,0)
+			$fromMin = String($scope.eventDetail.fromDate.getMinutes()).padStart(2,0) 
+
+			$toDate = $scope.eventDetail.toDate .toDateString();
+			$toHour = String($scope.eventDetail.toDate.getHours()).padStart(2,0)
+			$toMin = String($scope.eventDetail.toDate.getMinutes()).padStart(2,0) 
+
+			if ($fromDate!=$toDate){
+				$scope.eventDetail.time = $fromDate +  "  " + $fromHour + ":" +  $fromMin + "  -  " + $toDate + "  " + $toHour + ":" +  $toMin ;
+			}else{
+				$scope.eventDetail.time = $fromDate +  "  " + $fromHour + ":" +  $fromMin + "  -  " + $toHour + ":" +  $toMin;
+			}		
 		}
 		$scope.init();
 	}

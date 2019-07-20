@@ -51,7 +51,7 @@
 		<ul id="slides" >
 			<li class="slide" ng-repeat="row in eventDetail.photos">
 				<a href="{{row.Photo}}" target=1>
-				<div class="slide-img"><img src={{row.Photo}}></div>
+				<div class="slide-img"><img ng-src={{row.Photo}} src={{row.Photo}}><</div>
 				<h1 class="title"><span class="title-text">{{row.Type}}</span></h1>
 			</a>
 			</li>
@@ -66,7 +66,7 @@
 
 		<h1> {{eventDetail.Name}}</h1>
 
-		<img class="icon" ng-src="gallery/when.png" src="gallery/when.png">{{eventDetail.fromDate}} - {{eventDetail.toDate}} <br>
+		<img class="icon" ng-src="gallery/when.png" src="gallery/when.png">{{eventDetail.time}}<br>
 		<img class="icon" ng-src="gallery/where.png" src="gallery/where.png">{{eventDetail.Place}} 
 		<br>{{eventDetail.remarks}}
 
