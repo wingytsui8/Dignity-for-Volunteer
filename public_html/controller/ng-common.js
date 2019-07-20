@@ -297,7 +297,7 @@ app.controller("RecentEventsController", function($scope) {
 			}
 
 			if ($fromMonth!=$toMonth){
-				responseData[i].monthStr = $fromMonth + "/" + $fromMonth;
+				responseData[i].monthStr = $fromMonth + "/" + $toMonth;
 			}else{
 				responseData[i].monthStr = $fromMonth;
 			}
@@ -343,7 +343,7 @@ app.controller("UpcomingListController", ["$scope", "$rootScope", function($scop
 			}
 
 			if ($fromMonth!=$toMonth){
-				responseData[i].monthStr = $fromMonth + "/" + $fromMonth;
+				responseData[i].monthStr = $fromMonth + "/" + $toMonth;
 			}else{
 				responseData[i].monthStr = $fromMonth;
 			}
