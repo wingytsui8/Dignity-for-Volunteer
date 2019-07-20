@@ -76,7 +76,14 @@ if(isset($_POST['action'])){
 
 		header('Content-type: application/json');
 		echo json_encode( getUpcomingList() );
-		exit;		
+		exit;
+
+		case "getUpcomingDisplayDetail":
+		$id = (string)$_POST['id'];
+
+		header('Content-type: application/json');
+		echo json_encode( getUpcomingDisplayDetail($id) );
+		exit;
 
 		case "registerEvents":
 		$email = (string)$_POST['email'];
@@ -162,7 +169,7 @@ function getEventDisplayDetail($id){
 		where event.id = " . $id;
 	$result = runQuickQuery($sql);
 
-	$sql= "SELECT `path` as Photo, type as Type, des as Description
+	$sql= "SELECT `path` as Photo, des as Description
 		From photo  
 		where eventId = " . $id . " and Type = 'content'";
 
@@ -191,7 +198,7 @@ function getUpcomingList(){
 }
 
 function getUpcomingDisplayDetail($id){
-	$sql= "SELECT id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
+	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, location, contactName, contactEmail, applicationDeadline, quota, remarks, `path` as Photo, des as Description
 		From event 
 		left outer join photo on photo.eventId = event.id and photo.type = 'poster'
 		where event.id = " . $id;
@@ -205,7 +212,6 @@ function getUpcomingDisplayDetail($id){
 
 function postEvent($id, $name, $fromDate, $toDate, $venue, $location, $contactName, $contactEmail, $applicationDeadline, $quota, $active){ 
 	$sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES ('". $id. "','" . $name."', '".$fromDate."', '".$toDate."', '" .$venue."', '" .$location. "' , '" . $contactName . "', '" . $contactEmail. "', '".$applicationDeadline."', '". $quota. "', '".$active."')
-
 	ON DUPLICATE KEY UPDATE 
 	name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
 

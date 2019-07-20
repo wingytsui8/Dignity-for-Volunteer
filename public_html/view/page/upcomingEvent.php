@@ -36,66 +36,28 @@
 	<script type="text/javascript">
 		window.useTrailingSlashes = true;
 	</script>
-
 	<link href="css/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
     <!--[if lt IE 9]>
 	<script src="js/html5shiv.min.js"></script>
 <![endif]-->
-
 </head>
-
 <body>
+	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
-	<div class="loader" ng-show="loading"> 
-	</div>
-	<div class="textbody">
-	<div ng-app="digVol" ng-controller="UpcomingEventController">
-		<!-- <div id="upcomingEvent"> -->
-			<h1>Upcoming Event</h1>
-			<div id="upcomingEventTable">
-				<table st-table="upcommingEvents" class="table table-striped">
-					<thead>
-						<tr>
-							<th style="min-width: 70vw;">Event</th>
-							<th style="min-width: 10vw;"><text ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">Registration</text></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="row in upcomingEvents">
-							<td>
-								<strong>{{row.name}}</strong><br>
-								{{row.fromDate}} - {{row.toDate}}<br>
-								{{row.venue}}<br>
-								{{row.location}}<br><br>
-								Contact Person: <br>
-								<strong>{{row.contactName}}</strong><br> 
-								{{row.contactEmail}}<br>
-								<br>
-								Deadline: {{row.applicationDeadline}} <br>
-								Quota : {{row.quota}}
-								<br><br>
-								{{row.remarks}}
-							</td>
-
-							<td><text ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}"> 
-								<input type="checkbox" ng-model="row.isRegistered">
-							</text></td>
-						</tr>
-					</tbody>
-				</table>
-				<button type="button" ng-click="confirmRegister()">Save</button> 
-			</div>
+	<div id="pastEventTable" ng-app="digVol" ng-controller="UpcomingEventDetailsController">
+		<div id="container">
+			<a href="{{eventDetail.Photo}}" target=1>
+				<div class="slide-img"><img ng-src={{eventDetail.Photo}} src={{eventDetail.Photo}}></div>
+				<h1 class="title"><span class="title-text">{{eventDetail.Description}}</span></h1>
+			</a>
+		</div>
+		<div class="textbody below_slide">
+			<h1> {{eventDetail.Name}}</h1>
+			<img class="icon" ng-src="gallery/when.png" src="gallery/when.png">{{eventDetail.time}}<br>
+			<img class="icon" ng-src="gallery/where.png" src="gallery/where.png">{{eventDetail.Place}}<br>
+			<div><img class="icon" ng-src="gallery/info.png" src="gallery/info.png"><text>{{eventDetail.remarks}}</text></div>
 		</div>
 	</div>
 	<commonfooter></commonfooter>
 </body>
 </html>
-
-
-
-
-
-
-
-
-

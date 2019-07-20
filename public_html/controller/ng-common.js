@@ -354,118 +354,55 @@ app.controller("UpcomingListController", ["$scope", "$rootScope", function($scop
 	$scope.init();
 }]);
 
-
-
-app.controller("UpcomingEventController", ["$scope", "$rootScope", function($scope, $rootScope) {
-	$scope.upcomingEvents = [];
-	$rootScope.upcomingInitChange = function(email){
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'getRegisterEventDetails' ,  email: email },
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-				for (var i = 0 ;i<responseData.length;i++){
-					if (responseData[i].registered == "1"){
-						responseData[i].isRegistered = true;
-					}else if(responseData[i].registered == "0"){
-						responseData[i].isRegistered = false;
-					}
-				}
+app.controller("UpcomingEventDetailsController", ["$scope", "$rootScope", function($scope, $rootScope) {
+	$rootScope.loading = true;
+	$scope.id = 0;
+	// $scope.eventDetail = null;
+	var queryString = window.location.href.split('/');
+	for (var i = queryString.length-1;i >=0 ; i--){
+		if(queryString[i] != null && queryString[i].length>0){
+			if(queryString[i] == "UpcomingEvent"){
+				return;
+			}else{
+				$scope.id = queryString[i];
+				break;
 			}
-		});
-
-		$scope.upcomingEvents = responseData;
+		}
 	}
-	var email = sessionStorage.getItem("lEmail");
-	if (email!= null && email != "undefined" && email.length > 0){
+	if ($scope.id > 0){
 		$scope.init = function(){
 			$.ajax({
 				url: '../connectDB.php',
 				type: 'POST',
-				data : { action: 'getRegisterEventDetails' ,  email: email },
+				data : { action: 'getUpcomingDisplayDetail' ,  id: $scope.id },
 				dataType: "json",
 				async: false,
 				success: function(response) {
 					responseData = JSON.parse(response);
-					for (var i = 0 ;i<responseData.length;i++){
-						if (responseData[i].registered == "1"){
-							responseData[i].isRegistered = true;
-						}else if(responseData[i].registered == "0"){
-							responseData[i].isRegistered = false;
-						}
-					}
+					$rootScope.loading = false;
 				}
 			});
+			$scope.eventDetail = responseData[0];
+			$scope.eventDetail.fromDate = new Date($scope.eventDetail.From);
+			$scope.eventDetail.toDate = new Date($scope.eventDetail.To);
 
-			$scope.upcomingEvents = responseData;
+			
+			$fromDate = $scope.eventDetail.fromDate .toDateString();
+			$fromHour = String($scope.eventDetail.fromDate.getHours()).padStart(2,0)
+			$fromMin = String($scope.eventDetail.fromDate.getMinutes()).padStart(2,0) 
+
+			$toDate = $scope.eventDetail.toDate .toDateString();
+			$toHour = String($scope.eventDetail.toDate.getHours()).padStart(2,0)
+			$toMin = String($scope.eventDetail.toDate.getMinutes()).padStart(2,0) 
+
+			if ($fromDate!=$toDate){
+				$scope.eventDetail.time = $fromDate +  "  " + $fromHour + ":" +  $fromMin + "  -  " + $toDate + "  " + $toHour + ":" +  $toMin ;
+			}else{
+				$scope.eventDetail.time = $fromDate +  "  " + $fromHour + ":" +  $fromMin + "  -  " + $toHour + ":" +  $toMin;
+			}		
 		}
-	}else{
-		$scope.init = function(){
-			$.ajax({
-				url: '../connectDB.php',
-				type: 'POST',
-				data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 1 },
-				dataType: "json",
-				async: false,
-				success: function(response) {
-					responseData = JSON.parse(response);
-				}
-			});
-			$scope.upcomingEvents = responseData;
-		}
+		$scope.init();
 	}
-	$scope.init();
-
-// ----------------------------------vvvv init ^vvvv------------------
-
-$scope.confirmRegister = function(){
-	if (confirm("Are you sure?")){
-		var registerData = [];
-		for(var i = 0 ; i < $scope.upcomingEvents.length ; i++){
-			registerData.push({
-				"eventId" : $scope.upcomingEvents[i].id,
-				"isRegistered" : $scope.upcomingEvents[i].isRegistered?1:0
-			});
-		}
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'registerEvents' ,  email: $rootScope.lEmail , registerData: registerData },
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-				if (responseData){
-					alert("change applied");
-				}else{
-					alert("Login session has passed. Please login again");
-					sessionStorage.setItem("lEmail", "");
-					$rootScope.lEmail = "";
-					extEmail = "";
-					location.reload();
-				}
-			}
-		});
-	}
-
-}
-
-$scope.init = function(){
-	$.ajax({
-		url: '../connectDB.php',
-		type: 'POST',
-		data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 1 },
-		dataType: "json",
-		async: false,
-		success: function(response) {
-			responseData = JSON.parse(response);
-		}
-	});
-}
-
 }]);
 
 
@@ -474,7 +411,117 @@ $scope.init = function(){
 
 
 
+// app.controller("UpcomingEventController", ["$scope", "$rootScope", function($scope, $rootScope) {
+// 	$scope.upcomingEvents = [];
+// 	$rootScope.upcomingInitChange = function(email){
+// 		$.ajax({
+// 			url: '../connectDB.php',
+// 			type: 'POST',
+// 			data : { action: 'getRegisterEventDetails' ,  email: email },
+// 			dataType: "json",
+// 			async: false,
+// 			success: function(response) {
+// 				responseData = JSON.parse(response);
+// 				for (var i = 0 ;i<responseData.length;i++){
+// 					if (responseData[i].registered == "1"){
+// 						responseData[i].isRegistered = true;
+// 					}else if(responseData[i].registered == "0"){
+// 						responseData[i].isRegistered = false;
+// 					}
+// 				}
+// 			}
+// 		});
 
+// 		$scope.upcomingEvents = responseData;
+// 	}
+// 	var email = sessionStorage.getItem("lEmail");
+// 	if (email!= null && email != "undefined" && email.length > 0){
+// 		$scope.init = function(){
+// 			$.ajax({
+// 				url: '../connectDB.php',
+// 				type: 'POST',
+// 				data : { action: 'getRegisterEventDetails' ,  email: email },
+// 				dataType: "json",
+// 				async: false,
+// 				success: function(response) {
+// 					responseData = JSON.parse(response);
+// 					for (var i = 0 ;i<responseData.length;i++){
+// 						if (responseData[i].registered == "1"){
+// 							responseData[i].isRegistered = true;
+// 						}else if(responseData[i].registered == "0"){
+// 							responseData[i].isRegistered = false;
+// 						}
+// 					}
+// 				}
+// 			});
+
+// 			$scope.upcomingEvents = responseData;
+// 		}
+// 	}else{
+// 		$scope.init = function(){
+// 			$.ajax({
+// 				url: '../connectDB.php',
+// 				type: 'POST',
+// 				data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 1 },
+// 				dataType: "json",
+// 				async: false,
+// 				success: function(response) {
+// 					responseData = JSON.parse(response);
+// 				}
+// 			});
+// 			$scope.upcomingEvents = responseData;
+// 		}
+// 	}
+// 	$scope.init();
+
+// // ----------------------------------vvvv init ^vvvv------------------
+
+// 	$scope.confirmRegister = function(){
+// 		if (confirm("Are you sure?")){
+// 			var registerData = [];
+// 			for(var i = 0 ; i < $scope.upcomingEvents.length ; i++){
+// 				registerData.push({
+// 					"eventId" : $scope.upcomingEvents[i].id,
+// 					"isRegistered" : $scope.upcomingEvents[i].isRegistered?1:0
+// 				});
+// 			}
+// 			$.ajax({
+// 				url: '../connectDB.php',
+// 				type: 'POST',
+// 				data : { action: 'registerEvents' ,  email: $rootScope.lEmail , registerData: registerData },
+// 				dataType: "json",
+// 				async: false,
+// 				success: function(response) {
+// 					responseData = JSON.parse(response);
+// 					if (responseData){
+// 						alert("change applied");
+// 					}else{
+// 						alert("Login session has passed. Please login again");
+// 						sessionStorage.setItem("lEmail", "");
+// 						$rootScope.lEmail = "";
+// 						extEmail = "";
+// 						location.reload();
+// 					}
+// 				}
+// 			});
+// 		}
+
+// 	}
+
+// 	$scope.init = function(){
+// 		$.ajax({
+// 			url: '../connectDB.php',
+// 			type: 'POST',
+// 			data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '1' ,  upcoming: 1 },
+// 			dataType: "json",
+// 			async: false,
+// 			success: function(response) {
+// 				responseData = JSON.parse(response);
+// 			}
+// 		});
+// 	}
+
+// }]);
 
 
 
