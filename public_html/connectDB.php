@@ -198,7 +198,7 @@ function getUpcomingList(){
 }
 
 function getUpcomingDisplayDetail($id){
-	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, location, contactName, contactEmail, applicationDeadline, quota, remarks, `path` as Photo, des as Description
+	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, location, contactName, contactEmail, applicationDeadline, quota, remarks, `path` as Photo
 		From event 
 		left outer join photo on photo.eventId = event.id and photo.type = 'poster'
 		where event.id = " . $id;
