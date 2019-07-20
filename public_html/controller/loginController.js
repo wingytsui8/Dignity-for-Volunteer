@@ -18,7 +18,7 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
         	$.ajax({
         		url: '../connectDB.php',
         		type: 'POST',
-        		data : { action: 'login' ,  password: hash ,  email: $scope.email},
+        		data : { action: 'login' ,  password: hash ,  email: $scope.email.toLowerCase()},
         		dataType: "json",
         		async: false,
 				success: function(response) {

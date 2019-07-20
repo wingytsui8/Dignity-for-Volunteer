@@ -408,11 +408,12 @@ img.icon {
 }
 #slides .slide .title {
   position: absolute;
-  top: calc(50% - 36px);
+  top: calc(100% - 140px);
+  max-width: 60vw;
   left: 20px;
   z-index: 2;
   padding-top: 5px;
-  font-size: 36px;
+  font-size: 20px;
   color: white;
   overflow: hidden;
   text-shadow: 0px 0px 2px #000000;

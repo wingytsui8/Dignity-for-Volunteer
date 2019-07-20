@@ -162,9 +162,9 @@ function getEventDisplayDetail($id){
 		where event.id = " . $id;
 	$result = runQuickQuery($sql);
 
-	$sql= "SELECT photo.path as Photo, type as Type
+	$sql= "SELECT `path` as Photo, type as Type, des as Description
 		From photo  
-		where eventId = " . $id ;
+		where eventId = " . $id . " and Type = 'content'";
 
 	$photosRet = runQuickQuery($sql);
 	
