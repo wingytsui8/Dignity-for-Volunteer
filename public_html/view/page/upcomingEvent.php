@@ -9,7 +9,6 @@
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<!-- Facebook Open Graph -->
-	<meta property="og:title" content="About" />
 	<meta property="og:description" content="" />
 	<meta property="og:image" content="" />
 	<meta property="og:type" content="article" />
