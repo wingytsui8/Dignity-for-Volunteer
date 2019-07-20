@@ -27,7 +27,8 @@ CREATE TABLE `event` (
   `location` varchar(1000) DEFAULT NULL,
   `quota` mediumint(9) NOT NULL,
   `applicationDeadline` date NOT NULL,
-  `display` tinyint(1) DEFAULT 0,
+  `pastDisplay` tinyint(1) DEFAULT 0,
+  `upcomingDisplay` tinyint(1) DEFAULT 0,
   `active` tinyint(1) NOT NULL,
   `remarks` text NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

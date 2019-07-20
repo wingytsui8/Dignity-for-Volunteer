@@ -148,7 +148,7 @@ function getRecentEventsList($start){
 	$sql= "SELECT event.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') AS toDate, remarks, photo.path
 		From event 
 		left outer join photo on event.id = photo.eventId and photo.type = 'profile'
-		where active = 1 and toDate < CURDATE() and display = 1 
+		where active = 1 and toDate < CURDATE() and pastDisplay = 1 
 		order by fromDate DESC 
 	    Limit " . $start . " , 5";
 
@@ -185,8 +185,16 @@ function getUpcomingList(){
 	$sql= "SELECT event.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') AS toDate, remarks, photo.path
 		From event 
 		left outer join photo on event.id = photo.eventId and photo.type = 'profile'
-		where active = 1 and fromDate > CURDATE() and display = 1 
+		where active = 1 and fromDate > CURDATE() and upcomingDisplay = 1 
 		order by fromDate DESC";
+	return runQuery($sql);
+}
+
+function getUpcomingDisplayDetail($id){
+	$sql= "SELECT id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
+		From event 
+		left outer join photo on photo.eventId = event.id and photo.type = 'poster'
+		where event.id = " . $id;
 	return runQuery($sql);
 }
 
