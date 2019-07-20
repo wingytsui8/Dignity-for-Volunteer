@@ -60,8 +60,8 @@ Create Table `photo` (
 `id` mediumint(9) NOT NULL AUTO_INCREMENT,
 `eventId` int(11) NOT NULL,
 `type` varchar(50) NULL,
-`path` varchar(1024) NOT NULL,
-`des` varchar(1024) NULL,
+`path` varchar(2048) NOT NULL,
+`des` varchar(100) NULL,
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
