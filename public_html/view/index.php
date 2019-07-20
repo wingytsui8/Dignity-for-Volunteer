@@ -7,6 +7,7 @@
 		'0'	=> array('id' => '1', 'alias' => 'Home', 'file' => 'page/home.php','controllers' => array()),
 		'1'	=> array('id' => '4', 'alias' => 'Event', 'file' => 'page/event.php','controllers' => array()),
 		'2'	=> array('id' => '2', 'alias' => 'Upcoming', 'file' => 'page/upcomingList.php','controllers' => array()),
+		'6'	=> array('id' => '7', 'alias' => 'UpcomingEvent', 'file' => 'page/upcomingEvent.php','controllers' => array()),
 		'3'	=> array('id' => '3', 'alias' => 'Register', 'file' => 'page/register.php','controllers' => array()),
 		'4'	=> array('id' => '5', 'alias' => 'Management', 'file' => 'page/manage.php','controllers' => array()),
 		'5'	=> array('id' => '6', 'alias' => 'Events', 'file' => 'page/eventList.php','controllers' => array())

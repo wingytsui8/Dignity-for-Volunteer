@@ -17,7 +17,6 @@
 	<!-- Facebook Open Graph end -->
 
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	
 	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 	<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="js/main.js?v=20190117142751" type="text/javascript"></script>
@@ -50,7 +49,7 @@
 		<article class="sections">
 			<div class="events-list" ng-app="digVol" ng-controller="UpcomingListController">
 				<div class="events-list_event" ng-repeat="row in upcomingEvents">
-					<a href="https://dignityforvolunteer.000webhostapp.com/Upcoming/{{row.id}}" style="">
+					<a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}" style="">
 						<div class="events-list__event__left">
 							<div class="events-list__event__image">
 								<img ng-src={{row.path}} src={{row.path}}>
