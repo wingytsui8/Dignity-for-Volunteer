@@ -61,12 +61,7 @@ Create Table `photo` (
 `eventId` int(11) NOT NULL,
 `type` varchar(50) NULL,
 `path` varchar(1024) NOT NULL,
+`des` varchar(1024) NOT NULL,
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- DROP TABLE IF EXISTS `poster`;
--- Create Table `poster` (
--- `eventId` int(11) NOT NULL,
--- `path` varchar(1024) NOT NULL,
--- PRIMARY KEY (`eventId`)
--- )ENGINE=InnoDB DEFAULT CHARSET=utf8;
