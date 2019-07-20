@@ -45,13 +45,10 @@
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
 	<div id="pastEventTable" ng-app="digVol" ng-controller="UpcomingEventDetailsController">
-		<div id="container">
+		<div class="textbody">
 			<a href="{{eventDetail.Photo}}" target=1>
-				<div class="slide-img"><img ng-src={{eventDetail.Photo}} src={{eventDetail.Photo}}></div>
-				<h1 class="title"><span class="title-text">{{eventDetail.Description}}</span></h1>
+				<img class="poster" ng-src={{eventDetail.Photo}} src={{eventDetail.Photo}}>
 			</a>
-		</div>
-		<div class="textbody below_slide">
 			<h1> {{eventDetail.Name}}</h1>
 			<img class="icon" ng-src="gallery/when.png" src="gallery/when.png">{{eventDetail.time}}<br>
 			<img class="icon" ng-src="gallery/where.png" src="gallery/where.png">{{eventDetail.Place}}<br>
