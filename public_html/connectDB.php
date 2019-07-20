@@ -239,7 +239,7 @@ function login($email, $password){
 	$pwHash = hash("sha256", $password);
 	$sql= "SELECT 1
 		From volunteer
-		where email = '". $email . "' and password = '". $pwHash . "'";
+		where lower(email) = '". strtolower($email) . "' and password = '". $pwHash . "'";
 	$val =  validate($sql);
 	if ($val){
 		updateLoginTime($email);
@@ -255,7 +255,7 @@ function updateLoginTime($email){
 function checkLoginSession($email){
 	$sql= "SELECT 1
 		From volunteer 
-		where `email` ='" . $email . 
+		where lower(`email`) ='" . strtolower($email) . 
 	"' and `loginTime`is not null and ADDTIME(`loginTime`, '0 0:30:0') > NOW() ";	
 	return validate($sql);
 }
