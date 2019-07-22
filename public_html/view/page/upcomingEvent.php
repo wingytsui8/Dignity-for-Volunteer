@@ -50,9 +50,30 @@
 				<img class="poster" ng-src={{eventDetail.Photo}} src={{eventDetail.Photo}}>
 			</a>
 			<h1> {{eventDetail.Name}}</h1>
-			<img class="icon" ng-src="gallery/when.png" src="gallery/when.png">{{eventDetail.time}}<br>
-			<img class="icon" ng-src="gallery/where.png" src="gallery/where.png">{{eventDetail.Place}}<br>
-			<div><img class="icon" ng-src="gallery/info.png" src="gallery/info.png"><text>{{eventDetail.remarks}}</text></div>
+			<table>
+				<tr><td><img class="icon" ng-src="gallery/when.png" src="gallery/when.png"></td>
+					<td>{{eventDetail.time}}</td>
+				</tr>
+				<tr><td><img class="icon" ng-src="gallery/where.png" src="gallery/when.png"></td>
+					<td><strong>{{eventDetail.Place}}</strong><br>{{eventDetail.location}}</td>
+				</tr>
+				<tr><td><img class="icon" ng-src="gallery/contact.png" src="gallery/contact.png"></td>
+					<td>{{eventDetail.contactName}}</td>
+				</tr>
+				<tr><td><img class="icon" ng-src="gallery/email.png" src="gallery/email.png"></td>
+					<td><a href="mailto:{{eventDetail.contactEmail}}?subject=Enquiry%20on%20{{eventDetail.Name}}">{{eventDetail.contactEmail}}</a>
+					</td>
+				</tr>
+				<tr><td>Quota</td>
+					<td>{{eventDetail.quota}}</td>
+				</tr>
+				<tr><td>Application<br>Deadline</td>
+					<td>{{eventDetail.applicationDeadline}}</td>
+				</tr>
+				<tr><td><img class="icon" ng-src="gallery/info.png" src="gallery/when.png"></td>
+					<td>{{eventDetail.remarks}}</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 	<commonfooter></commonfooter>
