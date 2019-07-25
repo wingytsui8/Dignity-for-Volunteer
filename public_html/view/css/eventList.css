@@ -34,7 +34,7 @@ body {
         max-width: 20vw; 
     }
     .site-container {
-        background-image:  linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 60vw, #b1d681 75vw, black 100%), url("../gallery/event_list_bg.jpg");
+        background-image:  linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 60vw, #737232 75vw, black 100%), url("../gallery/event_list_bg.jpg");
     }
     a {
         height: 250px
