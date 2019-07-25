@@ -396,9 +396,9 @@ app.controller("UpcomingEventDetailsController", ["$scope", "$rootScope", functi
 			$toMin = String($scope.eventDetail.toDate.getMinutes()).padStart(2,0) 
 
 			if ($fromDate!=$toDate){
-				$scope.eventDetail.time = $fromDate +  "  " + $fromHour + ":" +  $fromMin + "  -  " + $toDate + "  " + $toHour + ":" +  $toMin ;
+				$scope.eventDetail.time = $fromDate +  " , " + $fromHour + ":" +  $fromMin + "  -  " + $toDate + " , " + $toHour + ":" +  $toMin ;
 			}else{
-				$scope.eventDetail.time = $fromDate +  "  " + $fromHour + ":" +  $fromMin + "  -  " + $toHour + ":" +  $toMin;
+				$scope.eventDetail.time = $fromDate +  " , " + $fromHour + ":" +  $fromMin + "  -  " + $toHour + ":" +  $toMin;
 			}		
 		}
 		$scope.init();

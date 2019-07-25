@@ -187,8 +187,9 @@ td {
 	background-color: aliceblue;
 	border-bottom: 1px solid var(--main-color);
 	border-collapse: collapse;
-	padding: 5px;
+	padding: 10px;
 }
+
 
 button {
 color: var(--main-color);
@@ -262,8 +263,8 @@ img.logoIcon {
 	max-height:35px;
 }
 img.icon {
-  height: 20px;
-  width: 20px;
+  height: 30px;
+  width: 30px;
   margin: 0px 20px;
 }
 
@@ -331,9 +332,9 @@ img.icon {
   padding: 0;
   border: 2px black solid;
   width: 100%;
-    height: auto;
-    box-shadow: 5px 5px grey;
-    margin-bottom: 30px;
+  height: auto;
+  box-shadow: 5px 5px grey;
+  margin-bottom: 30px;
 }
 
 #slides {

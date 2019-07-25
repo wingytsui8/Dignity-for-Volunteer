@@ -36,7 +36,7 @@ body {
     .site-container {
         background-image:  linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 60vw, #737232 75vw, black 100%), url("../gallery/event_list_bg.jpg");
     }
-    a {
+    .sections a {
         height: 250px
     }
 
@@ -59,7 +59,7 @@ body {
     .site-container {
         background-color: black ;
     }
-    a {
+    .sections a {
         height: 500px
     }
 }
