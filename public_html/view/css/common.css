@@ -187,9 +187,8 @@ td {
 	background-color: aliceblue;
 	border-bottom: 1px solid var(--main-color);
 	border-collapse: collapse;
-	padding: 10px;
+	padding: 5px;
 }
-
 
 button {
 color: var(--main-color);
@@ -207,7 +206,7 @@ border-color: var(--main-color);
 transition: all 0.4s ease 0s;
 }
 
-input[type=date], [type=time]   {
+/*input[type=date], [type=time]   {
 	width: 40%;
 	padding: 10px;
 	 border-radius: 5px;
@@ -225,46 +224,46 @@ input[type=checkbox] {
   height: 25px;
   width: 25px;
   background-color: #eee;
-}
+}*/
 
 /* On mouse-over, add a grey background color */
-input[type=checkbox]:hover  {
+/*input[type=checkbox]:hover  {
   background-color: #ccc;
-}
+}*/
 
 /* When the checkbox is checked, add a blue background */
-input[type=checkbox]:checked {
+/*input[type=checkbox]:checked {
   background-color: #2196F3;
-}
+}*/
 
 /* Create the checkmark/indicator (hidden when not checked) */
-input[type=checkbox]:after {
+/*input[type=checkbox]:after {
   content: "";
   position: absolute;
   display: none;
-}
+}*/
 
 
 input:focus {
 	background-color: var(--main-color-input);
 }
 
-select {
+/*select {
 	width: 80%;
 	border: 5px solid #f8f8f8
-}
+}*/
 
-label{
+/*label{
 	font-size: 16px;
 	padding: 20px 0px 5px 0px;
-}
+}*/
 
 img.logoIcon {
 	max-height:35px;
 }
 img.icon {
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
   margin: 0px 20px;
 }
 
@@ -272,7 +271,7 @@ img.icon {
     position:fixed;
     width:100%;
     left:0;right:0;top:0;bottom:0;
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255,255,255,1);
     z-index:9999;
 }
 
@@ -332,9 +331,9 @@ img.icon {
   padding: 0;
   border: 2px black solid;
   width: 100%;
-  height: auto;
-  box-shadow: 5px 5px grey;
-  margin-bottom: 30px;
+    height: auto;
+    box-shadow: 5px 5px grey;
+    margin-bottom: 30px;
 }
 
 #slides {
