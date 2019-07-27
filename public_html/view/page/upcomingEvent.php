@@ -64,13 +64,13 @@
 					<td><a href="mailto:{{eventDetail.contactEmail}}?subject=Enquiry%20on%20{{eventDetail.Name}}">{{eventDetail.contactEmail}}</a>
 					</td>
 				</tr>
-				<tr><td>Quota</td>
-					<td>{{eventDetail.quota}}</td>
+				<tr><td><img class="icon" ng-src="gallery/quota.png" src="gallery/quota.png"></td>
+					<td>Quota:<br>{{eventDetail.quota}}</td>
 				</tr>
-				<tr><td>Application<br>Deadline</td>
-					<td>{{eventDetail.applicationDeadline}}</td>
+				<tr><td><img class="icon" ng-src="gallery/calendar.png" src="gallery/calendar.png"></td>
+					<td>Application Deadline: <br>{{eventDetail.applicationDeadline}}</td>
 				</tr>
-				<tr><td><img class="icon" ng-src="gallery/info.png" src="gallery/when.png"></td>
+				<tr><td><img class="icon" ng-src="gallery/info.png" src="gallery/info.png"></td>
 					<td>{{eventDetail.remarks}}</td>
 				</tr>
 			</table>
