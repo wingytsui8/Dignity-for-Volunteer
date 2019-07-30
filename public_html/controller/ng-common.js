@@ -37,7 +37,7 @@ commonHeaderHtml +=
 "<div id=\"wrap\" ng-controller=\"loginController\">" +
 "<div id=\"regbar\">" +
 "<div id=\"navthing\">" +
-"<div ng-style=\"{visibility: (lEmail!=null && lEmail.length > 0)?'hidden':'visible'}\">" +
+"<div ng-style=\"{visibility: (lEmail!=null && lEmail.length > 0) || pageTitle == 'Home'?'hidden':'visible'}\">" +
 "<div class = \"loginPanel\">" +
 "<button onclick=\"location.href='https://dignityforchildren.org/join-us/#volunteers'\">Sign up</button><button id=\"loginform\">Login</button>" + 
 "</div>" +

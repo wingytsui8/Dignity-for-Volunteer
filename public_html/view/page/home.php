@@ -47,7 +47,7 @@
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
 	<main>
-		<div class="home_main" ng-show="lEmail==null || lEmail.length == 0">
+		<div class="home_main" ng-show="lEmail==null || lEmail.length == 0" ng-controller="loginController">
 			<div class="home_login">
 				<div class="home_formholder">
 					<div class="home_randompad">
