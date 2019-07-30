@@ -7,9 +7,98 @@ main {
 }
 
 
-.home_login {
+/*.home_login {
     height: 50vw;
     border: 2px solid var(--navigation-color) ;
     border-radius: 50px;
     box-shadow: 5px 5px grey;
+}*/
+
+/*.home_login {
+  position: absolute;
+  top:80px;
+  right:0;
+  width: 350px;
+  display: none;
+}*/
+
+.home_formholder {
+  background: #ecf0f1;
+  width: 350px;
+  border-radius: 5px;
+  padding-top: 5px;
+ /* top: 40%;
+  position: fixed;
+  right: 40%;*/
+  line-height: 30px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+.home_formholder input[type="email"], .home_formholder input[type="password"] {
+  padding: 5px 10px;
+  width: 96%;
+  display: block;
+/*  font-size: 18px;*/
+  border-radius: 5px;
+  border: none;
+  -webkit-transition: 0.3s linear;
+  -moz-transition: 0.3s linear;
+  -o-transition: 0.3s linear;
+  transition: 0.3s linear;
+  margin: 0px 0px 10px 0px;
+  color: black;
+}
+.home_formholder input[type="email"]:focus, .home_formholder input[type="password"]:focus {
+  outline: none;
+  box-shadow: 0 0 1px 1px var(--main-color);
+}
+.home_formholder input[type="submit"] {
+  background: var(--main-color);
+  padding: 10px;
+  font-size: 20px;
+  display: block;
+  width: 96%;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  margin: 0px 0px 10px 0px;
+}
+.home_formholder input[type="submit"]:hover {
+  background: var(--main-color-light);
+}
+
+.home_randompad {
+  padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

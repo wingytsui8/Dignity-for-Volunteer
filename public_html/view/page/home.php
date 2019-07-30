@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Event'">
+<html lang="en" ng-app="digVol" ng-controller="CommonController" ng-init="pageTitle='Home'">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Dignity For Volunteer - Home</title>
@@ -47,11 +47,31 @@
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
 	<main class="textbody" >
-		1234567890
+		<div ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'hidden':'visible'}">
+			<div class="home_login">
+				<div class="home_formholder">
+					<div class="home_randompad">
+						<fieldset>
+							<label name="email">Email</label>
+							<input id="loginEmail" type="email" placeholder="example@example.com" ng-model="email"/>
+							<label name="password">Password</label>
+							<input id="loginPw" placeholder = "Date of birth (YYYMMDD)" type="password" ng-model="password"/>
+							<input type="submit" value="Login" ng-click="loginSubmit()"/>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">
+			
+			1234567890
+		</div>
+		
 	</main>
 
 	<commonfooter></commonfooter>
 </body>
-	
+
 </body>
 </html>
