@@ -46,8 +46,8 @@
 <body>
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
-	<main class="textbody" >
-		<div ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'hidden':'visible'}">
+	<main>
+		<div class="home_main" ng-show="lEmail==null || lEmail.length == 0">
 			<div class="home_login">
 				<div class="home_formholder">
 					<div class="home_randompad">
@@ -63,11 +63,11 @@
 			</div>
 		</div>
 
-		<div ng-style="{visibility: (lEmail!=null && lEmail.length > 0)?'visible':'hidden'}">
-			
+		<div ng-show="(lEmail!=null && lEmail.length > 0)">
+
 			1234567890
 		</div>
-		
+
 	</main>
 
 	<commonfooter></commonfooter>

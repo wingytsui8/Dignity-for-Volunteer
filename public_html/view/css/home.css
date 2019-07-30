@@ -1,9 +1,13 @@
 
+.home_main {
+	height:750px;
+}
+
 main {
 	background-image: url("../gallery/home_bg.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
-	height:700px;
+	height:750px;
 }
 
 
@@ -14,13 +18,16 @@ main {
     box-shadow: 5px 5px grey;
 }*/
 
-/*.home_login {
-  position: absolute;
-  top:80px;
-  right:0;
-  width: 350px;
-  display: none;
-}*/
+.home_login {
+  	position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 95px;
+  	height:750px;
+  /*display: none;*/
+}
 
 .home_formholder {
   background: #ecf0f1;
