@@ -88,7 +88,10 @@ background: var(--navigation-color-hover);
 }
 ul.loginNav li.liLogin {float: right;}
 
-ul.topnav li a:hover:not(.active) {color: var(--navigation-color); text-decoration: none;}
+ul.topnav li a:hover:not(.active) {
+  color: var(--navigation-color); 
+  text-decoration: none;
+}
 
 ul.topnav li a.active {
 	color: var(--navigation-color); 
@@ -174,6 +177,7 @@ table {
 	display: block;
 	/*border: 1px solid var(--main-color);*/
 	overflow-x: scroll;
+  margin: 20px 0px 50px 0px;
 }
 th  {
 	color : white;
@@ -193,10 +197,11 @@ td {
 button {
 color: var(--main-color);
 background: white;
-padding: 10px 100px;
+padding: 5px 30px;
 border: 2px solid var(--main-color) ;
 border-radius: 6px;
 display: inline-block;
+  margin: 5px 20px;
 }
 
 button:hover {
@@ -318,7 +323,6 @@ img.icon {
 }
 #container {
   padding: 0;
-
   left: 0px;
   border: 10px black solid;
   background-color: black;

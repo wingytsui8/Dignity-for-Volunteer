@@ -65,6 +65,30 @@ if(isset($_POST['action'])){
 		echo json_encode( getRegisteredList($id) );
 		exit;
 
+		case "getEventPhoto":
+		$id = (string)$_POST['id'];
+
+		header('Content-type: application/json');
+		echo json_encode( getEventPhoto($id) );
+		exit;
+
+		case "postPhoto":
+		$id = (string)$_POST['id'];
+		$name = (string)$_POST['name'];
+		$quota = (int)$_POST['quota'];
+		$active = (int)$_POST['active'];
+		
+		header('Content-type: application/json');
+		echo json_encode( postPhoto($id) );
+
+		case "daletePhoto":
+		$id = (string)$_POST['id'];
+
+		header('Content-type: application/json');
+		echo json_encode( deletePhoto($id) );
+		exit;
+
+
 		case "getRecentEventsList":
 		$start = (int)$_POST['start'];
 
@@ -100,16 +124,16 @@ if(isset($_POST['action'])){
 
 
 function getEvent($orderBy, $active , $upcoming){
-	$sql= "SELECT id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
+	$sql= "SELECT id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
 		From event
-		where active = " . $active .
-		" and fromDate " . ($upcoming? " >= " : " <= ") . " CURDATE() " .
+		where fromDate " . ($upcoming? " >= " : " <= ") . " CURDATE() " .
+		($active? (" and active = " . $active ): "") .
 		" order by fromDate " . $orderBy;
 	return runQuery($sql);
 }
 
 function getRegisterEventDetails($email){
-	$sql= "SELECT e.id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, 
+	$sql= "SELECT e.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, 
 		!(r.eventId is null) as registered
 		From event as e
 		left outer join  
@@ -125,7 +149,7 @@ function getRegisterEventDetails($email){
 }
 
 function getRegisteredList($id){
-	$sql= "SELECT volunteer.id as volId, volunteer.name as name, volunteer.email as email, register.createDate as createDate, register.active as active FROM `volunteer`, `register` WHERE register.eventId = " . $id . 
+	$sql= "SELECT volunteer.id as volId, volunteer.name as name, volunteer.email as email, register.createDate as createDate, register.active as active, register.status as status FROM `volunteer`, `register` WHERE register.eventId = " . $id . 
 		" and register.active = 1 
 		and register.volId = volunteer.id 
 		order by register.createDate";
@@ -142,12 +166,13 @@ function getVolunteerId($email){
 }
 
 function getEventManageDetail($id){
-	$sql= "SELECT event.id as id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks, event.active, count(event.id) as registered
+	$sql= "SELECT event.id as id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks, pastDisplay, upcomingDisplay, event.active, count(event.id) as registered
 		From event
-		inner join register on event.id = register.eventId and register.active = 1
+		left outer join register on event.id = register.eventId and register.active = 1
 		where event.id = " . $id . " 
 		group by event.id"
 		;
+		// return $sql;
 	return runQuery($sql);
 }
 
@@ -205,6 +230,17 @@ function getUpcomingDisplayDetail($id){
 	return runQuery($sql);
 }
 
+function getEventPhoto($id){
+	$sql= "SELECT id, `path` as Photo, type, des as Description
+		From photo 
+		where eventId = " . $id;
+	return runQuery($sql);
+}
+
+function deletePhoto($id){
+	$sql= "DELETE FROM photo WHERE id = " . $id;
+	return runQuery($sql);
+}
 
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  Get functions   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
@@ -215,6 +251,13 @@ function postEvent($id, $name, $fromDate, $toDate, $venue, $location, $contactNa
 	ON DUPLICATE KEY UPDATE 
 	name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
 
+	return runQuery($sql);
+}
+
+function postPhoto($id, $type, $path, $des){ 
+	$sql= "INSERT INTO event (id, type, `path`, des) VALUES ('". $id. "','" . $type."', '".$path."', '".$des."')
+	ON DUPLICATE KEY UPDATE 
+	type=VALUES(type), path=VALUES(path), des=VALUES(des ";
 	return runQuery($sql);
 }
 

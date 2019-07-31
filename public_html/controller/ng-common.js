@@ -124,8 +124,46 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		"color" : "orange",
 		"padding" : "50px"
 	}
-	$scope.eventDetail = {id: null}
-	$scope.registeredList = {name: 'null'}
+	// $scope.eventDetail = {id: null}
+	// $scope.registeredList = {name: 'null'}
+	$scope.action = "";
+	$scope.getEvents = function($upcoming){
+		if ($upcoming){
+			$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '0' ,  upcoming: $upcoming },
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				$scope.action = "Edit Upcoming Event";
+			}
+			});
+		
+		}else{
+			$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '0' ,  upcoming: $upcoming },
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				$scope.action = "Edit Past Event";
+			}
+			});
+		}
+		$scope.events = responseData;
+		
+	}
+
+	$scope.createEmptyEvent = function() {
+		$scope.eventDetail = {id: null}
+		$scope.registeredList = {name: 'null'}
+		$scope.action = "Create New Event"
+	}
+
 	$scope.getEventDetail = function(id) {
 		$.ajax({
 			url: '../connectDB.php',
@@ -143,6 +181,7 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		$scope.eventDetail.applicationDeadline = new Date($scope.eventDetail.applicationDeadline);
 		$scope.eventDetail.quota = Number($scope.eventDetail.quota);
 		$scope.getRegisteredList();
+		$scope.getEventPhoto();
 	}
 
 	$scope.postEvent = function() {
@@ -170,7 +209,7 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 			}
 		});
 		$scope.sql = responseData;
-
+		$scope.getEventDetail($scope.eventDetail.id);
 	}
 	$scope.getRegisteredList = function() {
 		$.ajax({
@@ -185,6 +224,79 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		});
 		$scope.registeredList = responseData;
 	}
+	$scope.downloadRegisteredList = function (){
+	    var csv = 'No.,Volunteer id,Name,Email,Registered Date,Status\n';
+	    for (var i = $scope.registeredList.length-1;i >=0 ; i--){
+		 	csv += (i+1) + ',';
+            csv += $scope.registeredList[i].volId + ',';
+            csv += $scope.registeredList[i].name + ',';
+            csv += $scope.registeredList[i].email + ',';
+            csv += $scope.registeredList[i].createDate + ',';
+            csv += $scope.registeredList[i].status;
+            csv += "\n";
+		}
+	    console.log(csv);
+	    var current = new Date();
+	    var hiddenElement = document.createElement('a');
+	    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+	    hiddenElement.target = '_blank';
+	    hiddenElement.download =  $scope.eventDetail.name + ' Registered List ' + current.getYear() + '-'  + current.getMonth() + '-'  + current.getDate() + '.csv';
+	    hiddenElement.click();
+	}
+
+	$scope.eventPhoto = null;
+	$scope.getEventPhoto = function() {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getEventPhoto' ,  id: $scope.eventDetail.id},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.eventPhoto = responseData;
+	}
+	$scope.createEmptyPhoto = function() {
+		var responseData = {id: null, path: null, type: "poster", des: null};
+		$scope.eventPhoto.push(responseData);
+	}
+	$scope.deletePhoto = function($id) {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'deletePhoto' ,  id: $id},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.getEventPhoto();
+	}
+	$scope.postEvent = function() {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				// action: 'postPhoto' ,  
+				// id: $scope.eventDetail.id, 
+				// name: $scope.eventDetail.name,
+				// contactEmail: $scope.eventDetail.contactEmail,
+				// applicationDeadline: $scope.eventDetail.applicationDeadline.toISOString().split('T')[0], 
+				// quota: $scope.eventDetail.quota,
+				// active: $scope.eventDetail.active
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.sql = responseData;
+	}
+
 	setTimeout(function(){
 		$rootScope.loading = false;
 		$ocLazyLoad.load('js/loginForm.js');
