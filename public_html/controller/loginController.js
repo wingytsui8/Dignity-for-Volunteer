@@ -26,7 +26,10 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
 					if (responseData){
 						$rootScope.lEmail = $scope.email;
 						extEmail = $rootScope.lEmail;
-                        $rootScope.upcomingInitChange(extEmail);
+                        //$rootScope.upcomingInitChange(extEmail);
+                        if ($rootScope.pageTitle == "Home"){
+                            $rootScope.homeInit();
+                        }
 					}
 				}
 			});
@@ -36,6 +39,9 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
     }
     $scope.setLEmail = function(email) {
     	$rootScope.lEmail = email;
+        if ($rootScope.pageTitle == "home"){
+            $rootScope.homeInit();
+        }
     	$scope.$apply();
     }
 

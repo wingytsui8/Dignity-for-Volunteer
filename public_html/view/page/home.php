@@ -63,9 +63,11 @@
 			</div>
 		</div>
 
-		<div ng-show="(lEmail!=null && lEmail.length > 0)">
+		<div ng-show="(lEmail!=null && lEmail.length > 0)" ng-controller="homeController">
 
-			1234567890
+			<h1>Welcome! {{name}}</h1>
+			<label>News</News>
+			<label>Thank you for support! See you on {{nextEventDate}}, at {{nextEventplace}}</label>
 		</div>
 
 	</main>
