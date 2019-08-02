@@ -1,10 +1,10 @@
 
-.home_main {
+/*.home_main {
 	height:750px;
-}
+}*/
 
 main {
-	background-image: url("../gallery/home_bg.jpg");
+	background-image: url("../gallery/home_bg.jpeg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	height:750px;
@@ -24,8 +24,8 @@ main {
     margin-right: auto;
     left: 0;
     right: 0;
-    top: 95px;
-  	height:750px;
+    top: 35vh;
+  	/*height:750px;*/
   /*display: none;*/
 }
 
