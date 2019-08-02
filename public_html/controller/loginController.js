@@ -38,11 +38,13 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
 		}
     }
     $scope.setLEmail = function(email) {
+        $rootScope.loading = true;
     	$rootScope.lEmail = email;
-        if ($rootScope.pageTitle == "home"){
+        if ($rootScope.pageTitle == "Home"){
             $rootScope.homeInit();
         }
     	$scope.$apply();
+        $rootScope.loading = false;
     }
 
 }]).run(['$window',function($window, Utilities) {

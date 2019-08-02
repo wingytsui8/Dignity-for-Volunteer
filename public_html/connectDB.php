@@ -19,10 +19,10 @@ if(isset($_POST['action'])){
 		echo json_encode( getRegisterEventDetails($email) );
 		exit;
 
-		case "getUserDetail":
+		case "getPortfolio":
 		$email = (string)$_POST['email'];
 		header('Content-type: application/json');
-		echo json_encode( getUserDetail($email) );
+		echo json_encode( getPortfolio($email) );
 		exit;
 
 		case "login":
@@ -243,13 +243,14 @@ function getEventPhoto($id){
 	return runQuery($sql);
 }
 
-function getUserDetail($email){
-	$sql= "SELECT event.id, event.name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, pastDisplay
+function getPortfolio($email){
+	$volId = getVolunteerId($email);
+
+	$sql= "SELECT event.id, event.name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, reg.status
 	From event
-	INNER join register on register.eventId = event.id and register.active = 1
-	INNER join volunteer on register.volId = volunteer.id and volunteer.email = '" . $email . "' " .
-	" where fromDate  >=  CURDATE() " .
-	" order by fromDate ";
+	left outer join register reg on reg.eventId = event.id and reg.active = 1 and reg.volId = ". $volId ."
+	where fromDate  >=  CURDATE() and upcomingDisplay = 1
+	order by fromDate Desc" ;
 
 	$results = runQuickQuery($sql);
 	$upcomingEvents = [];
@@ -262,9 +263,8 @@ function getUserDetail($email){
 	$sql= "SELECT event.id, event.name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, pastDisplay
 	From event
 	INNER join register on register.eventId = event.id and register.active = 1
-	INNER join volunteer on register.volId = volunteer.id and volunteer.email = '" . $email . "' " .
-	" where fromDate  <=  CURDATE() " .
-	" order by fromDate DESC" ;
+	where fromDate  <  CURDATE() and volId = ". $volId ."
+	order by fromDate DESC" ;
 
 	$results = runQuickQuery($sql);
 	
@@ -275,21 +275,37 @@ function getUserDetail($email){
 		}
 	}
 
-	$sql= "SELECT name as Name From volunteer where email = '" . $email . "' ";
+	$sql= "SELECT DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, post, venue, location, status, remarks
+	From volunteer_work
+	where active = 1 and volId = ". $volId ."
+	order by fromDate DESC" ;
 
 	$results = runQuickQuery($sql);
-	if ($result->num_rows > 0) {
-		$resArr[] = array_merge($result->fetch_assoc(), [
-			"upcoming" => $upcomingEvents,
-			"past" => $pastEvents,
+	
+	$pastEvents = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$pastEvents[] = $result;
+		}
+	}
 
+	$sql= "SELECT name as Name, volunteer_work.fromDate as nextVolDate, volunteer_work.venue as nextVolplace, volunteer_work.location as nextVolHow, volunteer_work.post as nextVolPost
+	From volunteer 
+	left outer join volunteer_work on volunteer.id = volunteer_work.volId and volId = ". $volId ." and volunteer_work.active = 1 and volunteer_work.toDate >= CURDATE() and volunteer_work.status <> 'Cancelled'
+	where volId = ". $volId ."
+	order by volunteer_work.fromDate desc
+	Limit 0 , 1";
+
+	$results = runQuickQuery($sql);
+
+	if ($results->num_rows > 0) {
+		$resArr[] = array_merge($results->fetch_assoc(), [
+			"upcoming" => $upcomingEvents,
+			"past" => $pastEvents
 		]);
 		return json_encode($resArr);
 	}
-
 }
-
-
 
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  Get functions   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
@@ -351,6 +367,7 @@ function updateLoginTime($email){
 }
 
 function checkLoginSession($email){
+	//
 	$sql= "SELECT 1
 	From volunteer 
 	where lower(`email`) ='" . strtolower($email) . 

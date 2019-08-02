@@ -20,7 +20,7 @@ When can I see you again?');
 
 INSERT INTO `volunteer` (`name`, `dob`, `email`, `password`, `active`) VALUES ( 'admin', '2019-05-01', 'DignityforVolunteer@gmail.com' , '24ee4dc136bc9c413d6b530494ec1bfbc733769b1d3e340572b5fb9d198f864b', '1');
 
-INSERT INTO `volunteer` (`id`, `name`, `dob`, `email`, `password`, `active`) VALUES (NULL, 'Sam Tang', '1992-09-02', 'neiamenase@gmail.com', '9c547119a74092b81f6c07be2029dc64833b5eea176bfe740c75261c5b51e8a8', '1');
+INSERT INTO `volunteer` (`id`, `name`, `dob`, `email`, `password`, `active`) VALUES (2, 'Sam Tang', '1992-09-02', 'neiamenase@gmail.com', '9c547119a74092b81f6c07be2029dc64833b5eea176bfe740c75261c5b51e8a8', '1');
 
 INSERT INTO `volunteer` (`id`, `name`, `dob`, `email`, `password`, `active`) VALUES (NULL, 'Testing 1', '1992-09-02', 'testing1@gmail.com', '9c547119a74092b81f6c07be2029dc64833b5eea176bfe740c75261c5b51e8a8', '1');
 
@@ -47,3 +47,7 @@ INSERT INTO `register` (`id`, `eventId`, `volId`, `status`, `createDate`, `modif
 INSERT INTO `event` (`id`, `name`, `fromDate`, `toDate`, `contactName`, `contactEmail`, `venue`, `location`, `quota`, `applicationDeadline`, `active`, `remarks`) VALUES (NULL, 'upcoming 2', '2020-05-01 00:00:00', '2021-01-28 00:00:00', 'Sam', 'neiamenase@gmail.com', 'somewhere in the Earth', 'whatever', '1', '2019-05-25', '1', 'There is another upcoming'), (NULL, 'upcoming 3', '2020-05-01 00:00:00', '2020-05-14 00:00:00', 'Sam', '123@123.123', 'whatever', 'Flat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLU', '2', '2019-05-31', '1', 'Flat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLUFlat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLUFlat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLUFlat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLUFlat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLUFlat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLUFlat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLUFlat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLUFlat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLUFlat 26 67, Fake Street East, Whatever Island, Somewhere on the Earth, Fake country, JLU');
 
 INSERT INTO `register` (`id`, `eventId`, `volId`, `createDate`, `modifyDate`, `status`, `active`) VALUES (NULL, '4', '2', '2019-05-25 00:00:00', '2019-05-25 00:00:00', 'Confirmed', '1'), (NULL, '5', '2', '2019-05-25 00:00:00', '2019-05-25 00:00:00', 'Cancelled', '1');
+
+INSERT INTO `volunteer_work` (`id`, `volId`, `fromDate`, `toDate`, `venue`, `location`, `post`, `status`, `active`, `remarks`) VALUES (NULL, '2', '2019-04-20', '2019-04-27', 'EAT X Dignity', NULL, 'Teacher', 'Confirmed', '1', 'By Sam Tang.');
+
+INSERT INTO `volunteer_work` (`id`, `volId`, `fromDate`, `toDate`, `venue`, `location`, `post`, `status`, `active`, `remarks`) VALUES (NULL, '2', '2020-06-01 00:00:00', '2020-07-01 00:00:00', NULL, NULL, 'IT Support', 'Pending', '1', 'test, by Sam');

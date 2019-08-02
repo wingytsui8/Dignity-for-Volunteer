@@ -66,3 +66,23 @@ Create Table `photo` (
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `volunteer_work`;
+CREATE TABLE `volunteer_work` (
+  `id` mediumint(9) NOT NULL,
+  `volId` mediumint(9) NOT NULL,
+  `fromDate` datetime NOT NULL,
+  `toDate` datetime NOT NULL,
+  `venue` varchar(255) DEFAULT NULL,
+  `location` varchar(1000) DEFAULT NULL,
+  `post` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `remarks` text NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `volunteer_work`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `volunteer_work`
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+

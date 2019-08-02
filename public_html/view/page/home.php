@@ -65,7 +65,7 @@
 
 		<div ng-show="(lEmail!=null && lEmail.length > 0)" ng-controller="homeController">
 
-			<h1>Welcome! {{name}}</h1>
+			<h1>Welcome! {{portfolio.Name}}</h1>
 			<label>News</News>
 			<label>Thank you for support! See you on {{nextEventDate}}, at {{nextEventplace}}</label>
 		</div>

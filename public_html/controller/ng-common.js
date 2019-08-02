@@ -524,33 +524,19 @@ app.controller("UpcomingEventDetailsController", ["$scope", "$rootScope", functi
 app.controller("homeController", ["$scope", "$rootScope", function($scope, $rootScope) {
 	$rootScope.loading = true;
 	$rootScope.homeInit = function(){
-		// $.ajax({
-		// 	url: '../connectDB.php',
-		// 	type: 'POST',
-		// 	data : { action: 'getUpcomingDisplayDetail' ,  id: $scope.id },
-		// 	dataType: "json",
-		// 	async: false,
-		// 	success: function(response) {
-		// 		responseData = JSON.parse(response);
-		// 		$rootScope.loading = false;
-		// 	}
-		// });
-		$scope.name = "Sam Tang";
-		$scope.nextEventDate = "2019-09-02";
-		$scope.nextEventplace = "Dignity"; 
-		$scope.$apply();
-		//$scope.eventDetail = responseData;
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getPortfolio' ,  email: $rootScope.lEmail },
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.portfolio = responseData;
 	};
-	// setTimeout(function(){ 
-	// 	if ($rootScope.lEmail != null && $rootScope.lEmail.length>0){
-	// 		$rootScope.homeInit();
-	// 	}
-	// },3000);
 }]);
-
-
-
-
 
 
 
