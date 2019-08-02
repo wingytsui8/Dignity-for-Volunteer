@@ -47,73 +47,46 @@
 <body>
 	<div class="loader" ng-show="loading"> </div>
 	<commonheader></commonheader>
-	<div id="container">
-		<ul id="slides">
-			<li class="slide active">
-				<div class="slide-img"><img src="https://wallpapercave.com/wp/wp2438853.jpg"/></div>
-				<h1 class="title"><span class="title-text">11111</span></h1>
-			</li>
-			<li class="slide">
-				<div class="slide-img"><img src="https://wallpapercave.com/wp/wp3285738.jpg"/></div>
-				<h1 class="title"><span class="title-text">22222</span></h1>
-			</li>
-			<li class="slide">
-				<div class="slide-img"><img src="https://wallpapercave.com/wp/wp3285747.jpg"/></div>
-				<h1 class="title"><span class="title-text">33333</span></h1>
-			</li>
-			<li class="slide">
-				<div class="slide-img"><img src="https://wallpapercave.com/wp/wp2686919.jpg"/></div>
-				<h1 class="title"><span class="title-text">44444</span></h1>
-			</li>
-			<li class="slide">
-				<div class="slide-img"><img src="https://en.bcdn.biz/Images/2016/10/28/e68fb895-9ba1-4400-badf-d6741c1bb197.jpg"/></div>
-				<h1 class="title"><span class="title-text">55555</span></h1>
-			</li>
-		</ul>
-		<ul id="slide-select">
-			<li class="btn prev"><</li>
-			<li class="selector"></li>
-			<li class="selector"></li>
-			<li class="selector"></li>
-			<li class="selector"></li>
-			<li class="selector"></li>
-			<li class="btn next">></li>
-		</ul>
+	<div class='tab'>
+		<a href="#events">Event List</a>
+		<a href="#details">Details</a>
+		<a href="#photo">Photo</a>
+		<a href="#registeredList">Registered List</a>
 	</div>
+	<div class="textbody">
 
-	<div class="textbody below_slide">
+		<h1 id="events">Events</h1>
+		<button ng-click="getEvents(0)">Past</button>
+		<button ng-click="getEvents(1)">Upcoming</button>
+		<button ng-click="openCity(event, 'Tokyo')">Activity</button>
 
-
-		<div id="pastEventTable" ng-app="digVol" ng-controller="PastEventController">
-
-
-
-			<h1>Events</h1>
-			<table st-table="pastEvents" class="table table-striped">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Period</th>
-						<th>Venue</th>
-						<th>Application Deadline</th>
-						<th>Quota</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="row in pastEvents">
-						<td>{{row.name}}</td>
-						<td>{{row.fromDate}} - {{row.toDate}}</td>
-						<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
-						<td>{{row.applicationDeadline}}</td>
-						<td>{{row.quota}}</td>
-						<td><button ng-click="getEventDetail(row.id)">Details</button></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<table st-table="events" class="table table-striped">
+			<thead>
+				<tr>
+					<th style="width: 25%">Name</th>
+					<th style="width: 15%">Period</th>
+					<th style="width: 35%">Venue</th>
+					<th style="width: 10%">Application Deadline</th>
+					<th style="width: 5%">Quota</th>
+					<th style="width: 10%"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in events">
+					<td>{{row.name}}</td>
+					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+					<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
+					<td>{{row.applicationDeadline}}</td>
+					<td>{{row.quota}}</td>
+					<td><button ng-click="getEventDetail(row.id)">Details</button></td>
+				</tr>
+			</tbody>
+		</table>
 		<div>
-			<h1>{{action}}}</h1>
+			<h1 id="details">{{action}}</h1>
+			<button ng-click="createEmptyEvent()">New</button>
+			<button ng-click="getEventDetail(eventDetail.id)">Reset</button>
+			<button ng-click="postEvent()">Save</button>
 			<table>
 				<tr>
 					<td class="tdheader">
@@ -126,25 +99,20 @@
 						<label >Name</label>
 					</td>
 					<td class="tdcontent">
-						<input id="name" type="text" ng-model="eventDetail.name"/>
-						
+						<input id="name" type="text" ng-model="eventDetail.name"/>		
 					</td>
 				</tr>
 				<tr>
-
 					<td class="tdheader">
 						<label >From </label>
-						
 					</td>
 					<td class="tdcontent">
 						<input id="fromDate" type="date" ng-model="eventDetail.fromDate"/>  
 						<input id="fromTime" type="time" ng-model="eventDetail.fromDate"/><br>
 						<input id="fromDate1" type="text" ng-model="eventDetail.fromDate"/><br>
-						
 					</td>
 					<td class="tdheader">
 						<label >To</label>
-						
 					</td>
 					<td class="tdcontent">
 						<input id="toDate" type="date" ng-model="eventDetail.toDate"/>
@@ -197,6 +165,41 @@
 				</td>
 			</tr>
 			<tr>
+				<td class="tdheader">
+					<label >Registered Number: </label> 
+				</td>
+				<td class="tdcontent">
+					{{eventDetail.registered}}
+				</td>
+				<td class="tdheader">
+					<label >Remaing Quota: </label>
+				</td>
+				<td class="tdcontent"> 
+					{{eventDetail.quota - eventDetail.registered}}
+				</td>
+			</tr>
+			<tr>
+				<td class="tdheader">						
+					<label>Upcoming Display</label>
+				</td>
+				<td class="tdcontent">
+					<select ng-model="eventDetail.upcomingDisplay">
+						<option value="1">Display</option>
+						<option value="0">Hidden</option>
+					</select>
+				</td>
+				<td class="tdheader">
+					<label >Past Display</label> 
+				</td>
+				<td class="tdcontent">
+					<select ng-model="eventDetail.pastDisplay">
+						<option value="1">Display</option>
+						<option value="0">Hidden</option>
+					</select>
+				</td>
+
+			</tr>
+			<tr>
 				<td class="tdheader">						
 					<label>Active</label>
 				</td>
@@ -206,41 +209,23 @@
 						<option value="0">Cancelled</option>
 					</select>
 				</td>
-				<td class="tdheader">
-					<label >Registered Number: </label> 
-				</td>
-				<td class="tdcontent">
-					{{eventDetail.registered}}
-				</td>
-
+				<td></td>
+				<td></td>
 			</tr>
-			<tr>
-				<td class="tdheader">
-					<label >Remaing Quota: </label>
-				</td>
-				<td class="tdcontent"> 
-					{{eventDetail.quota - eventDetail.registered}}
-				</td>
-			</tr>
-		</table>
-
-
-
-		<button ng-click="postEvent()">Save</button>
-		<!-- <button ng-click="getRegisteredList()">Get Registered List</button> -->
+		</table>		
+		
 	</div>
-
 	<div>
-		<h1>Registered Volunteer</h1>
+		<h1 id="registeredList">Registered Volunteer</h1> <button ng-click="downloadRegisteredList()">Download CSV</button> 
 		<table st-table="registered" class="table table-striped">
 			<thead>
 				<tr>
-					<th style="min-width: 5vw;">No.</th>
-					<th style="min-width: 10vw;">Volunteer id</th>
-					<th style="min-width: 20vw;">Name</th>
-					<th style="min-width: 25vw;">Email</th>
-					<th style="min-width: 20vw;">Registered Date</th>
-					<th style="min-width: 10vw;">Active</th>
+					<th style="width: 5%;">No.</th>
+					<th style="width: 10%;">Volunteer id</th>
+					<th style="width: 30%;">Name</th>
+					<th style="width: 30%;">Email</th>
+					<th style="width: 15%;">Registered Date</th>
+					<th style="width: 10%;">Status</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -250,11 +235,64 @@
 					<td>{{row.name}}</td>
 					<td>{{row.email}}</td>
 					<td>{{row.createDate}}</td>
-					<td>{{row.active == "0"? 'inactive':'active'}}</td>
-
+					<td>{{row.status}}</td>
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	<div>
+		<h1 id="photo">Photos</h1> 
+		<button ng-click="createEmptyPhoto()">New</button>
+		<button ng-click="createEmptyPhoto()">Save</button>
+		<table st-table="photo" class="table table-striped">
+			<thead>
+				<tr>
+					<th style="width: 5%;">Id</th>
+					<th style="width: 10%;">Type</th>
+					<th style="width: 35%;">Description</th>
+					<th style="width: 35%;">Photo Path</th>
+					<th style="width: 15%;">Active</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in eventPhoto">
+					<td>{{$index + 1}}</td>
+					<td>
+						<select ng-model="row.type">
+							<option value="poster">Poster</option>
+							<option value="profile">Profile</option>
+							<option value="content">Content</option>
+						</select>
+					</td>
+					<td>
+						<textarea id="path" ng-model="row.Description"/></textarea> 
+					</td>
+					<td>
+						<textarea id="description" ng-model="row.Photo"/></textarea> 
+					</td>
+					<td>
+						<button ng-click="deletePhoto(row.id)">Remove</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+
+	<div id="slidesPreview">
+		<ul id="slides" >
+			<li class="slide" ng-repeat="row in eventPhoto">
+				<a href="{{row.Photo}}" target=1>
+				<div class="slide-img"><img ng-src={{row.Photo}} src={{row.Photo}}><</div>
+				<h1 class="title"><span class="title-text">{{row.Description}}</span></h1>
+			</a>
+			</li>
+		</ul>
+		<ul id="slide-select">
+			<li class="btn prev"><</li>
+			<li class="selector" ng-repeat="row in eventPhoto"></li>
+			<li class="btn next">></li>
+		</ul>
 	</div>
 </div>
 <commonfooter></commonfooter></body>
