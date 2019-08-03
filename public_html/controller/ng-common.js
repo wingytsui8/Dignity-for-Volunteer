@@ -534,7 +534,31 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 				responseData = JSON.parse(response);
 			}
 		});
-		$scope.portfolio = responseData;
+		$scope.portfolio = responseData[0];
+		$rootScope.upcomingInitChange($rootScope.lEmail);
+	};
+	$scope.upcomingEvents = [];
+	$rootScope.upcomingInitChange = function(email){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getRegisterEventDetails' ,  email: email },
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				for (var i = 0 ;i<responseData.length;i++){
+					if (responseData[i].registered == "1"){
+						responseData[i].isRegistered = true;
+					}else if(responseData[i].registered == "0"){
+						responseData[i].isRegistered = false;
+					}
+				}
+			}
+		});
+
+		$scope.upcomingEvents = responseData;
+		$rootScope.loading = false;
 	};
 }]);
 

@@ -1,14 +1,15 @@
 
 /*.home_main {
 	height:750px;
-}*/
+  }*/
 
-main {
-	background-image: url("../gallery/home_bg.jpeg");
-	background-size: cover;
-	background-repeat: no-repeat;
-	height:750px;
-}
+  main {
+   background-image: url("../gallery/home_bg.jpeg");
+   /*background-size: cover;*/
+   background-repeat: repeat;
+   min-height:750px;
+   padding: 48px 0px;
+ }
 
 
 /*.home_login {
@@ -16,24 +17,24 @@ main {
     border: 2px solid var(--navigation-color) ;
     border-radius: 50px;
     box-shadow: 5px 5px grey;
-}*/
+    }*/
 
-.home_login {
-  	position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    top: 35vh;
-  	/*height:750px;*/
-  /*display: none;*/
-}
+    .home_login {
+     position: absolute;
+     margin-left: auto;
+     margin-right: auto;
+     left: 0;
+     right: 0;
+     top: 35vh;
+     /*height:750px;*/
+     /*display: none;*/
+   }
 
-.home_formholder {
-  background: #ecf0f1;
-  width: 350px;
-  border-radius: 5px;
-  padding-top: 5px;
+   .home_formholder {
+    background: #ecf0f1;
+    width: 350px;
+    border-radius: 5px;
+    padding-top: 5px;
  /* top: 40%;
   position: fixed;
   right: 40%;*/
@@ -46,7 +47,7 @@ main {
   padding: 5px 10px;
   width: 96%;
   display: block;
-/*  font-size: 18px;*/
+  /*  font-size: 18px;*/
   border-radius: 5px;
   border: none;
   -webkit-transition: 0.3s linear;
@@ -81,15 +82,36 @@ main {
 
 
 
+section {  
+  display: block;
+  padding: 30px;
+  background-color: white;
+  color: var(--main-color);
+  margin: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.70);
+}
 
 
 
 
+a.button{
+  color: var(--main-color);
+background: white;
+padding: 5px 30px;
+border: 2px solid var(--main-color) ;
+border-radius: 6px;
+display: inline-block;
+  margin: 5px 20px;
+}
 
 
-
-
-
+a.button:hover{
+  color: white;
+background: var(--main-color);
+border-color: var(--main-color);
+transition: all 0.4s ease 0s;
+}
 
 
 

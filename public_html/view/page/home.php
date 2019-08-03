@@ -64,10 +64,130 @@
 		</div>
 
 		<div ng-show="(lEmail!=null && lEmail.length > 0)" ng-controller="homeController">
-
+		<section>
 			<h1>Welcome! {{portfolio.Name}}</h1>
-			<label>News</News>
-			<label>Thank you for support! See you on {{nextEventDate}}, at {{nextEventplace}}</label>
+			<div>Thank you for support! See you on {{portfolio.nextVolDate}}, at {{portfolio.nextVolplace}} . nextVolHow = {{portfolio.nextVolHow}} . nextVolPost = {{portfolio.nextVolPost}}</div>
+		</section>
+		<section>
+			<h1>Volunteer work records</h1>
+			<table st-table="upcoming" class="table table-striped">
+			<thead>
+				<tr>
+					<th style="width: 50%">Name</th>
+					<th style="width: 30%">Period</th>
+					<th style="width: 10%">Status</th>
+					<th style="width: 10%"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in portfolio.upcoming">
+					<td>{{row.name}}</td>
+					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+					<td>{{row.status}}</td>
+					<td>
+						<a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}" class="button">Details</a>
+		<!-- <button ng-click="window.location.href = 'https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}';">Details</button> -->
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</section>
+		<section>
+			<h1>Want to help again?</h1>
+			Let's us know your availability.
+			<table>
+				<tr>
+					<td>
+						<label>From </label> 
+					</td>
+					<td>
+						<input id="fromDate" type="date" ng-model="eventDetail.fromDate"/>  
+						<input id="fromTime" type="time" ng-model="eventDetail.fromDate"/><br>
+						<input id="fromDate1" type="text" ng-model="eventDetail.fromDate"/><br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>To </label> 
+					</td>
+					<td>
+						<input id="fromDate" type="date" ng-model="eventDetail.fromDate"/>  
+						<input id="fromTime" type="time" ng-model="eventDetail.fromDate"/><br>
+						<input id="fromDate1" type="text" ng-model="eventDetail.fromDate"/><br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Type </label> 
+					</td>
+					<td>
+						<input id="loginEmail" type="text" ng-model="eventDetail.contactEmail"/>
+					</td>
+				</tr>
+			</table>
+			<td><button ng-click="getEventDetail(row.id)">Add</button></td>
+		</section>
+		<section>
+			<h1>We also need volunteers for upcoming events...</h1>
+			<table st-table="upcoming" class="table table-striped">
+			<thead>
+				<tr>
+					<th style="width: 30%">Name</th>
+					<th style="width: 30%">Period</th>
+					<th style="width: 30%">Location</th>
+					<th style="width: 10%">Register</th>
+					<th style="width: 10%"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in upcomingEvents">
+					<td>{{row.name}}</td>
+					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+					<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
+					<td>
+						<input id="isRegistered" type="checkbox" ng-model="row.isRegistered"/>  
+					</td>
+					<td><a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}" class="button">Details</a>
+					<!-- <button ng-click="window.location.href = 'https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}';">Details</button> -->
+
+					</td>
+					
+				</tr>
+			</tbody>
+		</table>
+		<td><button ng-click="getEventDetail(row.id)">Register Events</button></td>
+		</section>
+	
+		<section>
+		<h1>History</h1>
+			<table st-table="past" class="table table-striped">
+			<thead>
+				<tr>
+					<th style="width: 25%">Name</th>
+					<th style="width: 15%">Period</th>
+					<th style="width: 15%">Location</th>
+					<th style="width: 5%">Post</th>
+					<th style="width: 5%">status</th>
+					<th style="width: 25%">Remarks</th>
+					<th style="width: 10%"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in portfolio.past">
+					<td>{{row.name}}</td>
+					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+					<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
+					<td>{{row.post}}</td>
+					<td>{{row.status}}</td>
+					<td>{{row.remarks}}</td>
+					<td>
+						<a href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}" class="button">Details</a>
+					<!-- <button ng-click="window.location.href = 'https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}';">Details</button> -->
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</section>
 		</div>
 
 	</main>
