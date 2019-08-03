@@ -262,8 +262,8 @@ function getPortfolio($email){
 
 	$sql= "SELECT event.id, event.name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, pastDisplay
 	From event
-	INNER join register on register.eventId = event.id and register.active = 1
-	where fromDate  <  CURDATE() and volId = ". $volId ."
+	INNER join register on register.eventId = event.id and register.active = 1 and volId = ". $volId ."
+	where fromDate  <  CURDATE()
 	order by fromDate DESC" ;
 
 	$results = runQuickQuery($sql);
@@ -293,7 +293,7 @@ function getPortfolio($email){
 	From volunteer 
 	left outer join volunteer_work on volunteer.id = volunteer_work.volId and volId = ". $volId ." and volunteer_work.active = 1 and volunteer_work.toDate >= CURDATE() and volunteer_work.status <> 'Cancelled'
 	where volId = ". $volId ."
-	order by volunteer_work.fromDate desc
+	order by volunteer_work.fromDate
 	Limit 0 , 1";
 
 	$results = runQuickQuery($sql);
