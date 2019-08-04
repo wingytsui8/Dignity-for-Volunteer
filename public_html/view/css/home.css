@@ -100,10 +100,6 @@ a.button:hover{
   transition: all 0.4s ease 0s;
 }
 
-#left {
-  width: 40%
-}
-
 @media (min-width: 812px){
   section {
     padding: 30px;
@@ -124,19 +120,19 @@ a.button:hover{
   width: 50%;
   display:inline-grid;
 }
-}
+
 
 }
 @media (max-width: 812px){
- section {
-  padding: 10px;
-  margin: 30px 10px;
-}
-main {
- background-color: aliceblue;
- min-height:750px;
- padding: 10px 0px;
-}
+   section {
+    padding: 10px;
+    margin: 30px 10px;
+  }
+  main {
+   background-color: aliceblue;
+   min-height:750px;
+   padding: 10px 0px;
+  }
 }
 
 
@@ -146,7 +142,6 @@ main {
 .formTable{
   border: 1px solid var(--main-color);
 }
-
 
 input{
   margin: 10px;
