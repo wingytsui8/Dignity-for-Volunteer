@@ -84,20 +84,20 @@ section {
 
 a.button{
   color: var(--main-color);
-background: white;
-padding: 5px 30px;
-border: 2px solid var(--main-color) ;
-border-radius: 6px;
-display: inline-block;
+  background: white;
+  padding: 5px 30px;
+  border: 2px solid var(--main-color) ;
+  border-radius: 6px;
+  display: inline-block;
   margin: 5px 20px;
 }
 
 
 a.button:hover{
   color: white;
-background: var(--main-color);
-border-color: var(--main-color);
-transition: all 0.4s ease 0s;
+  background: var(--main-color);
+  border-color: var(--main-color);
+  transition: all 0.4s ease 0s;
 }
 
 #left {
@@ -105,11 +105,11 @@ transition: all 0.4s ease 0s;
 }
 
 @media (min-width: 812px){
-    section {
-          padding: 30px;
-          margin: 50px;
-    }
-    main {
+  section {
+    padding: 30px;
+    margin: 50px;
+  }
+  main {
    background-image: url("../gallery/home_bg.jpeg");
    /*background-size: cover;*/
    background-repeat: repeat;
@@ -122,33 +122,88 @@ transition: all 0.4s ease 0s;
 }
 #right{
   width: 50%;
-  display:inline-table;
+  display:inline-grid;
 }
 }
 
 }
 @media (max-width: 812px){
-       section {
-          padding: 10px;
-          margin: 30px 10px;
-    }
-    main {
-   background-color: aliceblue;
-   min-height:750px;
-   padding: 10px 0px;
- }
+ section {
+  padding: 10px;
+  margin: 30px 10px;
+}
+main {
+ background-color: aliceblue;
+ min-height:750px;
+ padding: 10px 0px;
+}
 }
 
 
 .fif {
-    display: inline; /* Or inline-block */
+  display: inline; /* Or inline-block */
+}
+.formTable{
+  border: 1px solid var(--main-color);
 }
 
 
+input{
+  margin: 10px;
+}
+input[type=date], [type=time], [type=text], [type=number]  {
+    width: 90%;
+    padding: 0px 5px;
+    border-radius: 5px;
+}
 
+input[type=checkbox] {
+  top: 0;
+  left: 0;
+  background-color: #eee;
+}
 
+/* On mouse-over, add a grey background color */
+input[type=checkbox]:hover  {
+  background-color: #ccc;
+}
 
+/* When the checkbox is checked, add a blue background */
+input[type=checkbox]:checked {
+  background-color: #2196F3;
+}
 
+/* Create the checkmark/indicator (hidden when not checked) */
+input[type=checkbox]:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+input:focus {
+  background-color: var(--main-color-input);
+}
+
+select {
+    width: 90%;
+    border: 5px solid #f8f8f8;
+    margin: 10px;
+}
+label{
+  font-size: 16px;
+/*  padding: 20px 0px 5px 0px;*/
+}
+
+textarea {
+    width: 90%;
+    height: 60px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+textarea:focus {
+  background-color: var(--main-color-input);
+}
 
 
 

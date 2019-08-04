@@ -93,21 +93,23 @@
 		</table>
 		</section>
 		<section>
-			<div >
+			
 				<h1>Want to help again?</h1>
+				<div >
 				<div id="left">
 			Let us know your availability.</div>
 			<div id="right">
 
 			<table>
+				<tbody class="formTable">
 				<tr>
-					<td>
+					<td style="width: 20%;">
 						<label>From </label> 
 					</td>
-					<td>
-						<input id="fromDate" type="date" ng-model="eventDetail.fromDate"/>  
-						<input id="fromTime" type="time" ng-model="eventDetail.fromDate"/><br>
-						<input id="fromDate1" type="text" ng-model="eventDetail.fromDate"/><br>
+					<td style="width: 80%;">
+						<input id="fromDate" type="date" ng-model="work.fromDate"/>  
+						<!-- <input id="fromTime" type="time" ng-model="work.fromDate"/><br> -->
+						<input id="fromDate1" type="text" ng-model="work.fromDate"/><br>
 					</td>
 				</tr>
 				<tr>
@@ -115,17 +117,23 @@
 						<label>To </label> 
 					</td>
 					<td>
-						<input id="fromDate" type="date" ng-model="eventDetail.fromDate"/>  
-						<input id="fromTime" type="time" ng-model="eventDetail.fromDate"/><br>
-						<input id="fromDate1" type="text" ng-model="eventDetail.fromDate"/><br>
+						<input id="toDate" type="date" ng-model="work.toDate"/> 
+						<!-- <input id="toTime" type="time" ng-model="work.toDate"/><br> -->
+						<input id="fromDate1" type="text" ng-model="work.toDate"/><br>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label>Post </label> 
+						<label>Post</label> 
 					</td>
 					<td>
-						<input id="loginEmail" type="text" ng-model="eventDetail.contactEmail"/>
+						<select ng-model="work.postOption">
+							<option value="General" selected="selected">General</option>
+							<option value="Teacher">Teacher</option>
+							<option value="Other">Other</option>
+						</select>
+						<input ng-show="(work.postOption=3)" id="option" type="text" ng-model="work.post"/>
+						
 					</td>
 				</tr>
 				<tr>
@@ -133,9 +141,11 @@
 						<label>Remarks </label> 
 					</td>
 					<td>
-						<textarea id="remarks" ng-model="row.Description"/></textarea> 
+						<textarea id="remarks" ng-model="work.remarks"/></textarea> 
 					</td>
 				</tr>
+
+				</tbody>
 			</table>
 			<td><button ng-click="getEventDetail(row.id)">Add</button></td>
 		</div>
