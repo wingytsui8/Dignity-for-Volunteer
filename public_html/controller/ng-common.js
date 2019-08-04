@@ -534,35 +534,18 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 				responseData = JSON.parse(response);
 			}
 		});
-		$scope.portfolio = responseData[0];
-		$rootScope.upcomingInitChange($rootScope.lEmail);
-	};
-	$scope.upcomingEvents = [];
-	$rootScope.upcomingInitChange = function(email){
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'getRegisterEventDetails' ,  email: email },
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-				for (var i = 0 ;i<responseData.length;i++){
-					if (responseData[i].registered == "1"){
-						responseData[i].isRegistered = true;
-					}else if(responseData[i].registered == "0"){
-						responseData[i].isRegistered = false;
-					}
-				}
+		for (var i = 0 ;i<responseData[0].upcoming.length;i++){
+			if (responseData[0].upcoming[i].registered == "1"){
+				responseData[0].upcoming[i].isRegistered = true;
+			}else if(responseData[0].upcoming[i].registered == "0"){
+				responseData[0].upcoming[i].isRegistered = false;
 			}
-		});
-
-		$scope.upcomingEvents = responseData;
-		$rootScope.loading = false;
+		}
+		$scope.portfolio = responseData[0];
 	};
 	$scope.addVolunteerWork = function(){
-		if ($scope.work.postOption==null || $scope.work.fromDate==null || $scope.work.toDate==null ||
-			($scope.work.postOption=="Others" && ($scope.work.post == null || $scope.work.post.length == 0))){
+		if ($scope.work.postOption==null || $scope.work.fromDate==null || $scope.work.toDate==null || ($scope.work.postOption=="Others" 
+			&& ($scope.work.post == null || $scope.work.post.length == 0))){
 			alert("Please fill in all the necessary items before submission.");
 		}else{
 			if (confirm("Are you sure?")){
@@ -589,8 +572,6 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 				});
 			}
 		}
-		
-
 	}
 }]);
 

@@ -165,28 +165,26 @@
 		</div>
 		</section>
 		<section>
-			<h1>We also need volunteers for upcoming events...</h1>
+			<h1>We also need helpers for upcoming events...</h1>
 			<table st-table="upcoming" class="table table-striped">
 			<thead>
 				<tr>
-					<th style="width: 30%">Name</th>
+					<th style="width: 10%">Name</th>
 					<th style="width: 30%">Period</th>
-					<th style="width: 30%">Location</th>
-					<th style="width: 10%">Register</th>
-					<th style="width: 10%"></th>
+					<th style="width: 10%">Application Deadline</th>
+					<th style="width: 10%">Quota</th>
+					<th style="width: 10%">Application Status</th>
+					<th style="width: 10%">Register?</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="row in upcomingEvents">
-					<td>{{row.name}}</td>
+				<tr ng-repeat="row in upcoming">
+					<td><a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}">{{row.name}}</a></td>
 					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
-					<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
+					<td>{{row.applicationDeadline}}</td>
+					<td>{{row.quota}}</td>
 					<td>
 						<input id="isRegistered" type="checkbox" ng-model="row.isRegistered"/>  
-					</td>
-					<td><a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}" class="button">Details</a>
-					<!-- <button ng-click="window.location.href = 'https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}';">Details</button> -->
-
 					</td>
 					
 				</tr>

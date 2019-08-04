@@ -255,7 +255,7 @@ function getEventPhoto($id){
 function getPortfolio($email){
 	$volId = getVolunteerId($email);
 
-	$sql= "SELECT e.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, applicationDeadline, quota, !(r.eventId is null) as registered, r.status as Status
+	$sql= "SELECT e.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, applicationDeadline, quota, !(r.eventId is null) as registered, r.status as status
 	From event as e
 	left outer join  
 	(
