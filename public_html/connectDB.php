@@ -147,7 +147,7 @@ function getRegisterEventDetails($email){
 	Select r2.eventId
 	from volunteer as vol
 	inner join register as r2 on r2.active = 1 and r2.status <> \"Cancelled\" AND vol.id = r2.volId 
-	where vol.email = '" . $email . "'
+	where LOWER(vol.email) = '" . $email . "'
 	) as r on e.id = r.eventId
 	where active = 1 and fromDate >= CURDATE()
 	order by fromDate;";
@@ -166,7 +166,7 @@ function getRegisteredList($id){
 function getVolunteerId($email){
 	$sql= "SELECT id
 	From volunteer
-	where email = '". $email . "';";
+	where LOWER(email) = '". strtolower($email) . "';";
 	$result = runQuickQuery($sql);
 	return $result->fetch_assoc()["id"];
 }
@@ -292,7 +292,7 @@ function getPortfolio($email){
 	$sql= "SELECT name as Name, volunteer_work.fromDate as nextVolDate, volunteer_work.venue as nextVolplace, volunteer_work.location as nextVolHow, volunteer_work.post as nextVolPost
 	From volunteer 
 	left outer join volunteer_work on volunteer.id = volunteer_work.volId and volId = ". $volId ." and volunteer_work.active = 1 and volunteer_work.toDate >= CURDATE() and volunteer_work.status <> 'Cancelled'
-	where volId = ". $volId ."
+	where volunteer.id = ". $volId ."
 	order by volunteer_work.fromDate
 	Limit 0 , 1";
 
@@ -353,7 +353,7 @@ function login($email, $password){
 	$pwHash = hash("sha256", $password);
 	$sql= "SELECT 1
 	From volunteer
-	where lower(email) = '". strtolower($email) . "' and password = '". $pwHash . "'";
+	where LOWER(email) = '". strtolower($email) . "' and password = '". $pwHash . "'";
 	$val =  validate($sql);
 	if ($val){
 		updateLoginTime($email);
@@ -362,7 +362,7 @@ function login($email, $password){
 }
 
 function updateLoginTime($email){
-	$sql= "UPDATE `volunteer` set `loginTime` = Now() WHERE email = '". $email ."';";
+	$sql= "UPDATE `volunteer` set `loginTime` = Now() WHERE LOWER(email) = '". strtolower($email) ."';";
 	runNonQuery($sql);
 }
 
@@ -370,7 +370,7 @@ function checkLoginSession($email){
 	//
 	$sql= "SELECT 1
 	From volunteer 
-	where lower(`email`) ='" . strtolower($email) . 
+	where LOWER(`email`) ='" . strtolower($email) . 
 	"' and `loginTime`is not null and ADDTIME(`loginTime`, '0 0:30:0') > NOW() ";	
 	return validate($sql);
 }
