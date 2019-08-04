@@ -122,7 +122,7 @@
 					<td>
 						<input id="toDate" type="date" ng-model="work.toDate"/> 
 						<!-- <input id="toTime" type="time" ng-model="work.toDate"/><br> -->
-						<input id="fromDate1" type="text" ng-model="work.toDate"/><br>
+						<input id="toDate1" type="text" ng-model="work.toDate"/><br>
 					</td>
 				</tr>
 				<tr>
@@ -149,7 +149,7 @@
 
 				</tbody>
 			</table>
-			<td><button ng-click="getEventDetail(row.id)">Add</button></td>
+			<td><button ng-click="addVolunteerWork()">Add</button></td>
 		</div>
 		</div>
 		</section>
