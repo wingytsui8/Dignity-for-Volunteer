@@ -95,8 +95,8 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 	$rootScope.loading = true;
 
 	$scope.$watch('pageTitle', function () {
-    	$rootScope.pageTitle = $scope.pageTitle;
-    });
+		$rootScope.pageTitle = $scope.pageTitle;
+	});
 
 	$scope.reloadPage = function() {
 		$route.reload();
@@ -134,28 +134,28 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 	$scope.getEvents = function($upcoming){
 		if ($upcoming){
 			$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '0' ,  upcoming: $upcoming },
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-				$scope.action = "Edit Upcoming Event";
-			}
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '0' ,  upcoming: $upcoming },
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+					$scope.action = "Edit Upcoming Event";
+				}
 			});
-		
+
 		}else{
 			$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '0' ,  upcoming: $upcoming },
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-				$scope.action = "Edit Past Event";
-			}
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '0' ,  upcoming: $upcoming },
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+					$scope.action = "Edit Past Event";
+				}
 			});
 		}
 		$scope.events = responseData;
@@ -229,23 +229,23 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		$scope.registeredList = responseData;
 	}
 	$scope.downloadRegisteredList = function (){
-	    var csv = 'No.,Volunteer id,Name,Email,Registered Date,Status\n';
-	    for (var i = $scope.registeredList.length-1;i >=0 ; i--){
-		 	csv += (i+1) + ',';
-            csv += $scope.registeredList[i].volId + ',';
-            csv += $scope.registeredList[i].name + ',';
-            csv += $scope.registeredList[i].email + ',';
-            csv += $scope.registeredList[i].createDate + ',';
-            csv += $scope.registeredList[i].status;
-            csv += "\n";
+		var csv = 'No.,Volunteer id,Name,Email,Registered Date,Status\n';
+		for (var i = $scope.registeredList.length-1;i >=0 ; i--){
+			csv += (i+1) + ',';
+			csv += $scope.registeredList[i].volId + ',';
+			csv += $scope.registeredList[i].name + ',';
+			csv += $scope.registeredList[i].email + ',';
+			csv += $scope.registeredList[i].createDate + ',';
+			csv += $scope.registeredList[i].status;
+			csv += "\n";
 		}
-	    console.log(csv);
-	    var current = new Date();
-	    var hiddenElement = document.createElement('a');
-	    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-	    hiddenElement.target = '_blank';
-	    hiddenElement.download =  $scope.eventDetail.name + ' Registered List ' + current.getYear() + '-'  + current.getMonth() + '-'  + current.getDate() + '.csv';
-	    hiddenElement.click();
+		console.log(csv);
+		var current = new Date();
+		var hiddenElement = document.createElement('a');
+		hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+		hiddenElement.target = '_blank';
+		hiddenElement.download =  $scope.eventDetail.name + ' Registered List ' + current.getYear() + '-'  + current.getMonth() + '-'  + current.getDate() + '.csv';
+		hiddenElement.click();
 	}
 
 	$scope.eventPhoto = null;
@@ -560,6 +560,38 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		$scope.upcomingEvents = responseData;
 		$rootScope.loading = false;
 	};
+	$scope.addVolunteerWork = function(){
+		if ($scope.work.postOption==null || $scope.work.fromDate==null || $scope.work.toDate==null ||
+			($scope.work.postOption=="Others" && ($scope.work.post == null || $scope.work.post.length == 0))){
+			alert("Please fill in all the necessary items before submission.");
+		}else{
+			if (confirm("Are you sure?")){
+				$post = $scope.work.postOption;
+				if ($post!="Teacher" || $post!="General"){
+					$post = $scope.work.post;
+				}
+				$.ajax({
+					url: '../connectDB.php',
+					type: 'POST',
+					data : { 
+						action: 'addVolunteerWork', 
+						email: $rootScope.lEmail, 
+						from: $scope.work.fromDate, 
+						to: $scope.work.toDate,
+						post: $post,
+						remarks: $scope.work.remarks
+					},
+					dataType: "json",
+					async: false,
+					success: function(response) {
+						responseData = JSON.parse(response);
+					}
+				});
+			}
+		}
+		
+
+	}
 }]);
 
 
