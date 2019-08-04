@@ -183,6 +183,7 @@
 					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
 					<td>{{row.applicationDeadline}}</td>
 					<td>{{row.quota}}</td>
+					<td>{{row.status}}</td>
 					<td>
 						<input id="isRegistered" type="checkbox" ng-model="row.isRegistered"/>  
 					</td>
@@ -217,7 +218,6 @@
 					<td>{{row.remarks}}</td>
 					<td>
 						<a href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}" class="button">Details</a>
-					<!-- <button ng-click="window.location.href = 'https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}';">Details</button> -->
 					</td>
 				</tr>
 			</tbody>

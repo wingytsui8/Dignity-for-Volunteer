@@ -522,7 +522,6 @@ app.controller("UpcomingEventDetailsController", ["$scope", "$rootScope", functi
 }]);
 
 app.controller("homeController", ["$scope", "$rootScope", function($scope, $rootScope) {
-	$rootScope.loading = true;
 	$rootScope.homeInit = function(){
 		$.ajax({
 			url: '../connectDB.php',
@@ -542,6 +541,7 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 			}
 		}
 		$scope.portfolio = responseData[0];
+		$rootScope.loading = false;
 	};
 	$scope.addVolunteerWork = function(){
 		if ($scope.work.postOption==null || $scope.work.fromDate==null || $scope.work.toDate==null || ($scope.work.postOption=="Others" 
