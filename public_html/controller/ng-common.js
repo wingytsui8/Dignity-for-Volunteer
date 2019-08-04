@@ -24,7 +24,7 @@ for (var i = 0; i < pages.length; i++){
 	}
 	commonHeaderHtml += "href=\"" + pages[i] + "/\" target=\"_self\""
 	if (pages[i] == "Management"){
-		commonHeaderHtml += " ng-show=\"(lEmail!=null && lEmail.length > 0 && lEmail=='DignityforVolunteer@gmail.com')\""
+		commonHeaderHtml += " ng-show=\"(lEmail!=null && lEmail.length > 0 && lEmail.toLocaleLowerCase()=='dignityforvolunteer@gmail.com')\""
 	}
 	commonHeaderHtml += ">" + pages[i] + "</a></li>";
 }
