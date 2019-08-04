@@ -44,7 +44,7 @@
 	<script type="text/javascript">
 		function checkvalue(val){
 		 var element=document.getElementById('post');
-		 if(val=='Others')
+		 if(val=='Other')
 		   element.style.display='block';
 		 else {
 		 	element.style.display='none';
@@ -144,7 +144,7 @@
 						<select onchange='checkvalue(this.value)'> 
 					    <option value="General">General</option>
 					    <option value="Teacher">Teacher</option>
-					    <option value="Others">Others</option>
+					    <option value="Other">Other</option>
 					</select> 
 					<input type="text" id="post" ng-model="work.post" style='display:none'/>
 					</td>
@@ -208,7 +208,10 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="row in portfolio.past">
-					<td>{{row.name}}</td>
+					<td>
+						<div ng-show="row.pastDisplay==0">{{row.name}}</div>
+						<a ng-show="row.pastDisplay==1" href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}">{{row.name}}</a>
+					</td>
 					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
 					<td>{{row.venue}}</td>
 					<td>{{row.remarks}}</td>
