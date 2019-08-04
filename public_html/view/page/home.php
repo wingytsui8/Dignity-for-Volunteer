@@ -85,24 +85,23 @@
 		</section>
 		<section>
 			<h1>Volunteer work records</h1>
-			<table st-table="upcoming" class="table table-striped">
+			<table st-table="volWork" class="table table-striped">
 			<thead>
 				<tr>
-					<th style="width: 50%">Name</th>
 					<th style="width: 30%">Period</th>
 					<th style="width: 10%">Status</th>
-					<th style="width: 10%"></th>
+					<th style="width: 10%">Post</th>
+					<th style="width: 10%">Venue</th>
+					<th style="width: 30%">Remarks</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="row in portfolio.upcoming">
-					<td>{{row.name}}</td>
 					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
 					<td>{{row.status}}</td>
-					<td>
-						<a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}" class="button">Details</a>
-		<!-- <button ng-click="window.location.href = 'https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}';">Details</button> -->
-					</td>
+					<td>{{row.post}}</td>
+					<td>{{row.venue}}</td>
+					<td>{{row.remarks}}</td>
 				</tr>
 			</tbody>
 		</table>

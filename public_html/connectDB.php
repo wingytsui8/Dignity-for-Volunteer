@@ -122,6 +122,15 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( registerEvents($email, $registerData) );
 		exit;
+		case "addVolunteerWork":
+		$email = (string)$_POST['email'];
+		$from = (string)$_POST['from'];
+		$to = (string)$_POST['to'];
+		$post = (string)$_POST['post'];
+
+		header('Content-type: application/json');
+		echo json_encode( addVolunteerWork($email, $from, $to, $post, $remarks) );
+		exit;
 	}
 }
 
@@ -246,11 +255,17 @@ function getEventPhoto($id){
 function getPortfolio($email){
 	$volId = getVolunteerId($email);
 
-	$sql= "SELECT event.id, event.name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, reg.status
-	From event
-	left outer join register reg on reg.eventId = event.id and reg.active = 1 and reg.volId = ". $volId ."
-	where fromDate  >=  CURDATE() and upcomingDisplay = 1
-	order by fromDate Desc" ;
+	$sql= "SELECT e.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, applicationDeadline, quota, !(r.eventId is null) as registered, r.status as Status
+	From event as e
+	left outer join  
+	(
+	Select r2.eventId, r2.status
+	from volunteer as vol
+	inner join register as r2 on r2.active = 1 and r2.status <> 'Cancelled' AND vol.id = r2.volId 
+	where r2.id = " . $volId . "
+	) as r on e.id = r.eventId
+	where active = 1 and fromDate >= CURDATE()
+	order by fromDate;";
 
 	$results = runQuickQuery($sql);
 	$upcomingEvents = [];
@@ -275,17 +290,17 @@ function getPortfolio($email){
 		}
 	}
 
-	$sql= "SELECT DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, post, venue, location, status, remarks
+	$sql= "SELECT DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, post, venue, status, remarks
 	From volunteer_work
 	where active = 1 and volId = ". $volId ."
 	order by fromDate DESC" ;
 
 	$results = runQuickQuery($sql);
 	
-	$pastEvents = [];
+	$volWork = [];
 	if($results->num_rows > 0){
 		while($result = $results->fetch_assoc()) {
-			$pastEvents[] = $result;
+			$volWork[] = $result;
 		}
 	}
 
@@ -301,7 +316,8 @@ function getPortfolio($email){
 	if ($results->num_rows > 0) {
 		$resArr[] = array_merge($results->fetch_assoc(), [
 			"upcoming" => $upcomingEvents,
-			"past" => $pastEvents
+			"past" => $pastEvents,
+			"volWork" => $volWork
 		]);
 		return json_encode($resArr);
 	}
@@ -322,7 +338,7 @@ function postEvent($id, $name, $fromDate, $toDate, $venue, $location, $contactNa
 function postPhoto($id, $type, $path, $des){ 
 	$sql= "INSERT INTO event (id, type, `path`, des) VALUES ('". $id. "','" . $type."', '".$path."', '".$des."')
 	ON DUPLICATE KEY UPDATE 
-	type=VALUES(type), path=VALUES(path), des=VALUES(des ";
+	type=VALUES(type), path=VALUES(path), des=VALUES(des) ";
 	return runQuery($sql);
 }
 
@@ -342,6 +358,18 @@ function registerEvents($email, $registerData){
 			}
 		}
 		runNonQuery($dbChange);
+		return true;
+	}else{
+		return false;
+	}
+}
+
+function addVolunteerWork($email, $from, $to, $post, $remarks){
+	if (checkLoginSession($email)){
+		$volId = getVolunteerId($email);
+		$sql = "Insert into `volunteer_work` (`volId`, `fromDate`, `toDate`, `post`, `status`, `active`, `remarks`)
+				VALUES (". $volId .", '". $from ."', '". $to ."', '". $post ."', 'Pending', 1, '". $remarks ."');";
+		runNonQuery($sql);
 		return true;
 	}else{
 		return false;
