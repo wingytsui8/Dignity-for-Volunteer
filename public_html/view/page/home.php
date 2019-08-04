@@ -93,8 +93,12 @@
 		</table>
 		</section>
 		<section>
-			<h1>Want to help again?</h1>
-			Let's us know your availability.
+			<div >
+				<h1>Want to help again?</h1>
+				<div id="left">
+			Let us know your availability.</div>
+			<div id="right">
+
 			<table>
 				<tr>
 					<td>
@@ -118,14 +122,24 @@
 				</tr>
 				<tr>
 					<td>
-						<label>Type </label> 
+						<label>Post </label> 
 					</td>
 					<td>
 						<input id="loginEmail" type="text" ng-model="eventDetail.contactEmail"/>
 					</td>
 				</tr>
+				<tr>
+					<td>
+						<label>Remarks </label> 
+					</td>
+					<td>
+						<textarea id="remarks" ng-model="row.Description"/></textarea> 
+					</td>
+				</tr>
 			</table>
 			<td><button ng-click="getEventDetail(row.id)">Add</button></td>
+		</div>
+		</div>
 		</section>
 		<section>
 			<h1>We also need volunteers for upcoming events...</h1>

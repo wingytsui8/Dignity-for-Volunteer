@@ -3,13 +3,7 @@
 	height:750px;
   }*/
 
-  main {
-   background-image: url("../gallery/home_bg.jpeg");
-   /*background-size: cover;*/
-   background-repeat: repeat;
-   min-height:750px;
-   padding: 48px 0px;
- }
+  
 
 
 /*.home_login {
@@ -80,20 +74,13 @@
   padding: 10px;
 }
 
-
-
 section {  
   display: block;
-  padding: 30px;
   background-color: white;
   color: var(--main-color);
-  margin: 50px;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.70);
 }
-
-
-
 
 a.button{
   color: var(--main-color);
@@ -114,7 +101,31 @@ transition: all 0.4s ease 0s;
 }
 
 
+@media (min-width: 812px){
+    section {
+          padding: 30px;
+          margin: 50px;
+    }
+    main {
+   background-image: url("../gallery/home_bg.jpeg");
+   /*background-size: cover;*/
+   background-repeat: repeat;
+   min-height:750px;
+   padding: 48px 0px;
+ }
 
+}
+@media (max-width: 812px){
+       section {
+          padding: 0px;
+          margin: 0px;
+    }
+    main {
+   background-color: darkblue;
+   min-height:750px;
+   padding: 48px 0px;
+ }
+}
 
 
 
