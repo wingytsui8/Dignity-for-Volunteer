@@ -41,6 +41,18 @@
 		window.useTrailingSlashes = true;
 	</script>
 	<link href="css/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		function checkvalue(val){
+		 var element=document.getElementById('post');
+		 if(val=='Others')
+		   element.style.display='block';
+		 else {
+		 	element.style.display='none';
+		 	element.value = val;
+		 }
+		   
+		}
+	</script> 
 </head>
 
 <body>
@@ -122,7 +134,7 @@
 					<td>
 						<input id="toDate" type="date" ng-model="work.toDate"/> 
 						<!-- <input id="toTime" type="time" ng-model="work.toDate"/><br> -->
-						<input id="fromDate1" type="text" ng-model="work.toDate"/><br>
+						<input id="toDate1" type="text" ng-model="work.toDate"/><br>
 					</td>
 				</tr>
 				<tr>
@@ -130,17 +142,17 @@
 						<label>Post</label> 
 					</td>
 					<td>
-						<select ng-model="work.postOption">
-							<option value="General" selected="selected">General</option>
-							<option value="Teacher">Teacher</option>
-							<option value="Other">Other</option>
-						</select>
-						<input ng-show="(work.postOption=3)" id="option" type="text" ng-model="work.post"/>
+						<select onchange='checkvalue(this.value)'> 
+					    <option value="General">General</option>
+					    <option value="Teacher">Teacher</option>
+					    <option value="Others">Others</option>
+					</select> 
+					<input type="text" id="post" ng-model="work.post" style='display:none'/>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label>Remarks </label> 
+						<label>Remarks</label> 
 					</td>
 					<td>
 						<textarea id="remarks" ng-model="work.remarks"/></textarea> 
