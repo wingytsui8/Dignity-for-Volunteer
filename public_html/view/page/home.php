@@ -48,7 +48,6 @@
 		   element.style.display='block';
 		 else {
 		 	element.style.display='none';
-		 	element.value = val;
 		 }
 		   
 		}
@@ -122,7 +121,6 @@
 					</td>
 					<td style="width: 80%;">
 						<input id="fromDate" type="date" ng-model="work.fromDate"/>  
-						<!-- <input id="fromTime" type="time" ng-model="work.fromDate"/><br> -->
 						<input id="fromDate1" type="text" ng-model="work.fromDate"/><br>
 					</td>
 				</tr>
@@ -132,7 +130,6 @@
 					</td>
 					<td>
 						<input id="toDate" type="date" ng-model="work.toDate"/> 
-						<!-- <input id="toTime" type="time" ng-model="work.toDate"/><br> -->
 						<input id="toDate1" type="text" ng-model="work.toDate"/><br>
 					</td>
 				</tr>
@@ -141,7 +138,8 @@
 						<label>Post</label> 
 					</td>
 					<td>
-						<select onchange='checkvalue(this.value)'> 
+						<select onchange='checkvalue(this.value)' ng-model="work.postOption"> 
+						<option disabled selected value> -- select an option -- </option>
 					    <option value="General">General</option>
 					    <option value="Teacher">Teacher</option>
 					    <option value="Other">Other</option>

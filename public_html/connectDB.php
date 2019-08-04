@@ -293,7 +293,7 @@ function getPortfolio($email){
 	$sql= "SELECT DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, post, venue, status, remarks
 	From volunteer_work
 	where active = 1 and volId = ". $volId ."
-	order by fromDate DESC" ;
+	order by fromDate>CURDATE() DESC, `status`='Confirmed' DESC, fromDate" ;
 
 	$results = runQuickQuery($sql);
 	
@@ -325,7 +325,7 @@ function getPortfolio($email){
 
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  Get functions   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ others ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ other ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 function postEvent($id, $name, $fromDate, $toDate, $venue, $location, $contactName, $contactEmail, $applicationDeadline, $quota, $active){ 
 	$sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES ('". $id. "','" . $name."', '".$fromDate."', '".$toDate."', '" .$venue."', '" .$location. "' , '" . $contactName . "', '" . $contactEmail. "', '".$applicationDeadline."', '". $quota. "', '".$active."')
@@ -409,7 +409,7 @@ function deletePhoto($id){
 }
 
 
-// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv others vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv other vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
 
 

@@ -544,35 +544,44 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		$rootScope.loading = false;
 	};
 	$scope.addVolunteerWork = function(){
-		if ($scope.work.postOption==null || $scope.work.fromDate==null || $scope.work.toDate==null || ($scope.work.postOption=="Others" 
+		if ($scope.work==null || $scope.work.postOption==null || $scope.work.fromDate==null || $scope.work.toDate==null || ($scope.work.postOption=="Other" 
 			&& ($scope.work.post == null || $scope.work.post.length == 0))){
 			alert("Please fill in all the necessary items before submission.");
-		}else{
-			if (confirm("Are you sure?")){
-				$post = $scope.work.postOption;
-				if ($post!="Teacher" || $post!="General"){
-					$post = $scope.work.post;
-				}
-				$.ajax({
-					url: '../connectDB.php',
-					type: 'POST',
-					data : { 
-						action: 'addVolunteerWork', 
-						email: $rootScope.lEmail, 
-						from: $scope.work.fromDate, 
-						to: $scope.work.toDate,
-						post: $post,
-						remarks: $scope.work.remarks
-					},
-					dataType: "json",
-					async: false,
-					success: function(response) {
-						responseData = JSON.parse(response);
-					}
-				});
+	}else{
+		if (confirm("Are you sure?")){
+			$post = $scope.work.postOption;
+			if ($post!="Teacher" || $post!="General"){
+				$post = $scope.work.post;
 			}
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { 
+					action: 'addVolunteerWork', 
+					email: $rootScope.lEmail, 
+					from: $scope.work.fromDate.toISOString().split('T')[0],
+					to: $scope.work.toDate.toISOString().split('T')[0],
+					post: $post,
+					remarks: $scope.work.remarks?$scope.work.remarks:""
+				},
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+					if (responseData){
+						alert("change applied");
+					}else{
+						alert("Login session has passed. Please login again");
+						sessionStorage.setItem("lEmail", "");
+						$rootScope.lEmail = "";
+						extEmail = "";
+					}
+					location.reload();
+				}
+			});
 		}
 	}
+}
 }]);
 
 
