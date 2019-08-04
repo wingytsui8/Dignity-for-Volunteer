@@ -67,7 +67,7 @@
 		<section>
 			<h1>Welcome! {{portfolio.Name}}</h1>
 			<div>Thank you for your support!</div>
-			<div class="fif" ng-show="portfolio.nextVolDate!=null && portfolio.nextVolDate.length>0" class="fif">See you on {{portfolio.nextVolDate}}</div><div class="fif" ng-show="portfolio.nextVolplace!=null && portfolio.nextVolplace.length>0"> at {{portfolio.nextVolplace}}</div><div class="fif" ng-show="portfolio.nextVolPost!=null && portfolio.nextVolPost.length>0"> as a {{portfolio.nextVolPost}}</div><div class="fif">.</div>
+			<div class="fif" ng-show="portfolio.nextVolDate!=null && portfolio.nextVolDate.length>0" class="fif">See you on {{portfolio.nextVolDate}}</div><div class="fif" ng-show="portfolio.nextVolplace!=null && portfolio.nextVolplace.length>0"> at {{portfolio.nextVolplace}}</div><div class="fif" ng-show="portfolio.nextVolPost!=null && portfolio.nextVolPost.length>0"> as a {{portfolio.nextVolPost}}</div><div ng-show="(portfolio.nextVolDate!=null && portfolio.nextVolDate.length>0) || (portfolio.nextVolplace!=null && portfolio.nextVolplace.length>0) || (portfolio.nextVolPost!=null && portfolio.nextVolPost.length>0)" class="fif">.</div>
 
 			<div ng-show="portfolio.nextVolHow!=null && portfolio.nextVolHow.length>0">How to get there? {{portfolio.nextVolHow}}</div>
 		</section>
@@ -128,7 +128,10 @@
 						<label>Post </label> 
 					</td>
 					<td>
+
 						<input id="loginEmail" type="text" ng-model="eventDetail.contactEmail"/>
+
+
 					</td>
 				</tr>
 				<tr>
