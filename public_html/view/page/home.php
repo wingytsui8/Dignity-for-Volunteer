@@ -66,7 +66,10 @@
 		<div ng-show="(lEmail!=null && lEmail.length > 0)" ng-controller="homeController">
 		<section>
 			<h1>Welcome! {{portfolio.Name}}</h1>
-			<div>Thank you for support! See you on {{portfolio.nextVolDate}}, at {{portfolio.nextVolplace}} . nextVolHow = {{portfolio.nextVolHow}} . nextVolPost = {{portfolio.nextVolPost}}</div>
+			<div>Thank you for your support!</div>
+			<div class="fif" ng-show="portfolio.nextVolDate!=null && portfolio.nextVolDate.length>0" class="fif">See you on {{portfolio.nextVolDate}}</div><div class="fif" ng-show="portfolio.nextVolplace!=null && portfolio.nextVolplace.length>0"> at {{portfolio.nextVolplace}}</div><div class="fif" ng-show="portfolio.nextVolPost!=null && portfolio.nextVolPost.length>0"> as a {{portfolio.nextVolPost}}</div><div class="fif">.</div>
+
+			<div ng-show="portfolio.nextVolHow!=null && portfolio.nextVolHow.length>0">How to get there? {{portfolio.nextVolHow}}</div>
 		</section>
 		<section>
 			<h1>Volunteer work records</h1>
