@@ -96,7 +96,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="row in portfolio.upcoming">
+				<tr ng-repeat="row in portfolio.volWork">
 					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
 					<td>{{row.status}}</td>
 					<td>{{row.post}}</td>
@@ -178,7 +178,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="row in upcoming">
+				<tr ng-repeat="row in portfolio.upcoming">
 					<td><a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}">{{row.name}}</a></td>
 					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
 					<td>{{row.applicationDeadline}}</td>
@@ -195,15 +195,13 @@
 		</section>
 	
 		<section>
-		<h1>History</h1>
+		<h1>Participated Events</h1>
 			<table st-table="past" class="table table-striped">
 			<thead>
 				<tr>
 					<th style="width: 25%">Name</th>
 					<th style="width: 15%">Period</th>
-					<th style="width: 15%">Location</th>
-					<th style="width: 5%">Post</th>
-					<th style="width: 5%">status</th>
+					<th style="width: 15%">Venue</th>
 					<th style="width: 25%">Remarks</th>
 					<th style="width: 10%"></th>
 				</tr>
@@ -212,9 +210,7 @@
 				<tr ng-repeat="row in portfolio.past">
 					<td>{{row.name}}</td>
 					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
-					<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
-					<td>{{row.post}}</td>
-					<td>{{row.status}}</td>
+					<td>{{row.venue}}</td>
 					<td>{{row.remarks}}</td>
 					<td>
 						<a href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}" class="button">Details</a>

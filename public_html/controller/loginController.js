@@ -15,7 +15,7 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
 		if ($scope.password.length > 0 && $scope.email.length > 0){
 
             $scope.email = $scope.email.toLowerCase();
-            
+
         	var hash = sha256_digest($scope.password);
         	$.ajax({
         		url: '../connectDB.php',
@@ -45,8 +45,8 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
         if ($rootScope.pageTitle == "Home"){
             $rootScope.homeInit();
         }
-    	$scope.$apply();
         $rootScope.loading = false;
+    	$scope.$apply();
     }
 
 }]).run(['$window',function($window, Utilities) {
