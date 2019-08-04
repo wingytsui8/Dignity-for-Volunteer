@@ -100,6 +100,9 @@ border-color: var(--main-color);
 transition: all 0.4s ease 0s;
 }
 
+#left {
+  width: 40%
+}
 
 @media (min-width: 812px){
     section {
@@ -113,22 +116,33 @@ transition: all 0.4s ease 0s;
    min-height:750px;
    padding: 48px 0px;
  }
+ #left {
+  width: 40%;
+  display:inline-block;
+}
+#right{
+  width: 50%;
+  display:inline-table;
+}
+}
 
 }
 @media (max-width: 812px){
        section {
-          padding: 0px;
-          margin: 0px;
+          padding: 10px;
+          margin: 30px 10px;
     }
     main {
-   background-color: darkblue;
+   background-color: aliceblue;
    min-height:750px;
-   padding: 48px 0px;
+   padding: 10px 0px;
  }
 }
 
 
-
+.fif {
+    display: inline; /* Or inline-block */
+}
 
 
 
