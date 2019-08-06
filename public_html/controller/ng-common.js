@@ -94,6 +94,11 @@ app.directive("commonfooter", function() {
 app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$route", function($scope, $ocLazyLoad, $rootScope, $route) {
 	$rootScope.loading = true;
 
+	$scope.validateEmail = function(email) {
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
+	}
+
 	$scope.$watch('pageTitle', function () {
 		$rootScope.pageTitle = $scope.pageTitle;
 	});
@@ -279,30 +284,11 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		});
 		$scope.getEventPhoto();
 	}
-	$scope.postEvent = function() {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				// action: 'postPhoto' ,  
-				// id: $scope.eventDetail.id, 
-				// name: $scope.eventDetail.name,
-				// contactEmail: $scope.eventDetail.contactEmail,
-				// applicationDeadline: $scope.eventDetail.applicationDeadline.toISOString().split('T')[0], 
-				// quota: $scope.eventDetail.quota,
-				// active: $scope.eventDetail.active
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.sql = responseData;
-	}
 
 	setTimeout(function(){
-		$rootScope.loading = false;
+		if($rootScope.pageTitle!="Home" || !$scope.validateEmail(sessionStorage.getItem("lEmail"))){
+			$rootScope.loading = false;
+		}
 		$ocLazyLoad.load('js/loginForm.js');
 		$ocLazyLoad.load('js/sha256.js');
 	}, 1000);
@@ -567,29 +553,57 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		if ($scope.work==null || $scope.work.postOption==null || $scope.work.fromDate==null || $scope.work.toDate==null || ($scope.work.postOption=="Other" 
 			&& ($scope.work.post == null || $scope.work.post.length == 0))){
 			alert("Please fill in all the necessary items before submission.");
-	}else{
-		if (confirm("Are you sure?")){
-			$post = $scope.work.postOption;
-			if ($post!="Teacher" || $post!="General"){
-				$post = $scope.work.post;
+		}else{
+			if (confirm("Are you sure?")){
+				$post = $scope.work.postOption;
+				if ($post!="Teacher" || $post!="General"){
+					$post = $scope.work.post;
+				}
+				$.ajax({
+					url: '../connectDB.php',
+					type: 'POST',
+					data : { 
+						action: 'addVolunteerWork', 
+						email: $rootScope.lEmail, 
+						from: $scope.work.fromDate.toISOString().split('T')[0],
+						to: $scope.work.toDate.toISOString().split('T')[0],
+						post: $post,
+						remarks: $scope.work.remarks?$scope.work.remarks:""
+					},
+					dataType: "json",
+					async: false,
+					success: function(response) {
+						responseData = JSON.parse(response);
+						if (responseData){
+							alert("change applied");
+						}else{
+							alert("Login session has passed. Please login again");
+							sessionStorage.setItem("lEmail", "");
+							$rootScope.lEmail = "";
+							extEmail = "";
+						}
+						location.reload();
+					}
+				});
 			}
+		}
+	}
+	$scope.cancelVolunteerWork = function(id){
+		if (confirm("Are you sure?")){
 			$.ajax({
 				url: '../connectDB.php',
 				type: 'POST',
 				data : { 
-					action: 'addVolunteerWork', 
-					email: $rootScope.lEmail, 
-					from: $scope.work.fromDate.toISOString().split('T')[0],
-					to: $scope.work.toDate.toISOString().split('T')[0],
-					post: $post,
-					remarks: $scope.work.remarks?$scope.work.remarks:""
+					action: 'cancelVolunteerWork', 
+					id: id, 
+					email: $rootScope.lEmail
 				},
 				dataType: "json",
 				async: false,
 				success: function(response) {
 					responseData = JSON.parse(response);
 					if (responseData){
-						alert("change applied");
+						alert("cancelled");
 					}else{
 						alert("Login session has passed. Please login again");
 						sessionStorage.setItem("lEmail", "");
@@ -597,35 +611,9 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 						extEmail = "";
 					}
 					location.reload();
-					}
-				});
-			}
-		}
-	}
-	$scope.cancelVolunteerWork = function(id){
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				action: 'cancelVolunteerWork', 
-				id: id, 
-				email: $rootScope.lEmail
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-				if (responseData){
-					alert("cancelled");
-				}else{
-					alert("Login session has passed. Please login again");
-					sessionStorage.setItem("lEmail", "");
-					$rootScope.lEmail = "";
-					extEmail = "";
 				}
-				location.reload();
-			}
-		});
+			});
+		}
 	}
 	function periodCovertToString (from, to){
 		var fromDate = new Date(from);
@@ -643,9 +631,9 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		toMin = String(toDate.getMinutes()).padStart(2,0) 
 
 		if (fromDate!=toDate){
-			 period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toDateString + " , " + toHour + ":" +  toMin ;
+			period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toDateString + " , " + toHour + ":" +  toMin ;
 		}else{
-			 period = fromDfromDateStringate +  " , " + fromHour + ":" +  fromMin + "  -  " + toHour + ":" +  toMin;
+			period = fromDfromDateStringate +  " , " + fromHour + ":" +  fromMin + "  -  " + toHour + ":" +  toMin;
 		}	
 
 		if (fromDate > today){
@@ -655,6 +643,37 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		}
 
 		return { period: period ,  past: past }
+	}
+
+	$scope.confirmRegister = function(){
+		if (confirm("Are you sure?")){
+			var registerData = [];
+			for(var i = 0 ; i < $scope.portfolio.upcoming.length ; i++){
+				registerData.push({
+					"eventId" : $scope.portfolio.upcoming[i].id,
+					"isRegistered" : $scope.portfolio.upcoming[i].isRegistered?1:0
+				});
+			}
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'registerEvents' ,  email: $rootScope.lEmail , registerData: registerData },
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+					if (responseData){
+						alert("change applied");
+					}else{
+						alert("Login session has passed. Please login again");
+						sessionStorage.setItem("lEmail", "");
+						$rootScope.lEmail = "";
+						extEmail = "";
+						location.reload();
+					}
+				}
+			});
+		}
 	}
 }]);
 
