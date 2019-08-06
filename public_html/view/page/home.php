@@ -97,12 +97,12 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="row in portfolio.volWork">
-							<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+							<td>{{row.period}}</td>
 							<td>{{row.status}}</td>
 							<td>{{row.post}}</td>
 							<td>{{row.venue}}</td>
 							<td>{{row.remarks}}</td>
-							<td><button ng-click="cancelVolunteerWork(row.id)">Cancel</button></td>
+							<td><button ng-show="row.displayButton" ng-click="cancelVolunteerWork(row.id)">Cancel</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -112,12 +112,12 @@
 				<h1>Want to help again?</h1>
 				<div class="announcement">
 					<img class="icon" ng-src="gallery/info.png" src="gallery/info.png">
-					<div>
-					<div ng-repeat="row in portfolio.announcement">
-						<label>{{row.postDate}}</label><br>
-						{{row.content}}
+					<div style="display: inline-grid;">
+						<div ng-repeat="row in portfolio.announcement">
+							<label>{{row.postDate}}</label><br>
+							{{row.content}}
+						</div>
 					</div>
-				</div>
 				</div>
 
 				<table>
@@ -183,7 +183,7 @@
 					<tbody>
 						<tr ng-repeat="row in portfolio.upcoming">
 							<td><a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}">{{row.name}}</a></td>
-							<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+							<td>{{row.period}}</td>
 							<td>{{row.applicationDeadline}}</td>
 							<td>{{row.quota}}</td>
 							<td>{{row.status}}</td>
@@ -215,7 +215,7 @@
 								<div ng-show="row.pastDisplay==0">{{row.name}}</div>
 								<a ng-show="row.pastDisplay==1" href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}">{{row.name}}</a>
 							</td>
-							<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+							<td>{{row.period}}</td>
 							<td>{{row.venue}}</td>
 							<td>{{row.remarks}}</td>
 					<!-- <td>

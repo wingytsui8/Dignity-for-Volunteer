@@ -54,4 +54,4 @@ INSERT INTO `volunteer_work` (`id`, `volId`, `fromDate`, `toDate`, `venue`, `loc
 
 INSERT INTO `announcement` (`id`, `content`, `postDate`, `toDate`) VALUES (NULL, 'Let us know your availability.', '2019-08-06', NULL);
 
-INSERT INTO `announcement` (`id`, `content`, `postDate`, `toDate`) VALUES (NULL, 'We want ....', '2019-08-20', '2020-04-27');
+INSERT INTO `announcement` (`id`, `content`, `postDate`, `toDate`) VALUES (NULL, 'we are in a teacher shortage', '2019-08-20', '2020-04-27');
