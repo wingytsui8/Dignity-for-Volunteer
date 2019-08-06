@@ -86,3 +86,11 @@ ALTER TABLE `volunteer_work`
 ALTER TABLE `volunteer_work`
   MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
+DROP TABLE IF EXISTS `announcement`;
+Create Table `announcement` (
+`id` mediumint(9) NOT NULL AUTO_INCREMENT,
+`content` varchar(50) NULL,
+`postDate` date NOT NULL,
+`toDate` date DEFAULT NULL,
+PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

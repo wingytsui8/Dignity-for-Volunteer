@@ -3,7 +3,12 @@
 	height:750px;
   }*/
 
-  
+  main {
+   background-image: url("../gallery/home_bg.jpeg");
+   /*background-size: cover;*/
+   background-repeat: repeat;
+   min-height:750px;
+ }
 
 
 /*.home_login {
@@ -82,7 +87,7 @@ section {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.70);
 }
 
-a.button{
+/*a.button{
   color: var(--main-color);
   background: white;
   padding: 5px 30px;
@@ -98,7 +103,7 @@ a.button:hover{
   background: var(--main-color);
   border-color: var(--main-color);
   transition: all 0.4s ease 0s;
-}
+}*/
 
 @media (min-width: 812px){
   section {
@@ -106,20 +111,21 @@ a.button:hover{
     margin: 50px;
   }
   main {
-   background-image: url("../gallery/home_bg.jpeg");
-   /*background-size: cover;*/
+/*   background-image: url("../gallery/home_bg.jpeg");
+   background-size: cover;
    background-repeat: repeat;
-   min-height:750px;
+   min-height:750px;*/
    padding: 48px 0px;
  }
- #left {
-  width: 40%;
+/* #left {
+  width: 55%;
   display:inline-block;
+  padding: 0px 20px;
 }
 #right{
-  width: 50%;
+  width: 40%;
   display:inline-grid;
-}
+}*/
 
 
 }
@@ -129,8 +135,8 @@ a.button:hover{
     margin: 30px 10px;
   }
   main {
-   background-color: aliceblue;
-   min-height:750px;
+/*   background-color: aliceblue;*/
+/*   min-height:750px;*/
    padding: 10px 0px;
   }
 }
@@ -181,8 +187,9 @@ input:focus {
 
 select {
     width: 90%;
-    /*border: 5px solid #f8f8f8;*/
+    border: 1px solid black;
     margin: 10px;
+    padding: 0px 5px;
 }
 label{
   font-size: 16px;
@@ -202,7 +209,16 @@ textarea:focus {
 
 
 
-
+.announcement{
+    background: #fffedd;
+    overflow-y: scroll;
+    max-height: 200px;
+    border: grey 1px solid;
+    color: black;
+    padding: 10px 30px;
+    border-radius: 5px;
+    display:inline-block;
+}
 
 
 

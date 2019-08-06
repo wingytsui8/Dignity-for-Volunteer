@@ -558,11 +558,36 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 						extEmail = "";
 					}
 					location.reload();
-				}
-			});
+					}
+				});
+			}
 		}
 	}
-}
+	$scope.cancelVolunteerWork = function(id){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'cancelVolunteerWork', 
+				id: id, 
+				email: $rootScope.lEmail
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					alert("cancelled");
+				}else{
+					alert("Login session has passed. Please login again");
+					sessionStorage.setItem("lEmail", "");
+					$rootScope.lEmail = "";
+					extEmail = "";
+				}
+				location.reload();
+			}
+		});
+	}
 }]);
 
 
