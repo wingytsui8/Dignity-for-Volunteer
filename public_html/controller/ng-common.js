@@ -137,7 +137,7 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 	// $scope.registeredList = {name: 'null'}
 
 	$scope.toLocalTimeString = function(date){
-		if($date){
+		if(date){
 			return date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 		}
 	}
