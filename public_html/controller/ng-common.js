@@ -95,8 +95,8 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 	$rootScope.loading = true;
 
 	$scope.validateEmail = function(email) {
-  		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  		return re.test(email);
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
 	}
 
 	$scope.$watch('pageTitle', function () {
@@ -563,12 +563,13 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 						extEmail = "";
 					}
 					location.reload();
-					}
-				});
-			}
+				}
+			});
 		}
 	}
-	$scope.cancelVolunteerWork = function(id){
+}
+$scope.cancelVolunteerWork = function(id){
+	if (confirm("Are you sure?")){
 		$.ajax({
 			url: '../connectDB.php',
 			type: 'POST',
@@ -593,6 +594,37 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 			}
 		});
 	}
+}
+$scope.confirmRegister = function(){
+	if (confirm("Are you sure?")){
+		var registerData = [];
+		for(var i = 0 ; i < $scope.portfolio.upcoming.length ; i++){
+			registerData.push({
+				"eventId" : $scope.portfolio.upcoming[i].id,
+				"isRegistered" : $scope.portfolio.upcoming[i].isRegistered?1:0
+			});
+		}
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'registerEvents' ,  email: $rootScope.lEmail , registerData: registerData },
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					alert("change applied");
+				}else{
+					alert("Login session has passed. Please login again");
+					sessionStorage.setItem("lEmail", "");
+					$rootScope.lEmail = "";
+					extEmail = "";
+					location.reload();
+				}
+			}
+		});
+	}
+}
 }]);
 
 

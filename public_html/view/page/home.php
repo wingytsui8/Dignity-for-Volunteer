@@ -194,7 +194,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<td><button ng-click="getEventDetail(row.id)">Register Events</button></td>
+				<td><button ng-click="confirmRegister()">Register Events</button></td>
 			</section>
 
 			<section>
