@@ -622,18 +622,20 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		var period = "";
 		var past = false;
 		
-		fromDateString = fromDate.toDateString();
-		fromHour = String(fromDate.getHours()).padStart(2,0)
-		fromMin = String(fromDate.getMinutes()).padStart(2,0) 
+		fromDateString = fromDate.toLocaleDateString();
+		// fromHour = String(fromDate.getHours()).padStart(2,0)
+		// fromMin = String(fromDate.getMinutes()).padStart(2,0) 
 
-		toDateString = toDate.toDateString();
-		toHour = String(toDate.getHours()).padStart(2,0)
-		toMin = String(toDate.getMinutes()).padStart(2,0) 
+		toDateString = toDate.toLocaleDateString();
+		// toHour = String(toDate.getHours()).padStart(2,0)
+		// toMin = String(toDate.getMinutes()).padStart(2,0) 
 
 		if (fromDate!=toDate){
-			period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toDateString + " , " + toHour + ":" +  toMin ;
+			// period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toDateString + " , " + toHour + ":" +  toMin ;
+			period = fromDateString + "  -  " + toDateString;
 		}else{
-			period = fromDfromDateStringate +  " , " + fromHour + ":" +  fromMin + "  -  " + toHour + ":" +  toMin;
+			// period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toHour + ":" +  toMin;
+			period = fromDateString;
 		}	
 
 		if (fromDate > today){
