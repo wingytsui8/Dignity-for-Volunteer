@@ -378,7 +378,7 @@ function registerEvents($email, $registerData){
 			$sql = "select 1 from register where volId = ". $volId. " And eventId = ". $record['eventId'] . " And active = 1 ";
 			$result = runQuickQuery($sql);
 			if ($result->num_rows > 0){
-				$dbChange = $dbChange . " UPDATE register Set modifyDate = Now(), status = ". ($record['isRegistered']==1? "'Confirmed'" : "'Cancelled'" )." where volId = ". $volId. " And eventId = ". $record['eventId'] . " And active = 1 ; ";
+				$dbChange = $dbChange . " UPDATE register Set modifyDate = Now(), status = ". ($record['isRegistered']==1? "'Pending'" : "'Cancelled'" )." where volId = ". $volId. " And eventId = ". $record['eventId'] . " And active = 1 ; ";
 			}else{
 				$dbChange = $dbChange  . " INSERT INTO register (eventId, volId, createDate, modifyDate, status, active)
 				VALUES (".$record['eventId'].", ". $volId .",  Now(),  Now(), 'Pending', 1 ); ";
