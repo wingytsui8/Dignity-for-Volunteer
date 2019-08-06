@@ -51,3 +51,7 @@ INSERT INTO `register` (`id`, `eventId`, `volId`, `createDate`, `modifyDate`, `s
 INSERT INTO `volunteer_work` (`id`, `volId`, `fromDate`, `toDate`, `venue`, `location`, `post`, `status`, `active`, `remarks`) VALUES (NULL, '2', '2019-04-20', '2019-04-27', 'EAT X Dignity', NULL, 'Teacher', 'Confirmed', '1', 'By Sam Tang.');
 
 INSERT INTO `volunteer_work` (`id`, `volId`, `fromDate`, `toDate`, `venue`, `location`, `post`, `status`, `active`, `remarks`) VALUES (NULL, '2', '2020-06-01 00:00:00', '2020-07-01 00:00:00', NULL, NULL, 'IT Support', 'Pending', '1', 'test, by Sam');
+
+INSERT INTO `announcement` (`id`, `content`, `postDate`, `toDate`) VALUES (NULL, 'Let us know your availability.', '2019-08-06', NULL);
+
+INSERT INTO `announcement` (`id`, `content`, `postDate`, `toDate`) VALUES (NULL, 'We want ....', '2019-08-20', '2020-04-27');

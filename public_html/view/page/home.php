@@ -43,13 +43,13 @@
 	<link href="css/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		function checkvalue(val){
-		 var element=document.getElementById('post');
-		 if(val=='Other')
-		   element.style.display='block';
-		 else {
-		 	element.style.display='none';
-		 }
-		   
+			var element=document.getElementById('post');
+			if(val=='Other')
+				element.style.display='block';
+			else {
+				element.style.display='none';
+			}
+
 		}
 	</script> 
 </head>
@@ -75,156 +75,161 @@
 		</div>
 
 		<div ng-show="(lEmail!=null && lEmail.length > 0)" ng-controller="homeController">
-		<section>
-			<h1>Welcome! {{portfolio.Name}}</h1>
-			<div>Thank you for your support!</div>
-			<div class="fif" ng-show="portfolio.nextVolDate!=null && portfolio.nextVolDate.length>0" class="fif">See you on {{portfolio.nextVolDate}}</div><div class="fif" ng-show="portfolio.nextVolplace!=null && portfolio.nextVolplace.length>0"> at {{portfolio.nextVolplace}}</div><div class="fif" ng-show="portfolio.nextVolPost!=null && portfolio.nextVolPost.length>0"> as a {{portfolio.nextVolPost}}</div><div ng-show="(portfolio.nextVolDate!=null && portfolio.nextVolDate.length>0) || (portfolio.nextVolplace!=null && portfolio.nextVolplace.length>0) || (portfolio.nextVolPost!=null && portfolio.nextVolPost.length>0)" class="fif">.</div>
+			<section>
+				<h1>Welcome! {{portfolio.Name}}</h1>
+				<div>Thank you for your support!</div>
+				<div class="fif" ng-show="portfolio.nextVolDate!=null && portfolio.nextVolDate.length>0" class="fif">See you on {{portfolio.nextVolDate}}</div><div class="fif" ng-show="portfolio.nextVolplace!=null && portfolio.nextVolplace.length>0"> at {{portfolio.nextVolplace}}</div><div class="fif" ng-show="portfolio.nextVolPost!=null && portfolio.nextVolPost.length>0"> as a {{portfolio.nextVolPost}}</div><div ng-show="(portfolio.nextVolDate!=null && portfolio.nextVolDate.length>0) || (portfolio.nextVolplace!=null && portfolio.nextVolplace.length>0) || (portfolio.nextVolPost!=null && portfolio.nextVolPost.length>0)" class="fif">.</div>
 
-			<div ng-show="portfolio.nextVolHow!=null && portfolio.nextVolHow.length>0">How to get there? {{portfolio.nextVolHow}}</div>
-		</section>
-		<section>
-			<h1>Volunteer work records</h1>
-			<table st-table="volWork" class="table table-striped">
-			<thead>
-				<tr>
-					<th style="width: 30%">Period</th>
-					<th style="width: 10%">Status</th>
-					<th style="width: 10%">Post</th>
-					<th style="width: 10%">Venue</th>
-					<th style="width: 30%">Remarks</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in portfolio.volWork">
-					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
-					<td>{{row.status}}</td>
-					<td>{{row.post}}</td>
-					<td>{{row.venue}}</td>
-					<td>{{row.remarks}}</td>
-				</tr>
-			</tbody>
-		</table>
-		</section>
-		<section>
-			
+				<div ng-show="portfolio.nextVolHow!=null && portfolio.nextVolHow.length>0">How to get there? {{portfolio.nextVolHow}}</div>
+			</section>
+			<section>
+				<h1>Volunteer work records</h1>
+				<table st-table="volWork" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 30%">Period</th>
+							<th style="width: 10%">Status</th>
+							<th style="width: 10%">Post</th>
+							<th style="width: 10%">Venue</th>
+							<th style="width: 20%">Remarks</th>
+							<th style="width: 20%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in portfolio.volWork">
+							<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+							<td>{{row.status}}</td>
+							<td>{{row.post}}</td>
+							<td>{{row.venue}}</td>
+							<td>{{row.remarks}}</td>
+							<td><button ng-click="cancelVolunteerWork(row.id)">Cancel</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			<section>
+
 				<h1>Want to help again?</h1>
-				<div >
-				<div id="left">
-			Let us know your availability.</div>
-			<div id="right">
+				<div class="announcement">
+					<img class="icon" ng-src="gallery/info.png" src="gallery/info.png">
+					<div>
+					<div ng-repeat="row in portfolio.announcement">
+						<label>{{row.postDate}}</label><br>
+						{{row.content}}
+					</div>
+				</div>
+				</div>
 
-			<table>
-				<tbody class="formTable">
-				<tr>
-					<td style="width: 20%;">
-						<label>From </label> 
-					</td>
-					<td style="width: 80%;">
-						<input id="fromDate" type="date" ng-model="work.fromDate"/>  
-						<input id="fromDate1" type="text" ng-model="work.fromDate"/><br>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label>To </label> 
-					</td>
-					<td>
-						<input id="toDate" type="date" ng-model="work.toDate"/> 
-						<input id="toDate1" type="text" ng-model="work.toDate"/><br>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label>Post</label> 
-					</td>
-					<td>
-						<select onchange='checkvalue(this.value)' ng-model="work.postOption"> 
-						<option disabled selected value> -- select an option -- </option>
-					    <option value="General">General</option>
-					    <option value="Teacher">Teacher</option>
-					    <option value="Other">Other</option>
-					</select> 
-					<input type="text" id="post" ng-model="work.post" style='display:none'/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label>Remarks</label> 
-					</td>
-					<td>
-						<textarea id="remarks" ng-model="work.remarks"/></textarea> 
-					</td>
-				</tr>
+				<table>
+					<tbody class="formTable">
+						<tr>
+							<td style="width: 20%;">
+								<label>From </label> 
+							</td>
+							<td style="width: 80%;">
+								<input id="fromDate" type="date" ng-model="work.fromDate"/>  
+								<input id="fromDate1" type="text" ng-model="work.fromDate"/><br>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>To </label> 
+							</td>
+							<td>
+								<input id="toDate" type="date" ng-model="work.toDate"/> 
+								<input id="toDate1" type="text" ng-model="work.toDate"/><br>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Post</label> 
+							</td>
+							<td>
+								<select onchange='checkvalue(this.value)' ng-model="work.postOption"> 
+									<option disabled selected value> -- select an option -- </option>
+									<option value="General">General</option>
+									<option value="Teacher">Teacher</option>
+									<option value="Other">Other</option>
+								</select> 
+								<input type="text" id="post" ng-model="work.post" style='display:none'/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Remarks</label> 
+							</td>
+							<td>
+								<textarea id="remarks" ng-model="work.remarks"/></textarea> 
+							</td>
+						</tr>
 
-				</tbody>
-			</table>
-			<td><button ng-click="addVolunteerWork()">Add</button></td>
-		</div>
-		</div>
-		</section>
-		<section>
-			<h1>We also need helpers for upcoming events...</h1>
-			<table st-table="upcoming" class="table table-striped">
-			<thead>
-				<tr>
-					<th style="width: 10%">Name</th>
-					<th style="width: 30%">Period</th>
-					<th style="width: 10%">Application Deadline</th>
-					<th style="width: 10%">Quota</th>
-					<th style="width: 10%">Application Status</th>
-					<th style="width: 10%">Register?</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in portfolio.upcoming">
-					<td><a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}">{{row.name}}</a></td>
-					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
-					<td>{{row.applicationDeadline}}</td>
-					<td>{{row.quota}}</td>
-					<td>{{row.status}}</td>
-					<td>
-						<input id="isRegistered" type="checkbox" ng-model="row.isRegistered"/>  
-					</td>
-					
-				</tr>
-			</tbody>
-		</table>
-		<td><button ng-click="getEventDetail(row.id)">Register Events</button></td>
-		</section>
-	
-		<section>
-		<h1>Participated Events</h1>
-			<table st-table="past" class="table table-striped">
-			<thead>
-				<tr>
-					<th style="width: 25%">Name</th>
-					<th style="width: 15%">Period</th>
-					<th style="width: 15%">Venue</th>
-					<th style="width: 25%">Remarks</th>
-					<th style="width: 10%"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in portfolio.past">
-					<td>
-						<div ng-show="row.pastDisplay==0">{{row.name}}</div>
-						<a ng-show="row.pastDisplay==1" href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}">{{row.name}}</a>
-					</td>
-					<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
-					<td>{{row.venue}}</td>
-					<td>{{row.remarks}}</td>
-					<td>
+					</tbody>
+				</table>
+				<td><button ng-click="addVolunteerWork()">Add</button></td>
+			</section>
+			<section>
+				<h1>We also need helpers for upcoming events...</h1>
+				<table st-table="upcoming" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 10%">Name</th>
+							<th style="width: 30%">Period</th>
+							<th style="width: 10%">Application Deadline</th>
+							<th style="width: 10%">Quota</th>
+							<th style="width: 10%">Application Status</th>
+							<th style="width: 10%">Register?</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in portfolio.upcoming">
+							<td><a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}">{{row.name}}</a></td>
+							<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+							<td>{{row.applicationDeadline}}</td>
+							<td>{{row.quota}}</td>
+							<td>{{row.status}}</td>
+							<td>
+								<input id="isRegistered" type="checkbox" ng-model="row.isRegistered"/>  
+							</td>
+
+						</tr>
+					</tbody>
+				</table>
+				<td><button ng-click="getEventDetail(row.id)">Register Events</button></td>
+			</section>
+
+			<section>
+				<h1>Participated Events</h1>
+				<table st-table="past" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 25%">Name</th>
+							<th style="width: 15%">Period</th>
+							<th style="width: 15%">Venue</th>
+							<th style="width: 25%">Remarks</th>
+							<!-- <th style="width: 10%"></th> -->
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in portfolio.past">
+							<td>
+								<div ng-show="row.pastDisplay==0">{{row.name}}</div>
+								<a ng-show="row.pastDisplay==1" href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}">{{row.name}}</a>
+							</td>
+							<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+							<td>{{row.venue}}</td>
+							<td>{{row.remarks}}</td>
+					<!-- <td>
 						<a href="https://dignityforvolunteer.000webhostapp.com/Event/{{row.id}}" class="button">Details</a>
-					</td>
+					</td> -->
 				</tr>
 			</tbody>
 		</table>
-		</section>
-		</div>
+	</section>
+</div>
 
-	</main>
+</main>
 
-	<commonfooter></commonfooter>
+<commonfooter></commonfooter>
 </body>
 
 </body>

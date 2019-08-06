@@ -131,6 +131,18 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( addVolunteerWork($email, $from, $to, $post, $remarks) );
 		exit;
+
+		case "cancelVolunteerWork":
+		$id = (string)$_POST['id'];
+		$email = (string)$_POST['email'];
+		// $venue = (string)$_POST['venue'];
+		// $loaction = (string)$_POST['location'];
+		// $status = (string)$_POST['status'];
+		// $active = (string)$_POST['active'];
+
+		header('Content-type: application/json');
+		echo json_encode( cancelVolunteerWork($id, $email) );
+		exit;
 	}
 }
 
@@ -304,6 +316,20 @@ function getPortfolio($email){
 		}
 	}
 
+	$sql= "SELECT postDate, toDate, content
+	From announcement
+	where (toDate >= CURDATE() or toDate is null)
+	order by postDate" ;
+
+	$results = runQuickQuery($sql);
+	
+	$announcement = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$announcement[] = $result;
+		}
+	}
+
 	$sql= "SELECT name as Name, volunteer_work.fromDate as nextVolDate, volunteer_work.venue as nextVolplace, volunteer_work.location as nextVolHow, volunteer_work.post as nextVolPost
 	From volunteer 
 	left outer join volunteer_work on volunteer.id = volunteer_work.volId and volId = ". $volId ." and volunteer_work.active = 1 and volunteer_work.toDate >= CURDATE() and volunteer_work.status <> 'Cancelled'
@@ -317,7 +343,8 @@ function getPortfolio($email){
 		$resArr[] = array_merge($results->fetch_assoc(), [
 			"upcoming" => $upcomingEvents,
 			"past" => $pastEvents,
-			"volWork" => $volWork
+			"volWork" => $volWork,
+			'announcement' => $announcement,
 		]);
 		return json_encode($resArr);
 	}
@@ -376,6 +403,18 @@ function addVolunteerWork($email, $from, $to, $post, $remarks){
 	}
 }
 
+function cancelVolunteerWork($id, $email){
+	if (checkLoginSession($email)){
+		$volId = getVolunteerId($email);
+		$sql = "UPDATE `volunteer_work` 
+			SET status= 'Cancelled'
+			WHERE id = ". $id .";";
+		runNonQuery($sql);
+		return true;
+	}else{
+		return false;
+	}
+}
 
 function login($email, $password){
 	$pwHash = hash("sha256", $password);
