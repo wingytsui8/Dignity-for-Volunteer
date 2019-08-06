@@ -59,7 +59,7 @@ select {
 
 label{
 	font-size: 16px;
-/*	padding: 20px 0px 5px 0px;*/
+	padding: 5px 0px 10px 0px;
 }
 
 textarea {
@@ -70,10 +70,14 @@ textarea {
 h1 {
 	display: inline;
 }
+
+hr {
+  border-top: 2px solid var(--main-color-dark);
+}
 /* Style the tab */
 .tab {
   overflow: hidden;
-  border: 1px solid var(--main-color-dark);
+  border: 2px solid var(--main-color-dark);
   background-color: aliceblue;
 }
 
@@ -109,7 +113,7 @@ h1 {
 .tabcontent {
   display: none;
   padding: 6px 12px;
-  border: 1px solid var(--main-color-dark);
+  border: 2px solid var(--main-color-dark);
   border-top: none;
 }
 #slidesPreview {

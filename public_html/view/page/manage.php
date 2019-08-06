@@ -54,38 +54,42 @@
 		<a href="#photo">Photo</a>
 		<a href="#registeredList">Registered List</a>
 	</div> -->
-	<div class="textbody">
+	<div class="textbody" ng-controller="manageController">
 
 		<div class="tab">
-			<button class="tablinks" onclick="displaySection(event, 'Volunteer_Work')" id="defaultOpen">Volunteer Work</button>
+			<button class="tablinks" onclick="displaySection(event, 'Volunteer_Work')" ng-click="getVolunteerWorkManageDetail()" id="defaultOpen">Volunteer Work</button>
 			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(0)">Past Event</button>
 			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(1)">Upcoming Event</button>
+			<button class="tablinks" onclick="displaySection(event, 'Volunteer')" ng-click="getEvents(1)">Volunteer</button>
 
 		</div>
 		<div id="Event" class="tabcontent">
-			<h1 id="events">Events details</h1>
-			<table st-table="events" class="table table-striped">
-				<thead>
-					<tr>
-						<th style="width: 25%">Name</th>
-						<th style="width: 15%">Period</th>
-						<th style="width: 35%">Venue</th>
-						<th style="width: 10%">Application Deadline</th>
-						<th style="width: 5%">Quota</th>
-						<th style="width: 10%"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="row in events">
-						<td>{{row.name}}</td>
-						<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
-						<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
-						<td>{{row.applicationDeadline}}</td>
-						<td>{{row.quota}}</td>
-						<td><button ng-click="getEventDetail(row.id)">Details</button></td>
-					</tr>
-				</tbody>
-			</table>
+			<div>
+				<h1 id="events">Events details</h1>
+				<table st-table="events" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 25%">Name</th>
+							<th style="width: 15%">Period</th>
+							<th style="width: 35%">Venue</th>
+							<th style="width: 10%">Application Deadline</th>
+							<th style="width: 5%">Quota</th>
+							<th style="width: 10%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in events">
+							<td>{{row.name}}</td>
+							<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+							<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
+							<td>{{row.applicationDeadline}}</td>
+							<td>{{row.quota}}</td>
+							<td><button ng-click="getEventDetail(row.id)">Details</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<hr>
 			<div>
 				<h1 id="details">{{action}}</h1>
 				<button ng-show="!past" ng-click="createEmptyEvent()">New</button>
@@ -135,7 +139,7 @@
 							<label >Location</label>
 						</td>
 						<td class="tdcontent">
-							<input id="location" type="text" ng-model="eventDetail.location" ng-disabled="past"/>
+							<textarea id="location" ng-model="eventDetail.location" ng-disabled="past"/></textarea> 
 						</td>
 					</tr>
 					<tr>
@@ -219,6 +223,7 @@
 			</table>		
 
 		</div>
+		<hr>
 		<div>
 			<h1 id="registeredList">Registered Volunteer</h1> <button ng-click="downloadRegisteredList()">Download CSV</button> 
 			<table st-table="registered" class="table table-striped">
@@ -244,6 +249,7 @@
 				</tbody>
 			</table>
 		</div>
+		<hr>
 		<div>
 			<h1 id="photo">Photos</h1> 
 			<button ng-click="createEmptyPhoto()">New</button>
@@ -303,14 +309,19 @@
 	</div>
 
 	<div id="Volunteer_Work" class="tabcontent">
+		<div>
+			<h1>Volunteer Work</h1>
+		</div>
+		<hr>
+		<div>
+			<h1>Calendar</h1>
+		</div>
+		<hr>
+		<div>
+			<h1>Announcement</h1>
+			<button ng-click="createEmptyAnnouncement()">New</button>
 
-		<h1>Volunteer Work</h1>
-		<h1>Calendar</h1>
-		
-		<h1>News</h1>
-		<button ng-click="createEmptyNews()">New</button>
-		
-		<table st-table="news" class="table table-striped">
+			<table st-table="announcement" class="table table-striped">
 				<thead>
 					<tr>
 						<th style="width: 20%;">Post Date</th>
@@ -320,7 +331,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="row in news">
+					<tr ng-repeat="row in announcement">
 						<td>
 							<input id="postDate" type="date" ng-model="row.postDate"/>  
 						</td>
@@ -331,15 +342,17 @@
 							<textarea id="content" ng-model="row.content"/></textarea> 
 						</td>
 						<td>
-							<button ng-click="saveNews(row)">Save</button>
-							<button ng-click="deleteNews(row.id)">Remove</button>
+							<button ng-click="saveAnnouncement(row)">Save</button>
+							<button ng-click="deleteAnnouncement(row.id)">Remove</button>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			
+		</div>
+		<hr>
+		<div>
 			<h1>Pending</h1>
-		<table st-table="pending" class="table table-striped">
+			<table st-table="pending" class="table table-striped">
 				<thead>
 					<tr>
 						<th style="width: 20%;">Info</th>
@@ -349,7 +362,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="row in work">
+					<tr ng-repeat="row in pending">
 						<td><label>Vol id: </label>{{row.volId}}<br>
 							<label>Name: </label>{{row.name}}<br>
 							<label>Period: </label>{{row.period}}<br>
@@ -361,12 +374,13 @@
 							<textarea id="location" ng-model="row.location"/></textarea> 
 						</td>
 						<td>
-							<label>status</label>
+							<label>Status</label>
 							<select ng-model="row.status">
 								<option value="Pending">Pending</option>
 								<option value="Confirmed">Confirmed</option>
 								<option value="Cancelled">Cancelled</option>
 							</select>
+							<label>Remarks</label>
 							<textarea id="content" ng-model="row.remarks"/></textarea> 
 						</td>
 						<td>
@@ -375,23 +389,75 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+		<hr>
+		<div>
+			<h1>Cancelled</h1>
+			<button ng-click="inactiveCancelledWork()">Delete All</button>
+			<table st-table="Cancelled" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 20%;">Info</th>
+						<th style="width: 30%;">Venue</th>
+						<th style="width: 30%;">Remarks</th>
+						<th style="width: 20%;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in cancelled">
+						<td><label>Vol id: </label>{{row.volId}}<br>
+							<label>Name: </label>{{row.name}}<br>
+							<label>Period: </label>{{row.period}}<br>
+							<label>Post: </label>{{row.post}}
+						</td>
+						<td><label>Venue</label>
+							<input id="venue" type="text" ng-model="row.venue"/>
+							<label>Location</label> 
+							<textarea id="location" ng-model="row.location"/></textarea> 
+						</td>
+						<td>
+							<label>Status</label>
+							<select ng-model="row.status">
+								<option value="Pending">Pending</option>
+								<option value="Confirmed">Confirmed</option>
+								<option value="Cancelled">Cancelled</option>
+							</select>
+							<label>Remarks</label>
+							<textarea id="content" ng-model="row.remarks"/></textarea> 
+						</td>
+						<td>
+							<button ng-click="saveWork(row.id)">Save</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div id="Volunteer" class="tabcontent">
+		<div>
+			<h1>Volunteer</h1>
+		</div>
+		<hr>
+		<div>
+			<h1>Calendar</h1>
+		</div>
 	</div>
 </div>
 <commonfooter></commonfooter>
 <script>
-		function displaySection(evt, sectionName) {
-			var i, tabcontent, tablinks;
-			tabcontent = document.getElementsByClassName("tabcontent");
-			for (i = 0; i < tabcontent.length; i++) {
-				tabcontent[i].style.display = "none";
-			}
-			tablinks = document.getElementsByClassName("tablinks");
-			for (i = 0; i < tablinks.length; i++) {
-				tablinks[i].className = tablinks[i].className.replace(" active", "");
-			}
-			document.getElementById(sectionName).style.display = "block";
-			evt.currentTarget.className += " active";
+	function displaySection(evt, sectionName) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName("tabcontent");
+		for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
 		}
+		tablinks = document.getElementsByClassName("tablinks");
+		for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(sectionName).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
 		// Get the element with id="defaultOpen" and click on it
 		document.getElementById("defaultOpen").click();
 	</script>

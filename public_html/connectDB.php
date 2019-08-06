@@ -144,6 +144,11 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( cancelVolunteerWork($id, $email) );
 		exit;
+
+		case "getVolunteerWorkManageDetail":
+		header('Content-type: application/json');
+		echo json_encode( getVolunteerWorkManageDetail() );
+		exit;
 	}
 }
 
@@ -319,7 +324,8 @@ function getPortfolio($email){
 
 	$sql= "SELECT postDate, toDate, content
 	From announcement
-	where (toDate >= CURDATE() or toDate is null)
+	where (toDate >= CURDATE() or toDate is null) 
+	and postDate <= CURDATE() 
 	order by postDate" ;
 
 	$results = runQuickQuery($sql);
@@ -351,6 +357,56 @@ function getPortfolio($email){
 	}
 }
 
+function getVolunteerWorkManageDetail(){
+	$sql= "SELECT id, content, postDate, toDate
+	From announcement 
+	order by postDate;";
+
+	$results = runQuickQuery($sql);
+	$announcement = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$announcement[] = $result;
+		}
+	}
+
+	$sql= "SELECT volunteer_work.id, volunteer.name, volunteer.email, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, post, status, remarks, volId
+	From volunteer_work
+	INNER join volunteer on volunteer.id = volunteer_work.volId and volunteer_work.active = 1 and status = 'Pending'
+	where fromDate  >  CURDATE()
+	order by fromDate DESC" ;
+
+	$results = runQuickQuery($sql);
+	
+	$pending = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$pending[] = $result;
+		}
+	}
+
+	$sql= "SELECT volunteer_work.id, volunteer.name, volunteer.email, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, post, status, remarks, volId
+	From volunteer_work
+	INNER join volunteer on volunteer.id = volunteer_work.volId and volunteer_work.active = 1 and status = 'Cancelled'
+	where fromDate  >  CURDATE()
+	order by fromDate DESC" ;
+
+	$results = runQuickQuery($sql);
+	
+	$cancelled = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$cancelled[] = $result;
+		}
+	}
+
+	return json_encode([
+		"announcement" => $announcement,
+		"pending" => $pending,
+		"cancelled" => $cancelled,
+	]);
+	
+}
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  Get functions   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ other ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

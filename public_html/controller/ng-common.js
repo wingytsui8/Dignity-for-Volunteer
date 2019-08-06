@@ -692,20 +692,30 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 	}
 }]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.controller("manageController", ["$scope", "$rootScope", function($scope, $rootScope) {
+	$scope.getVolunteerWorkManageDetail = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'getVolunteerWorkManageDetail', 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					$scope.announcement = responseData.announcement;
+					// for (var i = 0; responseData.announcement.length; i++){
+					// 	$scope.announcement.fromDate = new Date($scope.announcement.fromDate);
+					// 	$scope.announcement.toDate = new Date($scope.announcement.toDate);
+					// }
+					$scope.pending = responseData.pending;
+					$scope.cancelled = responseData.cancelled;
+				}
+			}
+		});
+	}
+	$scope.getVolunteerWorkManageDetail();
+}]);
 
