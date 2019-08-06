@@ -120,7 +120,7 @@
 					</div>
 				</div>
 
-				<table>
+				<table class="table table-striped">
 					<tbody class="formTable">
 						<tr>
 							<td style="width: 20%;">
