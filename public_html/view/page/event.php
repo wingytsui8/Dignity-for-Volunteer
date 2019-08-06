@@ -50,7 +50,7 @@
 		<ul id="slides" >
 			<li class="slide" ng-repeat="row in eventDetail.photos">
 				<a href="{{row.Photo}}" target=1>
-				<div class="slide-img"><img ng-src={{row.Photo}} src={{row.Photo}}><</div>
+				<div class="slide-img"><img ng-src={{row.Photo}} src={{row.Photo}}></div>
 				<h1 class="title"><span class="title-text">{{row.Description}}</span></h1>
 			</a>
 			</li>

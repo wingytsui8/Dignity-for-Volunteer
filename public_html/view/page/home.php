@@ -175,7 +175,6 @@
 							<th style="width: 10%">Name</th>
 							<th style="width: 30%">Period</th>
 							<th style="width: 10%">Application Deadline</th>
-							<th style="width: 10%">Quota</th>
 							<th style="width: 10%">Application Status</th>
 							<th style="width: 10%">Register?</th>
 						</tr>
@@ -185,7 +184,6 @@
 							<td><a href="https://dignityforvolunteer.000webhostapp.com/UpcomingEvent/{{row.id}}">{{row.name}}</a></td>
 							<td>{{row.period}}</td>
 							<td>{{row.applicationDeadline}}</td>
-							<td>{{row.quota}}</td>
 							<td>{{row.status}}</td>
 							<td>
 								<input id="isRegistered" type="checkbox" ng-model="row.isRegistered"/>  
