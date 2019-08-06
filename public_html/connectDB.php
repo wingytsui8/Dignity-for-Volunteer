@@ -127,6 +127,7 @@ if(isset($_POST['action'])){
 		$from = (string)$_POST['from'];
 		$to = (string)$_POST['to'];
 		$post = (string)$_POST['post'];
+		$remarks = (string)$_POST['remarks'];
 
 		header('Content-type: application/json');
 		echo json_encode( addVolunteerWork($email, $from, $to, $post, $remarks) );
