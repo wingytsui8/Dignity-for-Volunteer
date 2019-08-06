@@ -77,7 +77,9 @@ CREATE TABLE `volunteer_work` (
   `post` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
   `active` tinyint(1) NOT NULL,
-  `remarks` text NULL
+  `remarks` text NULL,
+  `createDate` datetime NOT NULL,
+  `modifyDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `volunteer_work`
