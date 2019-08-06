@@ -58,17 +58,12 @@
 
 		<div class="tab">
 			<button class="tablinks" onclick="displaySection(event, 'Volunteer_Work')" id="defaultOpen">Volunteer Work</button>
-			<button class="tablinks" onclick="displaySection(event, 'Past_Event')" >Past Event</button>
-			<button class="tablinks" onclick="displaySection(event, 'Upcomign_Event')" id="defaultOpen">Upcoming Event</button>
+			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(0)">Past Event</button>
+			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(1)">Upcoming Event</button>
 
 		</div>
-		<div id="Past_Event" class="tabcontent">
-			<h1 id="events">Events</h1>
-
-			<button ng-click="getEvents(0)">Past</button>
-			<button ng-click="getEvents(1)">Upcoming</button>
-			<button ng-click="openCity(event, 'Tokyo')">Activity</button>
-
+		<div id="Event" class="tabcontent">
+			<h1 id="events">Events details</h1>
 			<table st-table="events" class="table table-striped">
 				<thead>
 					<tr>
@@ -93,7 +88,7 @@
 			</table>
 			<div>
 				<h1 id="details">{{action}}</h1>
-				<button ng-click="createEmptyEvent()">New</button>
+				<button ng-show="!past" ng-click="createEmptyEvent()">New</button>
 				<button ng-click="getEventDetail(eventDetail.id)">Reset</button>
 				<button ng-click="postEvent()">Save</button>
 				<table>
@@ -108,7 +103,7 @@
 							<label >Name</label>
 						</td>
 						<td class="tdcontent">
-							<input id="name" type="text" ng-model="eventDetail.name"/>		
+							<input id="name" type="text" ng-model="eventDetail.name" ng-disabled="past"/>		
 						</td>
 					</tr>
 					<tr>
@@ -116,17 +111,17 @@
 							<label >From </label>
 						</td>
 						<td class="tdcontent">
-							<input id="fromDate" type="date" ng-model="eventDetail.fromDate"/>  
-							<input id="fromTime" type="time" ng-model="eventDetail.fromDate"/><br>
-							<input id="fromDate1" type="text" ng-model="eventDetail.fromDate"/><br>
+							<input id="fromDate" type="date" ng-model="eventDetail.fromDate" ng-disabled="past"/>  
+							<input id="fromTime" type="time" ng-model="eventDetail.fromDate" ng-disabled="past"/><br>
+							<input id="fromDate1" type="text" ng-model="eventDetail.fromDate" ng-disabled="past"/><br>
 						</td>
 						<td class="tdheader">
 							<label >To</label>
 						</td>
 						<td class="tdcontent">
-							<input id="toDate" type="date" ng-model="eventDetail.toDate"/>
-							<input id="toTime" type="time" ng-model="eventDetail.toDate"/><br>
-							<input id="toDate1" type="text" ng-model="eventDetail.toDate"/><br>
+							<input id="toDate" type="date" ng-model="eventDetail.toDate" ng-disabled="past"/>
+							<input id="toTime" type="time" ng-model="eventDetail.toDate" ng-disabled="past"/><br>
+							<input id="toDate1" type="text" ng-model="eventDetail.toDate" ng-disabled="past"/><br>
 						</td>
 					</tr>
 					<tr>
@@ -134,13 +129,13 @@
 							<label >Venue</label>
 						</td>
 						<td class="tdcontent">
-							<input id="venue" type="text" ng-model="eventDetail.venue"/>
+							<input id="venue" type="text" ng-model="eventDetail.venue" ng-disabled="past"/>
 						</td>
 						<td class="tdheader">
 							<label >Location</label>
 						</td>
 						<td class="tdcontent">
-							<input id="location" type="text" ng-model="eventDetail.location"/>
+							<input id="location" type="text" ng-model="eventDetail.location" ng-disabled="past"/>
 						</td>
 					</tr>
 					<tr>
@@ -148,13 +143,13 @@
 							<label >Contact Person Name</label>
 						</td>
 						<td class="tdcontent">
-							<input id="contactName" type="text" ng-model="eventDetail.contactName"/>
+							<input id="contactName" type="text" ng-model="eventDetail.contactName" ng-disabled="past"/>
 						</td>
 						<td class="tdheader">
 							<label >Contact Person Email</label>
 						</td>
 						<td class="tdcontent">
-							<input id="loginEmail" type="text" ng-model="eventDetail.contactEmail"/>
+							<input id="loginEmail" type="text" ng-model="eventDetail.contactEmail" ng-disabled="past"/>
 						</td>
 					</tr>
 				</td>
@@ -163,14 +158,14 @@
 						<label >Application Deadline</label>
 					</td>
 					<td class="tdcontent">
-						<input id="applictionDeadline" type="date" ng-model="eventDetail.applicationDeadline"/><br>
-						<input id="applictionDeadline1" type="text" ng-model="eventDetail.applicationDeadline"/>
+						<input id="applictionDeadline" type="date" ng-model="eventDetail.applicationDeadline" ng-disabled="past"/><br>
+						<input id="applictionDeadline1" type="text" ng-model="eventDetail.applicationDeadline" ng-disabled="past"/>
 					</td>
 					<td class="tdheader">
 						<label >Quota</label>
 					</td>
 					<td class="tdcontent">
-						<input id="quota" type="number" ng-model="eventDetail.quota"/>
+						<input id="quota" type="number" ng-model="eventDetail.quota" ng-disabled="past"/>
 					</td>
 				</tr>
 				<tr>
@@ -252,7 +247,8 @@
 		<div>
 			<h1 id="photo">Photos</h1> 
 			<button ng-click="createEmptyPhoto()">New</button>
-			<button ng-click="createEmptyPhoto()">Save</button>
+			<a href="https://www.youtube.com/watch?v=HSiZgaM2H_4" target=1 class="button">How to upload an image from Google Photo</a>
+			
 			<table st-table="photo" class="table table-striped">
 				<thead>
 					<tr>
@@ -274,12 +270,13 @@
 							</select>
 						</td>
 						<td>
-							<textarea id="path" ng-model="row.Description"/></textarea> 
+							<textarea id="path" ng-model="row.Description"/></textarea>
 						</td>
 						<td>
 							<textarea id="description" ng-model="row.Photo"/></textarea> 
 						</td>
 						<td>
+							<button ng-click="savePhoto(row)">Save</button><br>
 							<button ng-click="deletePhoto(row.id)">Remove</button>
 						</td>
 					</tr>
@@ -292,7 +289,7 @@
 			<ul id="slides" >
 				<li class="slide" ng-repeat="row in eventPhoto">
 					<a href="{{row.Photo}}" target=1>
-						<div class="slide-img"><img ng-src={{row.Photo}} src={{row.Photo}}><</div>
+						<div class="slide-img"><img ng-src={{row.Photo}} src={{row.Photo}}></div>
 						<h1 class="title"><span class="title-text">{{row.Description}}</span></h1>
 					</a>
 				</li>
@@ -306,7 +303,78 @@
 	</div>
 
 	<div id="Volunteer_Work" class="tabcontent">
+
 		<h1>Volunteer Work</h1>
+		<h1>Calendar</h1>
+		
+		<h1>News</h1>
+		<button ng-click="createEmptyNews()">New</button>
+		
+		<table st-table="news" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 20%;">Post Date</th>
+						<th style="width: 20%;">To Date</th>
+						<th style="width: 40%;">Content</th>
+						<th style="width: 20%;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in news">
+						<td>
+							<input id="postDate" type="date" ng-model="row.postDate"/>  
+						</td>
+						<td>
+							<input id="toDate" type="date" ng-model="row.toDate"/>  
+						</td>
+						<td>
+							<textarea id="content" ng-model="row.content"/></textarea> 
+						</td>
+						<td>
+							<button ng-click="saveNews(row)">Save</button>
+							<button ng-click="deleteNews(row.id)">Remove</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<h1>Pending</h1>
+		<table st-table="pending" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 20%;">Info</th>
+						<th style="width: 30%;">Venue</th>
+						<th style="width: 30%;">Remarks</th>
+						<th style="width: 20%;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in work">
+						<td><label>Vol id: </label>{{row.volId}}<br>
+							<label>Name: </label>{{row.name}}<br>
+							<label>Period: </label>{{row.period}}<br>
+							<label>Post: </label>{{row.post}}
+						</td>
+						<td><label>Venue</label>
+							<input id="venue" type="text" ng-model="row.venue"/>
+							<label>Location</label> 
+							<textarea id="location" ng-model="row.location"/></textarea> 
+						</td>
+						<td>
+							<label>status</label>
+							<select ng-model="row.status">
+								<option value="Pending">Pending</option>
+								<option value="Confirmed">Confirmed</option>
+								<option value="Cancelled">Cancelled</option>
+							</select>
+							<textarea id="content" ng-model="row.remarks"/></textarea> 
+						</td>
+						<td>
+							<button ng-click="saveWork(row.id)">Save</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 	</div>
 </div>
 <commonfooter></commonfooter>

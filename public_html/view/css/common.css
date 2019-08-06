@@ -211,6 +211,25 @@ border-color: var(--main-color);
 transition: all 0.4s ease 0s;
 }
 
+a.button{
+  color: var(--main-color);
+  background: white;
+  padding: 5px 30px;
+  border: 2px solid var(--main-color) ;
+  border-radius: 6px;
+  display: inline-block;
+  margin: 5px 20px;
+}
+
+
+a.button:hover{
+  color: white;
+  background: var(--main-color);
+  border-color: var(--main-color);
+  transition: all 0.4s ease 0s;
+  text-decoration: none;
+}
+
 /*input[type=date], [type=time]   {
 	width: 40%;
 	padding: 10px;

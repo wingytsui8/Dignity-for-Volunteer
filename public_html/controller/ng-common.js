@@ -143,6 +143,7 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 	}
 
 	$scope.action = "";
+	$scope.past = false;
 	$scope.getEvents = function($upcoming){
 		if ($upcoming){
 			$.ajax({
@@ -154,6 +155,7 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 				success: function(response) {
 					responseData = JSON.parse(response);
 					$scope.action = "Edit Upcoming Event";
+					$scope.past = false;
 				}
 			});
 
@@ -167,6 +169,7 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 				success: function(response) {
 					responseData = JSON.parse(response);
 					$scope.action = "Edit Past Event";
+					$scope.past = true;
 				}
 			});
 		}
