@@ -66,17 +66,15 @@ textarea {
 h1 {
 	display: inline;
 }
+/* Style the tab */
 .tab {
-    top: 0px;
-    padding: 5px;
-    position: fixed;
-    z-index: 11;
-    left: 700px;
-    vertical-align: middle;
-	font-size: 16px;
-	font-weight : 700;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
 }
-.tab a {
+
+/* Style the buttons inside the tab */
+.tab button {
   background-color: inherit;
   float: left;
   border: none;
@@ -84,27 +82,26 @@ h1 {
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
-  color: var(--main-color); 
+  font-size: 17px;
 }
 
 /* Change background color of buttons on hover */
-.tab a:hover {
-  color: white; 
+.tab button:hover {
+  background-color: #ddd;
 }
 
 /* Create an active/current tablink class */
-/*.tab a.active {
+.tab button.active {
   background-color: #ccc;
-  color: var(--main-color-dark);
-}*/
+}
 
 /* Style the tab content */
-/*.tabcontent {
+.tabcontent {
   display: none;
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
-}*/
+}
 #slidesPreview {
   padding: 0;
   left: 0px;
