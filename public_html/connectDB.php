@@ -274,7 +274,7 @@ function getPortfolio($email){
 	Select r2.eventId, r2.status
 	from volunteer as vol
 	inner join register as r2 on r2.active = 1 and r2.status <> 'Cancelled' AND vol.id = r2.volId 
-	where r2.id = " . $volId . "
+	where vol.id = " . $volId . "
 	) as r on e.id = r.eventId
 	where active = 1 and fromDate >= CURDATE()
 	order by fromDate;";
