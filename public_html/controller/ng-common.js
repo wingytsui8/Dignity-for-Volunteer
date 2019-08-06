@@ -135,6 +135,13 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 	}
 	// $scope.eventDetail = {id: null}
 	// $scope.registeredList = {name: 'null'}
+
+	$scope.toLocalTimeString = function(date){
+		if($date){
+			return date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+		}
+	}
+
 	$scope.action = "";
 	$scope.getEvents = function($upcoming){
 		if ($upcoming){
@@ -531,6 +538,7 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 			}else if(responseData[0].upcoming[i].registered == "0"){
 				responseData[0].upcoming[i].isRegistered = false;
 			}
+			responseData[0].upcoming[i].original = responseData[0].upcoming[i].isRegistered;
 		}
 		for (var i = 0 ;i<responseData[0].volWork.length;i++){
 			var period = periodCovertToString(responseData[0].volWork[i].fromDate, responseData[0].volWork[i].toDate);
@@ -555,9 +563,9 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 			alert("Please fill in all the necessary items before submission.");
 		}else{
 			if (confirm("Are you sure?")){
-				$post = $scope.work.postOption;
-				if ($post!="Teacher" || $post!="General"){
-					$post = $scope.work.post;
+				var post = $scope.work.postOption;
+				if (post == "Other"){
+					post = $scope.work.post;
 				}
 				$.ajax({
 					url: '../connectDB.php',
@@ -565,9 +573,9 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 					data : { 
 						action: 'addVolunteerWork', 
 						email: $rootScope.lEmail, 
-						from: $scope.work.fromDate.toISOString().split('T')[0],
-						to: $scope.work.toDate.toISOString().split('T')[0],
-						post: $post,
+						from: $scope.toLocalTimeString($scope.work.fromDate),
+						to: $scope.toLocalTimeString($scope.work.toDate),
+						post: post,
 						remarks: $scope.work.remarks?$scope.work.remarks:""
 					},
 					dataType: "json",
@@ -651,10 +659,12 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		if (confirm("Are you sure?")){
 			var registerData = [];
 			for(var i = 0 ; i < $scope.portfolio.upcoming.length ; i++){
-				registerData.push({
-					"eventId" : $scope.portfolio.upcoming[i].id,
-					"isRegistered" : $scope.portfolio.upcoming[i].isRegistered?1:0
-				});
+				if ($scope.portfolio.upcoming[i].isRegistered != $scope.portfolio.upcoming[i].original){
+					registerData.push({
+						"eventId" : $scope.portfolio.upcoming[i].id,
+						"isRegistered" : $scope.portfolio.upcoming[i].isRegistered?1:0
+					});
+				}
 			}
 			$.ajax({
 				url: '../connectDB.php',
@@ -678,3 +688,21 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		}
 	}
 }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
