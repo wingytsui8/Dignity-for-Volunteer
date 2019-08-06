@@ -302,7 +302,7 @@ function getPortfolio($email){
 		}
 	}
 
-	$sql= "SELECT DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, post, venue, status, remarks
+	$sql= "SELECT DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, post, venue, status, remarks, id
 	From volunteer_work
 	where active = 1 and volId = ". $volId ."
 	order by fromDate>CURDATE() DESC, `status`='Confirmed' DESC, fromDate" ;
@@ -405,7 +405,6 @@ function addVolunteerWork($email, $from, $to, $post, $remarks){
 
 function cancelVolunteerWork($id, $email){
 	if (checkLoginSession($email)){
-		$volId = getVolunteerId($email);
 		$sql = "UPDATE `volunteer_work` 
 			SET status= 'Cancelled'
 			WHERE id = ". $id .";";

@@ -533,11 +533,31 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 				responseData = JSON.parse(response);
 			}
 		});
+		for (var i = 0 ;i<responseData[0].past.length;i++){
+			var period = periodCovertToString(responseData[0].past[i].fromDate, responseData[0].past[i].toDate);
+			responseData[0].past[i].period = period.period;
+		}
 		for (var i = 0 ;i<responseData[0].upcoming.length;i++){
+			var period = periodCovertToString(responseData[0].upcoming[i].fromDate, responseData[0].upcoming[i].toDate);
+			responseData[0].upcoming[i].period = period.period;
 			if (responseData[0].upcoming[i].registered == "1"){
 				responseData[0].upcoming[i].isRegistered = true;
 			}else if(responseData[0].upcoming[i].registered == "0"){
 				responseData[0].upcoming[i].isRegistered = false;
+			}
+		}
+		for (var i = 0 ;i<responseData[0].volWork.length;i++){
+			var period = periodCovertToString(responseData[0].volWork[i].fromDate, responseData[0].volWork[i].toDate);
+			responseData[0].volWork[i].period = period.period;
+			if (responseData[0].volWork[i].status == "Cancelled"){	
+				responseData[0].volWork[i].displayButton = false;
+			}else{
+				if (period.past){
+					responseData[0].volWork[i].status = "Ended";
+					responseData[0].volWork[i].displayButton = false;
+				}else{
+					responseData[0].volWork[i].displayButton = true;
+				}
 			}
 		}
 		$scope.portfolio = responseData[0];
@@ -606,6 +626,35 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 				location.reload();
 			}
 		});
+	}
+	function periodCovertToString (from, to){
+		var fromDate = new Date(from);
+		var toDate = new Date(to);
+		var today = new Date();
+		var period = "";
+		var past = false;
+		
+		fromDateString = fromDate.toDateString();
+		fromHour = String(fromDate.getHours()).padStart(2,0)
+		fromMin = String(fromDate.getMinutes()).padStart(2,0) 
+
+		toDateString = toDate.toDateString();
+		toHour = String(toDate.getHours()).padStart(2,0)
+		toMin = String(toDate.getMinutes()).padStart(2,0) 
+
+		if (fromDate!=toDate){
+			 period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toDateString + " , " + toHour + ":" +  toMin ;
+		}else{
+			 period = fromDfromDateStringate +  " , " + fromHour + ":" +  fromMin + "  -  " + toHour + ":" +  toMin;
+		}	
+
+		if (fromDate > today){
+			past = false;
+		}else{
+			past = true
+		}
+
+		return { period: period ,  past: past }
 	}
 }]);
 
