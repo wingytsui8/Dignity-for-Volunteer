@@ -279,30 +279,11 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		});
 		$scope.getEventPhoto();
 	}
-	$scope.postEvent = function() {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				// action: 'postPhoto' ,  
-				// id: $scope.eventDetail.id, 
-				// name: $scope.eventDetail.name,
-				// contactEmail: $scope.eventDetail.contactEmail,
-				// applicationDeadline: $scope.eventDetail.applicationDeadline.toISOString().split('T')[0], 
-				// quota: $scope.eventDetail.quota,
-				// active: $scope.eventDetail.active
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.sql = responseData;
-	}
 
 	setTimeout(function(){
-		$rootScope.loading = false;
+		if($rootScope.pageTitle!="Home" || ($rootScope.lEmail.length==0 || $rootScope.lEmail == null)){
+			$rootScope.loading = false;
+		}
 		$ocLazyLoad.load('js/loginForm.js');
 		$ocLazyLoad.load('js/sha256.js');
 	}, 1000);
