@@ -395,8 +395,8 @@ function registerEvents($email, $registerData){
 function addVolunteerWork($email, $from, $to, $post, $remarks){
 	if (checkLoginSession($email)){
 		$volId = getVolunteerId($email);
-		$sql = "Insert into `volunteer_work` (`volId`, `fromDate`, `toDate`, `post`, `status`, `active`, `remarks`)
-				VALUES (". $volId .", '". $from ."', '". $to ."', '". $post ."', 'Pending', 1, '". $remarks ."');";
+		$sql = "Insert into `volunteer_work` (`volId`, `fromDate`, `toDate`, `post`, `status`, `active`, `remarks`, `createDate`, `modifyDate`)
+				VALUES (". $volId .", '". $from ."', '". $to ."', '". $post ."', 'Pending', 1, '". $remarks ."', Now(), Now());";
 		runNonQuery($sql);
 		return true;
 	}else{
@@ -407,7 +407,7 @@ function addVolunteerWork($email, $from, $to, $post, $remarks){
 function cancelVolunteerWork($id, $email){
 	if (checkLoginSession($email)){
 		$sql = "UPDATE `volunteer_work` 
-			SET status= 'Cancelled'
+			SET status= 'Cancelled', modifyDate = Now()
 			WHERE id = ". $id .";";
 		runNonQuery($sql);
 		return true;
