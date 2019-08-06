@@ -575,9 +575,9 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 					success: function(response) {
 						responseData = JSON.parse(response);
 						if (responseData){
-							alert("change applied");
+							alert("Change applied.");
 						}else{
-							alert("Login session has passed. Please login again");
+							alert("Login session has passed. Please login again.");
 							sessionStorage.setItem("lEmail", "");
 							$rootScope.lEmail = "";
 							extEmail = "";
@@ -603,9 +603,9 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 				success: function(response) {
 					responseData = JSON.parse(response);
 					if (responseData){
-						alert("cancelled");
+						alert("Change applied.");
 					}else{
-						alert("Login session has passed. Please login again");
+						alert("Login session has passed. Please login again.");
 						sessionStorage.setItem("lEmail", "");
 						$rootScope.lEmail = "";
 						extEmail = "";
@@ -663,9 +663,9 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 				success: function(response) {
 					responseData = JSON.parse(response);
 					if (responseData){
-						alert("change applied");
+						alert("Change applied.");
 					}else{
-						alert("Login session has passed. Please login again");
+						alert("Login session has passed. Please login again.");
 						sessionStorage.setItem("lEmail", "");
 						$rootScope.lEmail = "";
 						extEmail = "";
