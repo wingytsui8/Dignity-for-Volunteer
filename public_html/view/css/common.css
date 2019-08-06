@@ -372,8 +372,8 @@ img.icon {
 }
 #slides .slide .title .title-text {
   display: block;
-  -webkit-transform: translateY(1.2em);
-          transform: translateY(1.2em);
+  -webkit-transform: translateY(100px);
+          transform: translateY(100px);
 /*  transition: -webkit-transform 1s ease-in-out;
   transition: transform 1s ease-in-out;*/
   transition: transform 1s ease-in-out, -webkit-transform 1s ease-in-out;
