@@ -267,7 +267,7 @@ function getEventPhoto($id){
 function getPortfolio($email){
 	$volId = getVolunteerId($email);
 
-	$sql= "SELECT e.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, applicationDeadline, quota, !(r.eventId is null) as registered, r.status as status
+	$sql= "SELECT e.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, applicationDeadline, !(r.eventId is null) as registered, r.status as status
 	From event as e
 	left outer join  
 	(
@@ -381,7 +381,7 @@ function registerEvents($email, $registerData){
 				$dbChange = $dbChange . " UPDATE register Set modifyDate = Now(), status = ". ($record['isRegistered']==1? "'Confirmed'" : "'Cancelled'" )." where volId = ". $volId. " And eventId = ". $record['eventId'] . " And active = 1 ; ";
 			}else{
 				$dbChange = $dbChange  . " INSERT INTO register (eventId, volId, createDate, modifyDate, status, active)
-				VALUES (".$record['eventId'].", ". $volId .",  Now(),  Now(), 'Confirmed', 1 ); ";
+				VALUES (".$record['eventId'].", ". $volId .",  Now(),  Now(), 'Pending', 1 ); ";
 			}
 		}
 		runNonQuery($dbChange);

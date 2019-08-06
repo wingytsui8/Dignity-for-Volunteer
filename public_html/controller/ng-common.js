@@ -669,8 +669,8 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 						sessionStorage.setItem("lEmail", "");
 						$rootScope.lEmail = "";
 						extEmail = "";
-						location.reload();
 					}
+					location.reload();
 				}
 			});
 		}
