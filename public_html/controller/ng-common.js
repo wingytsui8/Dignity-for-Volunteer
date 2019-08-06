@@ -94,6 +94,11 @@ app.directive("commonfooter", function() {
 app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$route", function($scope, $ocLazyLoad, $rootScope, $route) {
 	$rootScope.loading = true;
 
+	$scope.validateEmail = function(email) {
+  		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  		return re.test(email);
+	}
+
 	$scope.$watch('pageTitle', function () {
 		$rootScope.pageTitle = $scope.pageTitle;
 	});
@@ -281,7 +286,7 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 	}
 
 	setTimeout(function(){
-		if($rootScope.pageTitle!="Home" || ($rootScope.lEmail.length==0 || $rootScope.lEmail == null)){
+		if($rootScope.pageTitle!="Home" || !$scope.validateEmail(sessionStorage.getItem("lEmail"))){
 			$rootScope.loading = false;
 		}
 		$ocLazyLoad.load('js/loginForm.js');
