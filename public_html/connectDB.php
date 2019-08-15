@@ -1,5 +1,5 @@
 <?php
-
+ 
 if(isset($_POST['action'])){
 	$action = (string)$_POST['action']; 
 	switch ($action){
