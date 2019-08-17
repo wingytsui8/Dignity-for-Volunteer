@@ -299,37 +299,31 @@
 	</div>
 
 	<div id="Overview" class="tabcontent">
-		<div>
-			<h1>Notification</h1>
-			how many updated record?
+		<button class="collapsible">Notification</button>
+		<div class="content">
+		  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 		</div>
-		<hr>
-		<div>
-			<h1>Calendar</h1>
+		<button class="collapsible">Calendar</button>
+		<div class="content">
+		  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 		</div>
-		<hr>
-		
-		<div>
-			<h1>Pending Volunteer Work Application</h1>
-			<table st-table="pendingWork" class="table table-striped">
+		<button class="collapsible">Pending Volunteer Work Application</button>
+		<div class="content">
+		  <table st-table="pendingWork" class="table table-striped">
 				<thead>
 					<tr>
-						<th style="width: 40%;">Info</th>
-						<th style="width: 40%;">Remarks</th>
+						<th style="width: 40%;">Volunteer</th>
+						<th style="width: 40%;">Work Remarks</th>
 						<th style="width: 20%;"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="row in pendingWork">
-						<td><label>Vol id: </label>{{row.volId}}<br>
-							<label>Name: </label>{{row.name}}<br>
-							<label>Email: </label> <a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}}, %0D%0A%0D%0A Your volunteer application is {{row.status}} %0D%0A%0D%0A Here is the details: %0D%0A Period: {{row.period}}%0D%0A
-							Post: {{row.post}}%0D%0A
-							Venue:{{row.venue}}%0D%0A
-							Location:{{row.location}}%0D%0A
-							Remarks: {{row.remarks}}">{{row.email}}</a><br>
-							<label>Period: </label>{{row.period}}<br>
-							<label>Post: </label>{{row.post}}
+						<td><label>Id: </label>&nbsp{{row.volId}}<br>
+							<label>Name: </label>&nbsp{{row.name}}<br>
+							<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
+							<label>Period: </label>&nbsp{{row.period}}<br>
+							<label>Post: </label>&nbsp{{row.post}}
 						</td>
 						<td><label>Venue</label>
 							<input id="venue" type="text" ng-model="row.venue"/>
@@ -345,7 +339,55 @@
 							<textarea id="content" ng-model="row.remarks"/></textarea> 
 						</td>
 						<td>
-							<button ng-click="saveWork(row.id)">Save</button>
+							<button ng-click="updateVolunteerWork(row)">Save</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div>
+			<h1>Notification</h1>
+			how many updated record?
+		</div>
+		<hr>
+		<div>
+			<h1>Calendar</h1>
+		</div>
+		<hr>
+		
+		<div>
+			<h1>Pending Volunteer Work Application</h1>
+			<table st-table="pendingWork" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 40%;">Volunteer</th>
+						<th style="width: 40%;">Work Remarks</th>
+						<th style="width: 20%;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in pendingWork">
+						<td><label>Id: </label>&nbsp{{row.volId}}<br>
+							<label>Name: </label>&nbsp{{row.name}}<br>
+							<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
+							<label>Period: </label>&nbsp{{row.period}}<br>
+							<label>Post: </label>&nbsp{{row.post}}
+						</td>
+						<td><label>Venue</label>
+							<input id="venue" type="text" ng-model="row.venue"/>
+							<label>Location</label> 
+							<textarea id="location" ng-model="row.location"/></textarea> 
+							<label>Status</label>
+							<select ng-model="row.status">
+								<option value="Pending">Pending</option>
+								<option value="Confirmed">Confirmed</option>
+								<option value="Cancelled">Cancelled</option>
+							</select>
+							<label>Remarks</label>
+							<textarea id="content" ng-model="row.remarks"/></textarea> 
+						</td>
+						<td>
+							<button ng-click="updateVolunteerWork(row)">Save</button>
 						</td>
 					</tr>
 				</tbody>
@@ -357,24 +399,22 @@
 			<table st-table="pendingEvent" class="table table-striped">
 				<thead>
 					<tr>
-						<th style="width: 40%;">Info</th>
-						<th style="width: 40%;">Remarks</th>
+						<th style="width: 40%;">Volunteer</th>
+						<th style="width: 40%;">Event</th>
 						<th style="width: 20%;"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="row in pendingEvent">
-						<td><label>Vol id: </label>{{row.volId}}<br>
-							<label>Name: </label>{{row.name}}<br>
-							<label>Email: </label> <a href="mailto:{{row.email}}?subject=Regarding your volunteer application of {{row.eventName}} on {{row.fromDate}}&body=Hi {{row.name}}, %0D%0A%0D%0A Your volunteer application is {{row.status}} %0D%0A%0D%0A Here is the details: %0D%0A Period: {{row.period}}%0D%0A
-							Venue:{{row.venue}}%0D%0A
-							Location:{{row.location}}">{{row.email}}</a><br>
+						<td><label>Id: </label>&nbsp{{row.volId}}<br>
+							<label>Name: </label>&nbsp{{row.name}}<br>
+							<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application of {{row.eventName}} on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
 						</td>
 						<td>
-							<label>Event Name: </label>{{row.eventName}}<br>
-							<label>Period: </label>{{row.period}}<br>
-							<label>Venue</label>{{row.venue}}<br>
-							<label>Status</label>
+							<label>Name: </label>&nbsp{{row.eventName}}<br>
+							<label>Period: </label>&nbsp{{row.period}}<br>
+							<label>Venue: </label>&nbsp{{row.venue}}<br>
+							<label>Status: </label>
 							<select ng-model="row.status">
 								<option value="Pending">Pending</option>
 								<option value="Confirmed">Confirmed</option>
@@ -382,7 +422,7 @@
 							</select>
 						</td>
 						<td>
-							<button ng-click="saveEvent(row.id)">Save</button>
+							<button ng-click="updateRegistrationStatus(row)">Save</button>
 						</td>
 					</tr>
 				</tbody>
@@ -524,6 +564,22 @@
 	}
 		// Get the element with id="defaultOpen" and click on it
 		document.getElementById("defaultOpen").click();
+
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	  coll[i].addEventListener("click", function() {
+	    this.classList.toggle("active");
+	    var content = this.nextElementSibling;
+	    if (content.style.maxHeight){
+	      content.style.maxHeight = null;
+	    } else {
+	      content.style.maxHeight = content.scrollHeight + "px";
+	    } 
+	  });
+	}
+
 	</script>
 </body>
 
