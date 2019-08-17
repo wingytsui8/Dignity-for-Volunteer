@@ -789,7 +789,7 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 	}
 }]);
 
-app.directive('fileReader', function($scope) {
+app.directive('fileReader', function() {
 return {
 	scope: {
 		fileReader:"="
