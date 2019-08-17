@@ -91,8 +91,8 @@
 					</tbody>
 				</table>
 			</div>
-			<hr>
-			<div>
+			<button class="collapsible">{{action}}</button>
+			<div class="content">
 				<h1 id="details">{{action}}</h1>
 				<button ng-show="!past" ng-click="createEmptyEvent()">New</button>
 				<button ng-click="getEventDetail(eventDetail.id)">Reset</button>
@@ -213,8 +213,8 @@
 			</table>		
 
 		</div>
-		<hr>
-		<div>
+		<button class="collapsible">Registered Volunteer</button>
+		<div class="content">
 			<h1 id="registeredList">Registered Volunteer</h1> <button ng-click="downloadRegisteredList()">Download CSV</button> 
 			<table st-table="registered" class="table table-striped">
 				<thead>
@@ -239,8 +239,8 @@
 				</tbody>
 			</table>
 		</div>
-		<hr>
-		<div>
+		<button class="collapsible">Photos</button>
+		<div class="content">
 			<h1 id="photo">Photos</h1> 
 			<button ng-click="createEmptyPhoto()">New</button>
 			<a href="https://www.youtube.com/watch?v=HSiZgaM2H_4" target=1 class="button">How to upload an image from Google Photo</a>
@@ -280,7 +280,8 @@
 			</table>
 		</div>
 
-
+		<button class="collapsible">Slide</button>
+		<div class="content">
 		<div id="slidesPreview">
 			<ul id="slides" >
 				<li class="slide" ng-repeat="row in eventPhoto">
@@ -297,54 +298,9 @@
 			</ul>
 		</div>
 	</div>
+	</div>
 
 	<div id="Overview" class="tabcontent">
-		<button class="collapsible">Notification</button>
-		<div class="content">
-		  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		</div>
-		<button class="collapsible">Calendar</button>
-		<div class="content">
-		  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		</div>
-		<button class="collapsible">Pending Volunteer Work Application</button>
-		<div class="content">
-		  <table st-table="pendingWork" class="table table-striped">
-				<thead>
-					<tr>
-						<th style="width: 40%;">Volunteer</th>
-						<th style="width: 40%;">Work Remarks</th>
-						<th style="width: 20%;"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="row in pendingWork">
-						<td><label>Id: </label>&nbsp{{row.volId}}<br>
-							<label>Name: </label>&nbsp{{row.name}}<br>
-							<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
-							<label>Period: </label>&nbsp{{row.period}}<br>
-							<label>Post: </label>&nbsp{{row.post}}
-						</td>
-						<td><label>Venue</label>
-							<input id="venue" type="text" ng-model="row.venue"/>
-							<label>Location</label> 
-							<textarea id="location" ng-model="row.location"/></textarea> 
-							<label>Status</label>
-							<select ng-model="row.status">
-								<option value="Pending">Pending</option>
-								<option value="Confirmed">Confirmed</option>
-								<option value="Cancelled">Cancelled</option>
-							</select>
-							<label>Remarks</label>
-							<textarea id="content" ng-model="row.remarks"/></textarea> 
-						</td>
-						<td>
-							<button ng-click="updateVolunteerWork(row)">Save</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
 		<div>
 			<h1>Notification</h1>
 			how many updated record?
@@ -352,6 +308,9 @@
 		<hr>
 		<div>
 			<h1>Calendar</h1>
+			<div>
+				<iframe src="https://calendar.google.com/calendar/embed?height=800&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=dm5mMDduaHN0ZnN1c211ZDV1N200cXBlcXNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=b2s4NHVqZmJrOTVnbm1zbm9xbWVtOWM4NTBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=ZW4tZ2IuY2hyaXN0aWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4tZ2IubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23F6BF26&amp;color=%23039BE5&amp;color=%230B8043&amp;color=%23D81B60&amp;showTitle=0" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+			</div>
 		</div>
 		<hr>
 		
@@ -472,27 +431,8 @@
 		</div>
 	</div>
 	<div id="Volunteer" class="tabcontent">
-		<div>
-			<h1>Volunteer Overview</h1>
-			show all upcoming and volunteer ??
-		</div>
-		<hr>
-		<div>
-			<h1>Upcoming Event List</h1>
-			By event
-		</div>
-		<hr>
-		<div>
-			<h1>Upcoming Volunteer Work List</h1>
-			By date (show coming month)
-		</div>
-		<hr>
-		<div>
-			<h1>Calendar</h1>
-		</div>
-	</div>
-	<div id="Setting" class="tabcontent">
-		<div>
+		<button class="collapsible">Announcement</button>
+		<div class="content">
 			<h1>Announcement</h1>
 			<button ng-click="createEmptyAnnouncement()">New</button>
 
@@ -524,12 +464,35 @@
 				</tbody>
 			</table>
 		</div>
-		<hr>
-		<div>
+		<button class="collapsible">Notification</button>
+		<div class="content">
+			<h1>Volunteer Overview</h1>
+			show all upcoming and volunteer ??
+		</div>
+		<button class="collapsible">Notification</button>
+		<div class="content">
+			<h1>Upcoming Event List</h1>
+			By event
+		</div>
+		<button class="collapsible">Notification</button>
+		<div class="content">
+			<h1>Upcoming Volunteer Work List</h1>
+			By date (show coming month)
+		</div>
+		<button class="collapsible">Notification</button>
+		<div class="content">
+			<h1>Calendar</h1>
+
+		</div>
+	</div>
+	<div id="Setting" class="tabcontent">
+		<button class="collapsible">Edit Options</button>
+		<div class="content">
 			<h1>Edit Options</h1>
 			e.g. (Venue and location), (post)
 		</div>
-		<hr>
+		<button class="collapsible">Upload</button>
+		<div class="content">
 		<h1>Upload</h1>
 		<select onchange='checkvalue(this.value)' ng-model="UploadOption"> 
 			<option disabled selected value> -- select an option -- </option>
@@ -556,7 +519,6 @@
 			</table>
 			<input type="file" file-reader="fileContent" />
 		</div>
-		<hr>
 		<div ng-show="UploadOption=='VolunteerWork'">
 			*All volunteer ID uploaded should already exist in our database. If it is not, please upload volunteer first.
 			*For dates, the format is yyyy-mm-dd<br>
@@ -573,9 +535,9 @@
 			</table>
 			<input type="file" file-reader="fileContent" />
 		</div>
-		<hr>
-		
-		<div>
+		</div>
+		<button class="collapsible">Housekeeping</button>
+		<div class="content">
 			<h1>Housekeeping</h1>
 			clean up all unused past record
 		</div>
@@ -609,7 +571,8 @@
 	    if (content.style.maxHeight){
 	      content.style.maxHeight = null;
 	    } else {
-	      content.style.maxHeight = content.scrollHeight + "px";
+	      // content.style.maxHeight = content.scrollHeight + "px";
+	       content.style.maxHeight = "max-content";
 	    } 
 	  });
 	}
