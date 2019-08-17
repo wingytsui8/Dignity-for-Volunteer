@@ -710,20 +710,20 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 					// 	$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
 					// }
 					$scope.pendingWork = responseData.pendingWork;
-					for (var i = 0; i < responseData.pendingWork.length; i++){
-						$scope.pendingWork[i].period = $scope.periodCovertToString($scope.pendingWork[i].fromDate, $scope.pendingWork[i].toDate);
+					// for (var i = 0; i < responseData.pendingWork.length; i++){
+					// 	$scope.pendingWork[i].period = $scope.periodCovertToString($scope.pendingWork[i].fromDate, $scope.pendingWork[i].toDate);
 						
-					}
+					// }
 					$scope.pendingEvent = responseData.pendingEvent;
-					for (var i = 0; i < responseData.pendingEvent.length; i++){
-						$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
+					// for (var i = 0; i < responseData.pendingEvent.length; i++){
+					// 	$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
 						
-					}
+					// }
 					$scope.cancelled = responseData.cancelled;
-					for (var i = 0; i < responseData.pending.length; i++){
-						$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
+					// for (var i = 0; i < responseData.pending.length; i++){
+					// 	$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
 						
-					}
+					// }
 				}
 			}
 		});
