@@ -789,27 +789,38 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 	}
 }]);
 
-app.directive('fileReader', function() {
-  return {
-    scope: {
-      fileReader:"="
-    },
-    link: function(scope, element) {
-      $(element).on('change', function(changeEvent) {
-        var files = changeEvent.target.files;
-        if (files.length) {
-          var r = new FileReader();
-          r.onload = function(e) {
-              var contents = e.target.result;
-              scope.$apply(function () {
-                scope.fileReader = contents;
-              });
-          };
-          
-          r.readAsText(files[0]);
-        }
-      });
-    }
-  };
+app.directive('fileReader', function($scope) {
+return {
+	scope: {
+		fileReader:"="
+	},
+	link: function(scope, element) {
+		$(element).on('change', function(changeEvent) {
+			var files = changeEvent.target.files;
+			if (files.length) {
+				var r = new FileReader();
+				r.onload = function(e) {
+					var contents = e.target.result;
+					scope.$apply(function () {
+						var lines=contents.split("\n");
+						var result = [];
+						var headers=lines[0].split(",");
+						for(var i=1;i<lines.length;i++){
+							var obj = {};
+							var currentline=lines[i].split(",");
+							for(var j=0;j<headers.length;j++){
+								obj[headers[j]] = currentline[j];
+							}
+							result.push(obj);
+						}
+						scope.fileReader = JSON.stringify(result);;
+					});
+				};
+
+				r.readAsText(files[0]);
+			}
+		});
+	}
+};
 });
 
