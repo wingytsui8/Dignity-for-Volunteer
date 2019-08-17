@@ -6,7 +6,6 @@ var pages = [
 "Home",
 "Events",
 "Upcoming",
-"Register",
 "Management"
 ];
 var title = document.getElementsByTagName("title")[0].innerHTML.replace("Dignity For Volunteer - ", "");
