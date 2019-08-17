@@ -323,7 +323,11 @@
 					<tr ng-repeat="row in pendingWork">
 						<td><label>Vol id: </label>{{row.volId}}<br>
 							<label>Name: </label>{{row.name}}<br>
-							<label>Email: </label> <a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}}, <br> {{row.venue}}">{{row.email}}</a><br>
+							<label>Email: </label> <a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}}, %0D%0A%0D%0A Your volunteer application is {{row.status}} %0D%0A%0D%0A Here is the details: %0D%0A Period: {{row.period}}%0D%0A
+							Post: {{row.post}}%0D%0A
+							Venue:{{row.venue}}%0D%0A
+							Location:{{row.location}}%0D%0A
+							Remarks: {{row.remarks}}">{{row.email}}</a><br>
 							<label>Period: </label>{{row.period}}<br>
 							<label>Post: </label>{{row.post}}
 						</td>
@@ -350,6 +354,39 @@
 		<hr>
 		<div>
 			<h1>Pending Event Helper Application</h1>
+			<table st-table="pendingEvent" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 40%;">Info</th>
+						<th style="width: 40%;">Remarks</th>
+						<th style="width: 20%;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in pendingEvent">
+						<td><label>Vol id: </label>{{row.volId}}<br>
+							<label>Name: </label>{{row.name}}<br>
+							<label>Email: </label> <a href="mailto:{{row.email}}?subject=Regarding your volunteer application of {{row.eventName}} on {{row.fromDate}}&body=Hi {{row.name}}, %0D%0A%0D%0A Your volunteer application is {{row.status}} %0D%0A%0D%0A Here is the details: %0D%0A Period: {{row.period}}%0D%0A
+							Venue:{{row.venue}}%0D%0A
+							Location:{{row.location}}">{{row.email}}</a><br>
+						</td>
+						<td>
+							<label>Event Name: </label>{{row.eventName}}<br>
+							<label>Period: </label>{{row.period}}<br>
+							<label>Venue</label>{{row.venue}}<br>
+							<label>Status</label>
+							<select ng-model="row.status">
+								<option value="Pending">Pending</option>
+								<option value="Confirmed">Confirmed</option>
+								<option value="Cancelled">Cancelled</option>
+							</select>
+						</td>
+						<td>
+							<button ng-click="saveEvent(row.id)">Save</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		<hr>
 		<div>

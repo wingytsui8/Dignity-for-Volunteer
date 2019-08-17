@@ -408,11 +408,11 @@ function getManagementOverview(){
 	}
 
 // get pending event registration record
-	$sql= "SELECT `event`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`name` as volName,`volunteer`.`email` as email , `register`.`status` 
+	$sql= "SELECT `event`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`id`, `volunteer`.`name` as name,`volunteer`.`email` as email , `register`.`status` 
 		From `event` 
 		inner join `register` on `event`.`id` = `register`.`eventId` and `register`.`active` = 1 and `register`.`status` = 'Pending' 
 		inner join `volunteer` on `volunteer`.`id` = `register`.`volId`
-		order by fromDate, id, `register`.`createDate`";
+		order by fromDate, `event`.`id`, `register`.`createDate`";
 
 
 	$results = runQuickQuery($sql);
