@@ -122,6 +122,15 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( registerEvents($email, $registerData) );
 		exit;
+
+		case "updateRegistrationStatus":
+		$id = (string)$_POST['id'];
+		$status = $_POST['status'];
+
+		header('Content-type: application/json');
+		echo json_encode( updateRegistrationStatus($id, $status) );
+		exit;
+
 		case "addVolunteerWork":
 		$email = (string)$_POST['email'];
 		$from = (string)$_POST['from'];
@@ -145,7 +154,7 @@ if(isset($_POST['action'])){
 		echo json_encode( cancelVolunteerWork($id, $email) );
 		exit;
 
-		case "postVolunteerWork":
+		case "updateVolunteerWork":
 		$id = (string)$_POST['id'];
 		$venue = (string)$_POST['venue'];
 		$location = (string)$_POST['location'];
@@ -153,7 +162,7 @@ if(isset($_POST['action'])){
 		$remarks = (string)$_POST['remarks'];
 
 		header('Content-type: application/json');
-		echo json_encode( addVolunteerWork($id, $venue, $location, $status, $remarks) );
+		echo json_encode( updateVolunteerWork($id, $venue, $location, $status, $remarks) );
 		exit;
 
 		case "getManagementOverview":
@@ -408,7 +417,7 @@ function getManagementOverview(){
 	}
 
 // get pending event registration record
-	$sql= "SELECT `event`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`id`, `volunteer`.`name` as name,`volunteer`.`email` as email , `register`.`status` 
+	$sql= "SELECT `register`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`id`, `volunteer`.`name` as name,`volunteer`.`email` as email , `register`.`status` 
 		From `event` 
 		inner join `register` on `event`.`id` = `register`.`eventId` and `register`.`active` = 1 and `register`.`status` = 'Pending' 
 		inner join `volunteer` on `volunteer`.`id` = `register`.`volId`
@@ -516,13 +525,14 @@ function postAnnouncement($id, $postDate, $toDate, $content){
 	return runQuery($sql);
 }
 
-function postVolunteerWork($id, $venue, $location, $status, $remarks){
+function updateVolunteerWork($id, $venue, $location, $status, $remarks){
 
 	$sql = "UPDATE `volunteer_work` 
 			SET venue= '".$venue."', location = '".$location. "' , status= '".$status."', remarks = '".$remarks. "'
 			WHERE id = ". $id .";";
-	return $sql;
-	return runQuery($sql);
+	runNonQuery($sql);
+	return true;
+
 }
 
 function postPhoto($id, $type, $path, $des){ 
@@ -552,6 +562,13 @@ function registerEvents($email, $registerData){
 	}else{
 		return false;
 	}
+}
+
+function updateRegistrationStatus($id, $status){
+	$sql = "UPDATE `register` 
+			SET  status= '".$status."'
+			WHERE id = ". $id .";";
+	return runQuery($sql);
 }
 
 function addVolunteerWork($email, $from, $to, $post, $remarks){

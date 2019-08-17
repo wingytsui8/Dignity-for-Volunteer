@@ -768,24 +768,76 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		});
 		$scope.getVolunteerWorkManageDetail();
 	}
-	$scope.postVolunteerWork = function(work) {
+	$scope.updateVolunteerWork = function(record) {
 		$.ajax({
 			url: '../connectDB.php',
 			type: 'POST',
 			data : { 
-				action: 'postVolunteerWork' ,  
-				id: work.id, 
-				venue: work.venue,
-				location: work.location, 
-				status: work.status,
-				remarks: work.remarks, 
+				action: 'updateVolunteerWork' ,  
+				id: record.id, 
+				venue: record.venue,
+				location: record.location, 
+				status: record.status,
+				remarks: record.remarks, 
 			},
 			dataType: "json",
 			async: false,
 			success: function(response) {
 				responseData = JSON.parse(response);
+				if (responseData){
+					alert("Change applied.");
+				}
 			}
 		});
+
+		var mailNextLine = "%0D%0A";
+		var mailSubject = "Regarding your volunteer application on " + record.fromDate;
+		var mailBodyGreetings = "Hi " + record.name + "," + mailNextLine + mailNextLine;
+
+		var mailBodyStatus = "Your volunteer application has been " + record.status +  mailNextLine + mailNextLine;
+
+		var mailBodyDetails= "Here are the details:  " + mailNextLine;
+		mailBodyDetails += "Period: " + record.period + mailNextLine;
+		mailBodyDetails += "Post: " + record.post + mailNextLine;
+		mailBodyDetails += "Venue: " + record.venue + mailNextLine;
+		mailBodyDetails += "Location: " + record.location + mailNextLine;
+		mailBodyDetails += "Remarks: " + record.remarks + mailNextLine;
+
+		var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
+		window.location.href = "mailto:" + record.email + "?subject=" + mailSubject + "&body=" + mailBody;
+	}
+	$scope.updateRegistrationStatus = function(record) {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'updateRegistrationStatus' ,  
+				id: record.id, 
+				status: record.status,
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					alert("Change applied.");
+				}
+			}
+		});
+		
+		var mailNextLine = "%0D%0A";
+		var mailSubject = "Regarding your volunteer application of " + record.eventName + " on " + record.fromDate;
+		var mailBodyGreetings = "Hi " + record.name + "," + mailNextLine + mailNextLine;
+
+		var mailBodyStatus = "Your volunteer application has been " + record.status +  mailNextLine + mailNextLine;
+
+		var mailBodyDetails= "Here are the details:  " + mailNextLine;
+		mailBodyDetails += "Period: " + record.period + mailNextLine;
+		mailBodyDetails += "Venue: " + record.venue + mailNextLine;
+		mailBodyDetails += "Location: " + record.location + mailNextLine;
+
+		var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
+		window.location.href = "mailto:" + record.email + "?subject=" + mailSubject + "&body=" + mailBody;
 	}
 }]);
 
