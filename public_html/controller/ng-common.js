@@ -813,7 +813,7 @@ return {
 							}
 							result.push(obj);
 						}
-						scope.fileReader = JSON.stringify(result);;
+						scope.fileReader = result;;
 					});
 				};
 

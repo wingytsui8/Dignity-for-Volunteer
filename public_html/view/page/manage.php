@@ -490,17 +490,21 @@
 			e.g. (Venue and location), (post)
 		</div>
 		<hr>
-		<div>
-			<h1>Upload Volunteer record</h1>
+		<h1>Upload</h1>
+		<select onchange='checkvalue(this.value)' ng-model="UploadOption"> 
+			<option disabled selected value> -- select an option -- </option>
+			<option value="Volunteer">Upload Volunteers</option>
+			<option value="VolunteerWork">Upload Volunteer Works</option>
+		</select>
+		<div ng-show="UploadOption=='Volunteer'">
 			<br>
-			*For volunteer id, please sync with local database. Therefore, there will not be any "NEW" volunteer<br>
+			*For volunteer id, please sync with local database. Therefore, a whole new volunteer should not be created here<br>
 			*For dob, the format is yyyy-mm-dd<br>
-			*This function is for upadte or insert only. Contact DBA to delete volunteer or setting it to inactive<br>
+			*This function is for upadte or insert only. Contact IT support to delete a volunteer or set it to inactive<br>
 			<a href="template/update_volunteer_template.csv" download="update_volunteer_template.csv">Template</a>
 			<br>
-			<br>
 			Expected columns:
-			<table st-table="announcement" class="table table-striped">
+			<table st-table="upload_volunteer" class="table table-striped">
 				<thead>
 					<tr>
 						<th style="width: 20%;">VolunteerID</th>
@@ -510,12 +514,24 @@
 					</tr>
 				</thead>
 			</table>
- 			<input type="file" file-reader="fileContent" />
+			<input type="file" file-reader="fileContent" />
 		</div>
 		<hr>
-		<div>
-			<h1>Upload Volunteer Work record</h1>
- 			<input type="file" file-reader="fileContent" />
+		<div ng-show="UploadOption=='VolunteerWork'">
+			*All volunteer ID uploaded should already exist in our database. If it is not, please upload volunteer first.
+			*For dates, the format is yyyy-mm-dd<br>
+			<a href="template/update_volunteer_template.csv" download="update_volunteer_template.csv">Template</a>
+			Expected columns:
+			<table st-table="upload_volunteer" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 20%;">VolunteerID</th>
+						<th style="width: 30%;">From Date</th>
+						<th style="width: 30%;">To Date</th>
+					</tr>
+				</thead>
+			</table>
+			<input type="file" file-reader="fileContent" />
 		</div>
 		<hr>
 		
