@@ -105,7 +105,7 @@ hr {
 
 /* Create an active/current tablink class */
 .tab button.active {
-      background-color: var(--main-color-dark);
+    background-color: var(--main-color-dark);
     color: white;
 }
 

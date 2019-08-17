@@ -57,15 +57,17 @@
 	<div class="textbody" ng-controller="manageController">
 
 		<div class="tab">
-			<button class="tablinks" onclick="displaySection(event, 'Volunteer_Work')" ng-click="getVolunteerWorkManageDetail()" id="defaultOpen">Volunteer Work</button>
-			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(0)">Past Event</button>
-			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(1)">Upcoming Event</button>
+			<button class="tablinks" onclick="displaySection(event, 'Overview')" ng-click="getManagementOverview()" id="defaultOpen">Overview</button>
 			<button class="tablinks" onclick="displaySection(event, 'Volunteer')" ng-click="getEvents(1)">Volunteer</button>
+			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(1)">Upcoming Event</button>
+			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(0)">Past Event</button>
+			<button class="tablinks" onclick="displaySection(event, 'Setting')">Setting</button>
 
 		</div>
 		<div id="Event" class="tabcontent">
 			<div>
 				<h1 id="events">Events details</h1>
+				<button ng-click="getMoreEvent()">More</button>
 				<table st-table="events" class="table table-striped">
 					<thead>
 						<tr>
@@ -73,7 +75,7 @@
 							<th style="width: 15%">Period</th>
 							<th style="width: 35%">Venue</th>
 							<th style="width: 10%">Application Deadline</th>
-							<th style="width: 5%">Quota</th>
+							<!-- <th style="width: 5%">Quota</th> -->
 							<th style="width: 10%"></th>
 						</tr>
 					</thead>
@@ -83,8 +85,8 @@
 							<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
 							<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
 							<td>{{row.applicationDeadline}}</td>
-							<td>{{row.quota}}</td>
-							<td><button ng-click="getEventDetail(row.id)">Details</button></td>
+							<!-- <td>{{row.quota}}</td> -->
+							<td><button ng-click="getEventDetail(row.id)">Edit</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -94,6 +96,7 @@
 				<h1 id="details">{{action}}</h1>
 				<button ng-show="!past" ng-click="createEmptyEvent()">New</button>
 				<button ng-click="getEventDetail(eventDetail.id)">Reset</button>
+				<button ng-click="deleteEvent(eventDetail.id)">Delete</button>
 				<button ng-click="postEvent()">Save</button>
 				<table>
 					<tr>
@@ -207,19 +210,6 @@
 					</td>
 
 				</tr>
-				<tr>
-					<td class="tdheader">						
-						<label>Active</label>
-					</td>
-					<td class="tdcontent">
-						<select ng-model="eventDetail.active">
-							<option value="1">Active</option>
-							<option value="0">Cancelled</option>
-						</select>
-					</td>
-					<td></td>
-					<td></td>
-				</tr>
 			</table>		
 
 		</div>
@@ -308,50 +298,19 @@
 		</div>
 	</div>
 
-	<div id="Volunteer_Work" class="tabcontent">
+	<div id="Overview" class="tabcontent">
 		<div>
-			<h1>Volunteer Work</h1>
+			<h1>Notification</h1>
+			how many updated record?
 		</div>
 		<hr>
 		<div>
 			<h1>Calendar</h1>
 		</div>
 		<hr>
+		
 		<div>
-			<h1>Announcement</h1>
-			<button ng-click="createEmptyAnnouncement()">New</button>
-
-			<table st-table="announcement" class="table table-striped">
-				<thead>
-					<tr>
-						<th style="width: 20%;">Post Date</th>
-						<th style="width: 20%;">To Date</th>
-						<th style="width: 40%;">Content</th>
-						<th style="width: 20%;"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="row in announcement">
-						<td>
-							<input id="postDate" type="date" ng-model="row.postDate" style="width: 100%" />  
-						</td>
-						<td>
-							<input id="toDate" type="date" ng-model="row.toDate" style="width: 100%"/>  
-						</td>
-						<td>
-							<textarea id="content" ng-model="row.content"/></textarea> 
-						</td>
-						<td>
-							<button ng-click="postAnnouncement(row)">Save</button>
-							<button ng-click="deleteAnnouncement(row.id)">Remove</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<hr>
-		<div>
-			<h1>Pending</h1>
+			<h1>Pending Volunteer Work Application</h1>
 			<table st-table="pending" class="table table-striped">
 				<thead>
 					<tr>
@@ -392,8 +351,12 @@
 		</div>
 		<hr>
 		<div>
-			<h1>Cancelled</h1>
-			<button ng-click="inactiveCancelledWork()">Delete All</button>
+			<h1>Pending Event Helper Application</h1>
+		</div>
+		<hr>
+		<div>
+			<h1>Unread Cancelled Record</h1>
+			<button ng-click="inactiveCancelledWork()">Clear All</button>
 			<table st-table="Cancelled" class="table table-striped">
 				<thead>
 					<tr>
@@ -435,11 +398,77 @@
 	</div>
 	<div id="Volunteer" class="tabcontent">
 		<div>
-			<h1>Volunteer</h1>
+			<h1>Volunteer Overview</h1>
+			show all upcoming and volunteer ??
+		</div>
+		<hr>
+		<div>
+			<h1>Upcoming Event List</h1>
+			By event
+		</div>
+		<hr>
+		<div>
+			<h1>Upcoming Volunteer Work List</h1>
+			By date (show coming month)
 		</div>
 		<hr>
 		<div>
 			<h1>Calendar</h1>
+		</div>
+	</div>
+	<div id="Setting" class="tabcontent">
+		<div>
+			<h1>Announcement</h1>
+			<button ng-click="createEmptyAnnouncement()">New</button>
+
+			<table st-table="announcement" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 20%;">Post Date</th>
+						<th style="width: 20%;">Valid until</th>
+						<th style="width: 40%;">Content</th>
+						<th style="width: 20%;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in announcement">
+						<td>
+							<input id="postDate" type="date" ng-model="row.postDate" style="width: 100%" />  
+						</td>
+						<td>
+							<input id="toDate" type="date" ng-model="row.toDate" style="width: 100%"/>  
+						</td>
+						<td>
+							<textarea id="content" ng-model="row.content"/></textarea> 
+						</td>
+						<td>
+							<button ng-click="postAnnouncement(row)">Save</button>
+							<button ng-click="deleteAnnouncement(row.id)">Remove</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<hr>
+		<div>
+			<h1>Edit Options</h1>
+			e.g. (Venue and location), (post)
+		</div>
+		<hr>
+		<div>
+			<h1>Upload Volunteer record</h1>
+ 			upload voulunteer record
+		</div>
+		<hr>
+		<div>
+			<h1>Upload Volunteer Work record</h1>
+ 			upload voulunteer work record
+		</div>
+		<hr>
+		
+		<div>
+			<h1>Housekeeping</h1>
+			clean up all past record
 		</div>
 	</div>
 </div>

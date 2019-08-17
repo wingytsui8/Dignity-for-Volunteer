@@ -692,23 +692,23 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 }]);
 
 app.controller("manageController", ["$scope", "$rootScope", function($scope, $rootScope) {
-	$scope.getVolunteerWorkManageDetail = function(){
+	$scope.getManagementOverview = function(){
 		$.ajax({
 			url: '../connectDB.php',
 			type: 'POST',
 			data : { 
-				action: 'getVolunteerWorkManageDetail', 
+				action: 'getManagementOverview', 
 			},
 			dataType: "json",
 			async: false,
 			success: function(response) {
 				responseData = JSON.parse(response);
 				if (responseData){
-					$scope.announcement = responseData.announcement;
-					for (var i = 0; i < responseData.announcement.length; i++){
-						$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
-						$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
-					}
+					// $scope.announcement = responseData.announcement;
+					// for (var i = 0; i < responseData.announcement.length; i++){
+					// 	$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
+					// 	$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
+					// }
 					$scope.pending = responseData.pending;
 					for (var i = 0; i < responseData.pending.length; i++){
 						$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
@@ -723,7 +723,7 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 			}
 		});
 	}
-	$scope.getVolunteerWorkManageDetail();
+	$scope.getManagementOverview();
 
 	$scope.createEmptyAnnouncement = function() {
 		var responseData = {id: null, content: null, postDate: new Date(), toDate: new Date()};
@@ -762,6 +762,25 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 			}
 		});
 		$scope.getVolunteerWorkManageDetail();
+	}
+	$scope.postVolunteerWork = function(work) {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'postVolunteerWork' ,  
+				id: work.id, 
+				venue: work.venue,
+				location: work.location, 
+				status: work.status,
+				remarks: work.remarks, 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
 	}
 }]);
 

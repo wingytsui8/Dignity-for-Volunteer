@@ -145,9 +145,25 @@ if(isset($_POST['action'])){
 		echo json_encode( cancelVolunteerWork($id, $email) );
 		exit;
 
-		case "getVolunteerWorkManageDetail":
+		case "postVolunteerWork":
+		$id = (string)$_POST['id'];
+		$venue = (string)$_POST['venue'];
+		$location = (string)$_POST['location'];
+		$status = (string)$_POST['status'];
+		$remarks = (string)$_POST['remarks'];
+
 		header('Content-type: application/json');
-		echo json_encode( getVolunteerWorkManageDetail() );
+		echo json_encode( addVolunteerWork($id, $venue, $location, $status, $remarks) );
+		exit;
+
+		case "getManagementOverview":
+		header('Content-type: application/json');
+		echo json_encode( getManagementOverview() );
+		exit;
+
+		case "getManagementSetting":
+		header('Content-type: application/json');
+		echo json_encode( getManagementSetting() );
 		exit;
 
 		case "postAnnouncement":
@@ -374,7 +390,44 @@ function getPortfolio($email){
 	}
 }
 
-function getVolunteerWorkManageDetail(){
+function getManagementOverview(){
+
+	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
+		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Pending' 
+		where `volunteer_work`.`fromDate` > CURDATE() 
+		order by `volunteer_work`.`fromDate` DESC" ;
+
+	$results = runQuickQuery($sql);
+	
+	$pending = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$pending[] = $result;
+		}
+	}
+
+	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
+		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Cancelled' 
+		where `volunteer_work`.`fromDate` > CURDATE() 
+		order by `volunteer_work`.`fromDate` DESC" ;
+
+	$results = runQuickQuery($sql);
+	
+	$cancelled = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$cancelled[] = $result;
+		}
+	}
+
+	return json_encode([
+		"pending" => $pending,
+		"cancelled" => $cancelled,
+	]);
+	
+}
+
+function getManagementSetting(){
 	$sql= "SELECT id, content, postDate, toDate
 	From announcement 
 	order by postDate;";
@@ -441,6 +494,14 @@ function postAnnouncement($id, $postDate, $toDate, $content){
 	",'" . $postDate."', '".$toDate."', '".$content."')
 	ON DUPLICATE KEY UPDATE 
 	postDate=VALUES(postDate), toDate=VALUES(toDate), content=VALUES(content) ";
+	return runQuery($sql);
+}
+
+function postVolunteerWork($id, $venue, $location, $status, $remarks){
+
+	$sql = "UPDATE `volunteer_work` 
+			SET venue= '".$venue."', location = '".$location. "' , status= '".$status."', remarks = '".$remarks. "'
+			WHERE id = ". $id .";";
 	return $sql;
 	return runQuery($sql);
 }
