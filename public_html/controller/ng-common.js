@@ -530,11 +530,11 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 			}
 		});
 		for (var i = 0 ;i<responseData[0].past.length;i++){
-			var period = periodCovertToString(responseData[0].past[i].fromDate, responseData[0].past[i].toDate);
+			var period = $scope.periodCovertToString(responseData[0].past[i].fromDate, responseData[0].past[i].toDate);
 			responseData[0].past[i].period = period.period;
 		}
 		for (var i = 0 ;i<responseData[0].upcoming.length;i++){
-			var period = periodCovertToString(responseData[0].upcoming[i].fromDate, responseData[0].upcoming[i].toDate);
+			var period = $scope.periodCovertToString(responseData[0].upcoming[i].fromDate, responseData[0].upcoming[i].toDate);
 			responseData[0].upcoming[i].period = period.period;
 			if (responseData[0].upcoming[i].registered == "1"){
 				responseData[0].upcoming[i].isRegistered = true;
@@ -544,7 +544,7 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 			responseData[0].upcoming[i].original = responseData[0].upcoming[i].isRegistered;
 		}
 		for (var i = 0 ;i<responseData[0].volWork.length;i++){
-			var period = periodCovertToString(responseData[0].volWork[i].fromDate, responseData[0].volWork[i].toDate);
+			var period = $scope.periodCovertToString(responseData[0].volWork[i].fromDate, responseData[0].volWork[i].toDate);
 			responseData[0].volWork[i].period = period.period;
 			if (responseData[0].volWork[i].status == "Cancelled"){	
 				responseData[0].volWork[i].displayButton = false;
@@ -626,7 +626,7 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 			});
 		}
 	}
-	function periodCovertToString (from, to){
+	$scope.periodCovertToString = function (from, to){
 		var fromDate = new Date(from);
 		var toDate = new Date(to);
 		var today = new Date();
@@ -706,16 +706,63 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				responseData = JSON.parse(response);
 				if (responseData){
 					$scope.announcement = responseData.announcement;
-					// for (var i = 0; responseData.announcement.length; i++){
-					// 	$scope.announcement.fromDate = new Date($scope.announcement.fromDate);
-					// 	$scope.announcement.toDate = new Date($scope.announcement.toDate);
-					// }
+					for (var i = 0; i < responseData.announcement.length; i++){
+						$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
+						$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
+					}
 					$scope.pending = responseData.pending;
+					for (var i = 0; i < responseData.pending.length; i++){
+						$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
+						
+					}
 					$scope.cancelled = responseData.cancelled;
+					for (var i = 0; i < responseData.pending.length; i++){
+						$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
+						
+					}
 				}
 			}
 		});
 	}
 	$scope.getVolunteerWorkManageDetail();
+
+	$scope.createEmptyAnnouncement = function() {
+		var responseData = {id: null, content: null, postDate: new Date(), toDate: new Date()};
+		$scope.announcement.push(responseData);
+	}
+	$scope.postAnnouncement = function(announcement) {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'postAnnouncement' ,  
+				id: announcement.id, 
+				postDate: $scope.toLocalTimeString(announcement.postDate),
+				toDate: $scope.toLocalTimeString(announcement.toDate), 
+				content: announcement.content
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+	}
+	$scope.deleteAnnouncement = function(id) {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'deleteAnnouncement' ,  
+				id: id, 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.getVolunteerWorkManageDetail();
+	}
 }]);
 

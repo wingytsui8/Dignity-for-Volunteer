@@ -333,16 +333,16 @@
 				<tbody>
 					<tr ng-repeat="row in announcement">
 						<td>
-							<input id="postDate" type="date" ng-model="row.postDate"/>  
+							<input id="postDate" type="date" ng-model="row.postDate" style="width: 100%" />  
 						</td>
 						<td>
-							<input id="toDate" type="date" ng-model="row.toDate"/>  
+							<input id="toDate" type="date" ng-model="row.toDate" style="width: 100%"/>  
 						</td>
 						<td>
 							<textarea id="content" ng-model="row.content"/></textarea> 
 						</td>
 						<td>
-							<button ng-click="saveAnnouncement(row)">Save</button>
+							<button ng-click="postAnnouncement(row)">Save</button>
 							<button ng-click="deleteAnnouncement(row.id)">Remove</button>
 						</td>
 					</tr>
