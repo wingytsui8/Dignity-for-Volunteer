@@ -392,6 +392,7 @@ function getPortfolio($email){
 
 function getManagementOverview(){
 
+// get pending volunteer work record
 	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
 		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Pending' 
 		where `volunteer_work`.`fromDate` > CURDATE() 
@@ -399,10 +400,27 @@ function getManagementOverview(){
 
 	$results = runQuickQuery($sql);
 	
-	$pending = [];
+	$pendingWork = [];
 	if($results->num_rows > 0){
 		while($result = $results->fetch_assoc()) {
-			$pending[] = $result;
+			$pendingWork[] = $result;
+		}
+	}
+
+// get pending event registration record
+	$sql= "SELECT `event`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`name` as volName,`volunteer`.`email` as email , `register`.`status` 
+		From `event` 
+		inner join `register` on `event`.`id` = `register`.`eventId` and `register`.`active` = 1 and `register`.`status` = 'Pending' 
+		inner join `volunteer` on `volunteer`.`id` = `register`.`volId`
+		order by fromDate, id, `register`.`createDate`";
+
+
+	$results = runQuickQuery($sql);
+	
+	$pendingEvent = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$pendingEvent[] = $result;
 		}
 	}
 
@@ -421,7 +439,8 @@ function getManagementOverview(){
 	}
 
 	return json_encode([
-		"pending" => $pending,
+		"pendingWork" => $pendingWork,
+		"pendingEvent" => $pendingEvent,
 		"cancelled" => $cancelled,
 	]);
 	
