@@ -532,7 +532,25 @@
 		<hr>
 		<div>
 			<h1>Upload Volunteer record</h1>
- 			upload voulunteer record
+			<br>
+			*For volunteer id, please sync with local database. Therefore, there will not be any "NEW" volunteer<br>
+			*For dob, the format is yyyy-mm-dd<br>
+			*This function is for upadte or insert only. Contact DBA to delete volunteer or setting it to inactive<br>
+			<a href="template/update_volunteer_template.csv" download="update_volunteer_template.csv">Template</a>
+			<br>
+			<br>
+			Expected columns:
+			<table st-table="announcement" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 20%;">VolunteerID</th>
+						<th style="width: 20%;">Name</th>
+						<th style="width: 40%;">Email</th>
+						<th style="width: 20%;">Date of birth</th>
+					</tr>
+				</thead>
+			</table>
+ 			<input type="file" file-reader="fileContent" />
 		</div>
 		<hr>
 		<div>
