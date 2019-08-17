@@ -311,19 +311,19 @@
 		
 		<div>
 			<h1>Pending Volunteer Work Application</h1>
-			<table st-table="pending" class="table table-striped">
+			<table st-table="pendingWork" class="table table-striped">
 				<thead>
 					<tr>
-						<th style="width: 20%;">Info</th>
-						<th style="width: 30%;">Venue</th>
-						<th style="width: 30%;">Remarks</th>
+						<th style="width: 40%;">Info</th>
+						<th style="width: 40%;">Remarks</th>
 						<th style="width: 20%;"></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="row in pending">
+					<tr ng-repeat="row in pendingWork">
 						<td><label>Vol id: </label>{{row.volId}}<br>
 							<label>Name: </label>{{row.name}}<br>
+							<label>Email: </label> <a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}}, <br> {{row.venue}}">{{row.email}}</a><br>
 							<label>Period: </label>{{row.period}}<br>
 							<label>Post: </label>{{row.post}}
 						</td>
@@ -331,8 +331,6 @@
 							<input id="venue" type="text" ng-model="row.venue"/>
 							<label>Location</label> 
 							<textarea id="location" ng-model="row.location"/></textarea> 
-						</td>
-						<td>
 							<label>Status</label>
 							<select ng-model="row.status">
 								<option value="Pending">Pending</option>
