@@ -462,13 +462,13 @@
 		<hr>
 		<div>
 			<h1>Upload Volunteer Work record</h1>
- 			upload voulunteer work record
+ 			<input type="file" file-reader="fileContent" />
 		</div>
 		<hr>
 		
 		<div>
 			<h1>Housekeeping</h1>
-			clean up all past record
+			clean up all unused past record
 		</div>
 	</div>
 </div>
