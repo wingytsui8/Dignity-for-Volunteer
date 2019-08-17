@@ -149,6 +149,23 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( getVolunteerWorkManageDetail() );
 		exit;
+
+		case "postAnnouncement":
+		$id = (string)$_POST['id'];
+		$postDate = (string)$_POST['postDate'];
+		$toDate = (string)$_POST['toDate'];
+		$content = (string)$_POST['content'];
+
+		header('Content-type: application/json');
+		echo json_encode( postAnnouncement($id, $postDate, $toDate, $content) );
+		exit;
+
+		case "deleteAnnouncement":
+		$id = (string)$_POST['id'];
+
+		header('Content-type: application/json');
+		echo json_encode( deleteAnnouncement($id) );
+		exit;
 	}
 }
 
@@ -370,11 +387,10 @@ function getVolunteerWorkManageDetail(){
 		}
 	}
 
-	$sql= "SELECT volunteer_work.id, volunteer.name, volunteer.email, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, post, status, remarks, volId
-	From volunteer_work
-	INNER join volunteer on volunteer.id = volunteer_work.volId and volunteer_work.active = 1 and status = 'Pending'
-	where fromDate  >  CURDATE()
-	order by fromDate DESC" ;
+	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
+		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Pending' 
+		where `volunteer_work`.`fromDate` > CURDATE() 
+		order by `volunteer_work`.`fromDate` DESC" ;
 
 	$results = runQuickQuery($sql);
 	
@@ -385,11 +401,10 @@ function getVolunteerWorkManageDetail(){
 		}
 	}
 
-	$sql= "SELECT volunteer_work.id, volunteer.name, volunteer.email, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, post, status, remarks, volId
-	From volunteer_work
-	INNER join volunteer on volunteer.id = volunteer_work.volId and volunteer_work.active = 1 and status = 'Cancelled'
-	where fromDate  >  CURDATE()
-	order by fromDate DESC" ;
+	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
+		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Cancelled' 
+		where `volunteer_work`.`fromDate` > CURDATE() 
+		order by `volunteer_work`.`fromDate` DESC" ;
 
 	$results = runQuickQuery($sql);
 	
@@ -416,6 +431,17 @@ function postEvent($id, $name, $fromDate, $toDate, $venue, $location, $contactNa
 	ON DUPLICATE KEY UPDATE 
 	name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
 
+	return runQuery($sql);
+}
+
+function postAnnouncement($id, $postDate, $toDate, $content){
+
+	$sql= "INSERT INTO announcement (id, postDate, `toDate`, content) VALUES (" . 
+	($id == ''? "null" : $id ) . 
+	",'" . $postDate."', '".$toDate."', '".$content."')
+	ON DUPLICATE KEY UPDATE 
+	postDate=VALUES(postDate), toDate=VALUES(toDate), content=VALUES(content) ";
+	return $sql;
 	return runQuery($sql);
 }
 
@@ -500,6 +526,11 @@ function checkLoginSession($email){
 
 function deletePhoto($id){
 	$sql= "DELETE FROM photo WHERE id = " . $id;
+	return runQuery($sql);
+}
+
+function deleteAnnouncement($id){
+	$sql= "DELETE FROM announcement WHERE id = " . $id;
 	return runQuery($sql);
 }
 
