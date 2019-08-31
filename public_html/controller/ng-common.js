@@ -724,15 +724,67 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 					// 	$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
 						
 					// }
+					$scope.venueOptions = [];
+					$scope.locationOptions = [];
+					for (var i=0; i < responseData.options.length; i++){
+						if (responseData.options[i].type == 'Venue'){
+							$scope.venueOptions.push(responseData.options.content);
+						}else{
+							$scope.locationOptions.push(responseData.options.content);
+						}
+					}
 				}
 			}
 		});
 	}
-	$scope.getManagementOverview();
+	
+	$scope.getManagementVolunteer = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'getManagementVolunteer', 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					$scope.announcement = responseData.announcement;
+					for (var i = 0; i < responseData.announcement.length; i++){
+						$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
+						$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
+					}
+					$scope.confirmed = responseData.confirmed;
+				}
+			}
+		});
+	}
+	$scope.getManagementSetting = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'getManagementSetting', 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					$scope.setting = responseData.setting;
+				}
+			}
+		});
+	}
 
 	$scope.createEmptyAnnouncement = function() {
 		var responseData = {id: null, content: null, postDate: new Date(), toDate: new Date()};
 		$scope.announcement.push(responseData);
+	}
+	$scope.createEmptySetting = function() {
+		var responseData = {id: null, type: null, content: null};
+		$scope.setting.push(responseData);
 	}
 	$scope.postAnnouncement = function(announcement) {
 		$.ajax({
@@ -749,6 +801,25 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 			async: false,
 			success: function(response) {
 				responseData = JSON.parse(response);
+				alert("Change applied.");
+			}
+		});
+	}
+	$scope.postSetting = function(setting) {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'postSetting' ,  
+				id: setting.id, 
+				type: setting.type,
+				content: setting.content
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				alert("Change applied.");
 			}
 		});
 	}
@@ -766,7 +837,28 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				responseData = JSON.parse(response);
 			}
 		});
-		$scope.getVolunteerWorkManageDetail();
+		$scope.getManagementVolunteer();
+	}
+	$scope.deleteSetting = function(id) {
+		if (id == 1 || id == 2){
+			alert("Cannot delete");
+		}else{
+			$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'deleteSetting' ,  
+				id: id, 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.getManagementSetting();
+		}
+		
 	}
 	$scope.updateVolunteerWork = function(record) {
 		$.ajax({
@@ -839,6 +931,10 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
 		window.location.href = "mailto:" + record.email + "?subject=" + mailSubject + "&body=" + mailBody;
 	}
+
+//init()
+	$scope.getManagementOverview();
+
 }]);
 
 app.directive('fileReader', function() {

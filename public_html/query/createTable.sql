@@ -97,6 +97,7 @@ Create Table `announcement` (
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `setting`;
 CREATE TABLE `setting` (
   `id` mediumint(9) NOT NULL,
   `type` varchar(50) NOT NULL,

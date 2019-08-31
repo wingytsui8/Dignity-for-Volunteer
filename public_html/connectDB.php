@@ -170,6 +170,11 @@ if(isset($_POST['action'])){
 		echo json_encode( getManagementOverview() );
 		exit;
 
+		case "getManagementVolunteer":
+		header('Content-type: application/json');
+		echo json_encode( getManagementVolunteer() );
+		exit;
+
 		case "getManagementSetting":
 		header('Content-type: application/json');
 		echo json_encode( getManagementSetting() );
@@ -183,6 +188,15 @@ if(isset($_POST['action'])){
 
 		header('Content-type: application/json');
 		echo json_encode( postAnnouncement($id, $postDate, $toDate, $content) );
+		exit;
+
+		case "postSetting":
+		$id = (string)$_POST['id'];
+		$type = (string)$_POST['type'];
+		$content = (string)$_POST['content'];
+
+		header('Content-type: application/json');
+		echo json_encode( postSetting($id, $type, $content) );
 		exit;
 
 		case "deleteAnnouncement":
@@ -447,15 +461,30 @@ function getManagementOverview(){
 		}
 	}
 
+	$sql= "SELECT `type`, `content`
+	 From `setting` 
+		where `type` = 'Venue' or `type` = 'Location' 
+		order by `content`" ;
+
+	$results = runQuickQuery($sql);
+	
+	$options = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$options[] = $result;
+		}
+	}
+
 	return json_encode([
 		"pendingWork" => $pendingWork,
 		"pendingEvent" => $pendingEvent,
 		"cancelled" => $cancelled,
+		"options" => $options,
 	]);
 	
 }
 
-function getManagementSetting(){
+function getManagementVolunteer(){
 	$sql= "SELECT id, content, postDate, toDate
 	From announcement 
 	order by postDate;";
@@ -469,37 +498,40 @@ function getManagementSetting(){
 	}
 
 	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
-		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Pending' 
-		where `volunteer_work`.`fromDate` > CURDATE() 
+		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Confirmed' 
+		where `volunteer_work`.`fromDate` >= CURDATE() 
 		order by `volunteer_work`.`fromDate` DESC" ;
 
 	$results = runQuickQuery($sql);
 	
-	$pending = [];
+	$confirmed = [];
 	if($results->num_rows > 0){
 		while($result = $results->fetch_assoc()) {
-			$pending[] = $result;
+			$confirmed[] = $result;
 		}
 	}
+	return json_encode([
+		"announcement" => $announcement,
+		"confirmed" => $confirmed,
 
-	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
-		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Cancelled' 
-		where `volunteer_work`.`fromDate` > CURDATE() 
-		order by `volunteer_work`.`fromDate` DESC" ;
+	]);
+	
+}
+
+function getManagementSetting(){
+	$sql= "SELECT id, type, content from setting 
+	order by type;";
 
 	$results = runQuickQuery($sql);
-	
-	$cancelled = [];
+	$setting = [];
 	if($results->num_rows > 0){
 		while($result = $results->fetch_assoc()) {
-			$cancelled[] = $result;
+			$setting[] = $result;
 		}
 	}
 
 	return json_encode([
-		"announcement" => $announcement,
-		"pending" => $pending,
-		"cancelled" => $cancelled,
+		"setting" => $setting,
 	]);
 	
 }
@@ -522,6 +554,15 @@ function postAnnouncement($id, $postDate, $toDate, $content){
 	",'" . $postDate."', '".$toDate."', '".$content."')
 	ON DUPLICATE KEY UPDATE 
 	postDate=VALUES(postDate), toDate=VALUES(toDate), content=VALUES(content) ";
+	return runQuery($sql);
+}
+function postSetting($id, $type, $content){
+
+	$sql= "INSERT INTO setting (id, type, content) VALUES (" . 
+	($id == ''? "null" : $id ) . 
+	",'" . $type."', '".$content."')
+	ON DUPLICATE KEY UPDATE 
+	type=VALUES(type), content=VALUES(content) ";
 	return runQuery($sql);
 }
 

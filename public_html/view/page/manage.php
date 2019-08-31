@@ -58,10 +58,10 @@
 
 		<div class="tab">
 			<button class="tablinks" onclick="displaySection(event, 'Overview')" ng-click="getManagementOverview()" id="defaultOpen">Overview</button>
-			<button class="tablinks" onclick="displaySection(event, 'Volunteer')" ng-click="getEvents(1)">Volunteer</button>
+			<button class="tablinks" onclick="displaySection(event, 'Volunteer')" ng-click="getManagementVolunteer()">Volunteer</button>
 			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(1)">Upcoming Event</button>
 			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(0)">Past Event</button>
-			<button class="tablinks" onclick="displaySection(event, 'Setting')">Setting</button>
+			<button class="tablinks" onclick="displaySection(event, 'Setting')" ng-click="getManagementSetting()">Setting</button>
 
 		</div>
 		<div id="Event" class="tabcontent">
@@ -303,6 +303,7 @@
 	<div id="Overview" class="tabcontent">
 		<div>
 			<h1>Notification</h1>
+			today/tmr voluteer work record?
 			how many updated record?
 		</div>
 		<hr>
@@ -333,7 +334,9 @@
 							<label>Post: </label>&nbsp{{row.post}}
 						</td>
 						<td><label>Venue</label>
-							<input id="venue" type="text" ng-model="row.venue"/>
+							<input id="venue" type="text" ng-model="row.venue.Content"/>
+							<select ng-model="row.venue" ng-options="venueOptions">
+    </select>
 							<label>Location</label> 
 							<textarea id="location" ng-model="row.location"/></textarea> 
 							<label>Status</label>
@@ -464,32 +467,84 @@
 				</tbody>
 			</table>
 		</div>
-		<button class="collapsible">Notification</button>
+		<button class="collapsible">Volunteer Overview</button>
 		<div class="content">
 			<h1>Volunteer Overview</h1>
 			show all upcoming and volunteer ??
 		</div>
-		<button class="collapsible">Notification</button>
+		<button class="collapsible">Upcoming Volunteer Work List</button>
 		<div class="content">
-			<h1>Upcoming Event List</h1>
-			By event
-		</div>
-		<button class="collapsible">Notification</button>
-		<div class="content">
-			<h1>Upcoming Volunteer Work List</h1>
-			By date (show coming month)
-		</div>
-		<button class="collapsible">Notification</button>
-		<div class="content">
-			<h1>Calendar</h1>
-
+			<table st-table="confirmed" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 40%;">Volunteer</th>
+						<th style="width: 40%;">Work Remarks</th>
+						<th style="width: 20%;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in confirmed">
+						<td><label>Id: </label>&nbsp{{row.volId}}<br>
+							<label>Name: </label>&nbsp{{row.name}}<br>
+							<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
+							<label>Period: </label>&nbsp{{row.period}}<br>
+							<label>Post: </label>&nbsp{{row.post}}
+						</td>
+						<td><label>Venue</label>
+							<input id="venue" type="text" ng-model="row.venue"/>
+							<label>Location</label> 
+							<textarea id="location" ng-model="row.location"/></textarea> 
+							<label>Status</label>
+							<select ng-model="row.status">
+								<option value="Pending">Pending</option>
+								<option value="Confirmed">Confirmed</option>
+								<option value="Cancelled">Cancelled</option>
+							</select>
+							<label>Remarks</label>
+							<textarea id="content" ng-model="row.remarks"/></textarea> 
+						</td>
+						<td>
+							<button ng-click="updateVolunteerWork(row)">Save</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<div id="Setting" class="tabcontent">
 		<button class="collapsible">Edit Options</button>
 		<div class="content">
-			<h1>Edit Options</h1>
-			e.g. (Venue and location), (post)
+			<button ng-click="createEmptySetting()">New</button>
+			<table st-table="setting" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 30%;">type</th>
+						<th style="width: 40%;">Content</th>
+						<th style="width: 30%;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in setting">
+						<td>
+							<select ng-model="row.type">
+								<option value="Admin's Email">Admin's Email</option>
+								<option value="Admin's Temp Last Login Time">Admin's Temp Last Login Time
+</option>
+								<option value="Post">Post</option>
+								<option value="Venue">Venue</option>
+								<option value="Location">Location</option>
+							</select>
+						</td>
+						<td>
+							<input id="content" type="text" ng-model="row.content" />  
+						</td>
+						<td>
+							<button ng-click="postSetting(row)">Save</button>
+							<button ng-click="deleteSetting(row.id)">Remove</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		<button class="collapsible">Upload</button>
 		<div class="content">
