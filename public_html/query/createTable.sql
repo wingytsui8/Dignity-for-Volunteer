@@ -30,7 +30,8 @@ CREATE TABLE `event` (
   `pastDisplay` tinyint(1) DEFAULT 0,
   `upcomingDisplay` tinyint(1) DEFAULT 0,
   `active` tinyint(1) NOT NULL,
-  `remarks` text NULL
+  `remarks` text NULL,
+  `googleCalendarId` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `event`
@@ -78,6 +79,7 @@ CREATE TABLE `volunteer_work` (
   `status` varchar(255) NOT NULL,
   `active` tinyint(1) NOT NULL,
   `remarks` text NULL,
+  `googleCalendarId` varchar(255) DEFAULT NULL,
   `createDate` datetime NOT NULL,
   `modifyDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

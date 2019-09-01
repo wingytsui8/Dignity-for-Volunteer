@@ -1,6 +1,15 @@
 <?php
+include 'calendar.php';
  
+
+//  	$fp = fopen('data.txt', 'a');//opens file in append mode  
+// fwrite($fp, ' this is additional text ');  
+// fwrite($fp, 'appending data');  
+// fclose($fp);  
+  
+// echo "File appended successfully"; 
 if(isset($_POST['action'])){
+
 	$action = (string)$_POST['action']; 
 	switch ($action){
 
@@ -618,6 +627,7 @@ function addVolunteerWork($email, $from, $to, $post, $remarks){
 		$sql = "Insert into `volunteer_work` (`volId`, `fromDate`, `toDate`, `post`, `status`, `active`, `remarks`, `createDate`, `modifyDate`)
 				VALUES (". $volId .", '". $from ."', '". $to ."', '". $post ."', 'Pending', 1, '". $remarks ."', Now(), Now());";
 		runNonQuery($sql);
+		return updateGoogleCalendar('volunteer_work', null);
 		return true;
 	}else{
 		return false;
@@ -727,4 +737,49 @@ function connectDB($sql){
 	}
 }
 //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv Common Connecter Functions vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+function updateGoogleCalendar ($table, $id){
+
+	switch ($table) {
+		case 'event':
+			$calendar = 'EVENT';
+			break;
+		case 'volunteer_work':
+			$calendar = 'WORK';
+			$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` , `googleCalendarId` From `volunteer_work` 
+		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` "
+		 ;
+			break;
+		default:
+			$calendar = '';
+			return;
+			break;
+	}
+	if($id){
+		$sql = $sql . " where `volunteer_work`.`id` = " . $id ;
+	}else{
+		//for create record case
+		$sql = $sql . " order by `volunteer_work`.`id` desc limit 0 , 1" ;
+	}
+
+	$results = runQuickQuery($sql);
+	
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			printf(json_encode($result));
+			$test = $result->googleCalendarId;
+			printf('   googleCalendarId: ' . $test);
+		}
+	}
+
+	$googleCalendarId = callGoogleCalendar($calendar, null, "$eventName", "location", "description", "2019-09-10T00:00:00", "2019-10-10T09:09:09", ["$attendees"]);
+	
+	// $googleCalendarId = callGoogleCalendar($calendar, null, $eventName, $location, $description, $startTime, $endTime, $attendees);
+	return true;
+
+	// $sql= "UPDATE ". $table ." set `googleCalendarId` = " . $googleCalendarId . " WHERE id = '". $id ."';";
+	// runNonQuery($sql);
+
+	
+}
+
 ?>
