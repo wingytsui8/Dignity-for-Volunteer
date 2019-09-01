@@ -563,50 +563,22 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		if ($scope.work==null || $scope.work.postOption==null || $scope.work.fromDate==null || $scope.work.toDate==null || ($scope.work.postOption=="Other" 
 			&& ($scope.work.post == null || $scope.work.post.length == 0))){
 			alert("Please fill in all the necessary items before submission.");
-		}else{
-			if (confirm("Are you sure?")){
-				var post = $scope.work.postOption;
-				if (post == "Other"){
-					post = $scope.work.post;
-				}
-				$.ajax({
-					url: '../connectDB.php',
-					type: 'POST',
-					data : { 
-						action: 'addVolunteerWork', 
-						email: $rootScope.lEmail, 
-						from: $scope.toLocalTimeString($scope.work.fromDate),
-						to: $scope.toLocalTimeString($scope.work.toDate),
-						post: post,
-						remarks: $scope.work.remarks?$scope.work.remarks:""
-					},
-					dataType: "json",
-					async: false,
-					success: function(response) {
-						responseData = JSON.parse(response);
-						if (responseData){
-							alert("Change applied.");
-						}else{
-							alert("Login session has passed. Please login again.");
-							sessionStorage.setItem("lEmail", "");
-							$rootScope.lEmail = "";
-							extEmail = "";
-						}
-						location.reload();
-					}
-				});
-			}
-		}
-	}
-	$scope.cancelVolunteerWork = function(id){
+	}else{
 		if (confirm("Are you sure?")){
+			var post = $scope.work.postOption;
+			if (post == "Other"){
+				post = $scope.work.post;
+			}
 			$.ajax({
 				url: '../connectDB.php',
 				type: 'POST',
 				data : { 
-					action: 'cancelVolunteerWork', 
-					id: id, 
-					email: $rootScope.lEmail
+					action: 'addVolunteerWork', 
+					email: $rootScope.lEmail, 
+					from: $scope.toLocalTimeString($scope.work.fromDate),
+					to: $scope.toLocalTimeString($scope.work.toDate),
+					post: post,
+					remarks: $scope.work.remarks?$scope.work.remarks:""
 				},
 				dataType: "json",
 				async: false,
@@ -625,14 +597,42 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 			});
 		}
 	}
-	$scope.periodCovertToString = function (from, to){
-		var fromDate = new Date(from);
-		var toDate = new Date(to);
-		var today = new Date();
-		var period = "";
-		var past = false;
-		
-		fromDateString = fromDate.toLocaleDateString();
+}
+$scope.cancelVolunteerWork = function(id){
+	if (confirm("Are you sure?")){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'cancelVolunteerWork', 
+				id: id, 
+				email: $rootScope.lEmail
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					alert("Change applied.");
+				}else{
+					alert("Login session has passed. Please login again.");
+					sessionStorage.setItem("lEmail", "");
+					$rootScope.lEmail = "";
+					extEmail = "";
+				}
+				location.reload();
+			}
+		});
+	}
+}
+$scope.periodCovertToString = function (from, to){
+	var fromDate = new Date(from);
+	var toDate = new Date(to);
+	var today = new Date();
+	var period = "";
+	var past = false;
+	
+	fromDateString = fromDate.toLocaleDateString();
 		// fromHour = String(fromDate.getHours()).padStart(2,0)
 		// fromMin = String(fromDate.getMinutes()).padStart(2,0) 
 
@@ -712,79 +712,27 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 					$scope.pendingWork = responseData.pendingWork;
 					// for (var i = 0; i < responseData.pendingWork.length; i++){
 					// 	$scope.pendingWork[i].period = $scope.periodCovertToString($scope.pendingWork[i].fromDate, $scope.pendingWork[i].toDate);
-						
+					
 					// }
 					$scope.pendingEvent = responseData.pendingEvent;
 					// for (var i = 0; i < responseData.pendingEvent.length; i++){
 					// 	$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
-						
+					
 					// }
 					$scope.cancelled = responseData.cancelled;
 					// for (var i = 0; i < responseData.pending.length; i++){
 					// 	$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
-						
+					
 					// }
-					$scope.venueOptions = [];
-					$scope.locationOptions = [];
-					for (var i=0; i < responseData.options.length; i++){
-						if (responseData.options[i].type == 'Venue'){
-							$scope.venueOptions.push(responseData.options.content);
-						}else{
-							$scope.locationOptions.push(responseData.options.content);
-						}
-					}
 				}
 			}
 		});
 	}
-	
-	$scope.getManagementVolunteer = function(){
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				action: 'getManagementVolunteer', 
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-				if (responseData){
-					$scope.announcement = responseData.announcement;
-					for (var i = 0; i < responseData.announcement.length; i++){
-						$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
-						$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
-					}
-					$scope.confirmed = responseData.confirmed;
-				}
-			}
-		});
-	}
-	$scope.getManagementSetting = function(){
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				action: 'getManagementSetting', 
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-				if (responseData){
-					$scope.setting = responseData.setting;
-				}
-			}
-		});
-	}
+	$scope.getManagementOverview();
 
 	$scope.createEmptyAnnouncement = function() {
 		var responseData = {id: null, content: null, postDate: new Date(), toDate: new Date()};
 		$scope.announcement.push(responseData);
-	}
-	$scope.createEmptySetting = function() {
-		var responseData = {id: null, type: null, content: null};
-		$scope.setting.push(responseData);
 	}
 	$scope.postAnnouncement = function(announcement) {
 		$.ajax({
@@ -801,25 +749,6 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 			async: false,
 			success: function(response) {
 				responseData = JSON.parse(response);
-				alert("Change applied.");
-			}
-		});
-	}
-	$scope.postSetting = function(setting) {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				action: 'postSetting' ,  
-				id: setting.id, 
-				type: setting.type,
-				content: setting.content
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-				alert("Change applied.");
 			}
 		});
 	}
@@ -837,66 +766,48 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				responseData = JSON.parse(response);
 			}
 		});
-		$scope.getManagementVolunteer();
-	}
-	$scope.deleteSetting = function(id) {
-		if (id == 1 || id == 2){
-			alert("Cannot delete");
-		}else{
-			$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				action: 'deleteSetting' ,  
-				id: id, 
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.getManagementSetting();
-		}
-		
+		$scope.getVolunteerWorkManageDetail();
 	}
 	$scope.updateVolunteerWork = function(record) {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				action: 'updateVolunteerWork' ,  
-				id: record.id, 
-				venue: record.venue,
-				location: record.location, 
-				status: record.status,
-				remarks: record.remarks, 
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-				if (responseData){
-					alert("Change applied.");
+		if (confirm("Are you sure?")){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { 
+					action: 'updateVolunteerWork' ,  
+					id: record.id, 
+					venue: record.venue,
+					location: record.location, 
+					status: record.status,
+					remarks: record.remarks, 
+				},
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+					if (responseData){
+						alert("Change applied.");
+						if (confirm("Do you want to notify the volunteer with emai?")){
+							var mailNextLine = "%0D%0A";
+							var mailSubject = "Regarding your volunteer application on " + record.fromDate;
+							var mailBodyGreetings = "Hi " + record.name + "," + mailNextLine + mailNextLine;
+
+							var mailBodyStatus = "Your volunteer application has been " + record.status +  mailNextLine + mailNextLine;
+
+							var mailBodyDetails= "Here are the details:  " + mailNextLine;
+							mailBodyDetails += "Period: " + record.period + mailNextLine;
+							mailBodyDetails += "Post: " + record.post + mailNextLine;
+							mailBodyDetails += "Venue: " + record.venue + mailNextLine;
+							mailBodyDetails += "Location: " + record.location + mailNextLine;
+							mailBodyDetails += "Remarks: " + record.remarks + mailNextLine;
+
+							var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
+							window.location.href = "mailto:" + record.email + "?subject=" + mailSubject + "&body=" + mailBody;
+						}
+					}
 				}
-			}
-		});
-
-		var mailNextLine = "%0D%0A";
-		var mailSubject = "Regarding your volunteer application on " + record.fromDate;
-		var mailBodyGreetings = "Hi " + record.name + "," + mailNextLine + mailNextLine;
-
-		var mailBodyStatus = "Your volunteer application has been " + record.status +  mailNextLine + mailNextLine;
-
-		var mailBodyDetails= "Here are the details:  " + mailNextLine;
-		mailBodyDetails += "Period: " + record.period + mailNextLine;
-		mailBodyDetails += "Post: " + record.post + mailNextLine;
-		mailBodyDetails += "Venue: " + record.venue + mailNextLine;
-		mailBodyDetails += "Location: " + record.location + mailNextLine;
-		mailBodyDetails += "Remarks: " + record.remarks + mailNextLine;
-
-		var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
-		window.location.href = "mailto:" + record.email + "?subject=" + mailSubject + "&body=" + mailBody;
+			});
+		}
 	}
 	$scope.updateRegistrationStatus = function(record) {
 		$.ajax({
@@ -931,44 +842,40 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
 		window.location.href = "mailto:" + record.email + "?subject=" + mailSubject + "&body=" + mailBody;
 	}
-
-//init()
-	$scope.getManagementOverview();
-
 }]);
 
 app.directive('fileReader', function() {
-return {
-	scope: {
-		fileReader:"="
-	},
-	link: function(scope, element) {
-		$(element).on('change', function(changeEvent) {
-			var files = changeEvent.target.files;
-			if (files.length) {
-				var r = new FileReader();
-				r.onload = function(e) {
-					var contents = e.target.result;
-					scope.$apply(function () {
-						var lines=contents.split("\n");
-						var result = [];
-						var headers=lines[0].split(",");
-						for(var i=1;i<lines.length;i++){
-							var obj = {};
-							var currentline=lines[i].split(",");
-							for(var j=0;j<headers.length;j++){
-								obj[headers[j]] = currentline[j];
+	return {
+		scope: {
+			fileReader:"="
+		},
+		link: function(scope, element) {
+			$(element).on('change', function(changeEvent) {
+				var files = changeEvent.target.files;
+				if (files.length) {
+					var r = new FileReader();
+					r.onload = function(e) {
+						var contents = e.target.result;
+						scope.$apply(function () {
+							var lines=contents.split("\n");
+							var result = [];
+							var headers=lines[0].split(",");
+							for(var i=1;i<lines.length;i++){
+								var obj = {};
+								var currentline=lines[i].split(",");
+								for(var j=0;j<headers.length;j++){
+									obj[headers[j]] = currentline[j];
+								}
+								result.push(obj);
 							}
-							result.push(obj);
-						}
-						scope.fileReader = result;;
-					});
-				};
+							scope.fileReader = result;;
+						});
+					};
 
-				r.readAsText(files[0]);
-			}
-		});
-	}
-};
+					r.readAsText(files[0]);
+				}
+			});
+		}
+	};
 });
 
