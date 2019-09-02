@@ -632,7 +632,7 @@
 				</div>
 				<div ng-show="uploadOption=='VolunteerWork'">
 					*All volunteer ID should already exist in our database before the upload process. If it is not, please upload volunteer first.
-					*For dates, the format is yyyy-mm-dd<br>
+					*For From and To, the format is yyyy-mm-dd<br>
 					<a href="template/update_volunteer_template.csv" download="update_volunteer_template.csv">Download Template</a>
 					<br>
 					<input type="file" file-reader="fileContent" />
@@ -640,15 +640,15 @@
 						<thead>
 							<tr>
 								<th style="width: 20%;">VolunteerID</th>
-								<th style="width: 30%;">From Date</th>
-								<th style="width: 30%;">To Date</th>
+								<th style="width: 30%;">From</th>
+								<th style="width: 30%;">To</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="row in tryUpload.volunteerWork">
-								<td>{{row.volunteerID}}</td>
-								<td>{{row.fromDate}}</td>
-								<td>{{row.toDate}}</td>
+								<td>{{row.VolunteerID}}</td>
+								<td>{{row.From}}</td>
+								<td>{{row.To}}</td>
 							</tr>
 						</tbody>
 					</table>
