@@ -167,7 +167,7 @@ hr {
         border-radius: 0px; 
 }
 
-.active, .collapsible:hover {
+.tabcontent .active, .collapsible:hover {
     background-color: var(--main-color-input);
     color: var(--main-color-dark);
     border: 2px solid var(--main-color-dark);

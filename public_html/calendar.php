@@ -1,7 +1,6 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-
 define("CALENDAR_ID_EVENT", "vnf07nhstfsusmud5u7m4qpeqs@group.calendar.google.com");
 define("CALENDAR_ID_VOLUNTEER_WORK", "ok84ujfbk95gnmsnoqmem9c850@group.calendar.google.com");
 define("CALENDAR_ID_DIGNITY", "dignityforvolunteer@gmail.com");
@@ -65,85 +64,6 @@ function getClient()
 	return $client;
 }
 
-
-
-// Get the API client and construct the service object.
-
-
-// Print the next 10 events on the user's calendar.
-// $calendarId = 'vnf07nhstfsusmud5u7m4qpeqs@group.calendar.google.com';
-// $optParams = array(
-//   'maxResults' => 10,
-//   'orderBy' => 'startTime',
-//   'singleEvents' => true,
-//   'timeMin' => date('c'),
-// );
-// $results = $service->events->listEvents($calendarId, $optParams);
-// $events = $results->getItems();
-
-// if (empty($events)) {
-//     print "No upcoming events found.\n";
-// } else {
-//     print "Upcoming events:\n";
-//     foreach ($events as $event) {
-//         $start = $event->start->dateTime;
-//         if (empty($start)) {
-//             $start = $event->start->date;
-//         }
-//         printf("%s (%s)\n", $event->getSummary(), $start);
-//     }
-// }
-
-// function createGoogleEvent($eventName, $location, $description, $startTime, $endTime, $attendees){
-// 	printf('calendar.php | name: ' . $eventName . ' | loction: ' . $location);
-// 	$event = new Google_Service_Calendar_Event(array(
-// 		'summary' => $eventName,
-// 		'location' => $location,
-// 		'description' => $description,
-// 		'start' => array(
-// 			'dateTime' => $startTime,
-// 			'timeZone' => TIMEZONE_KL,
-// 		),
-// 		'end' => array(
-// 			'dateTime' => $endTime,
-// 			'timeZone' => TIMEZONE_KL,
-// 		),
-//   // 'attendees' => array(
-//   //   array('email' => 'abc@example.com'),
-//   //   array('email' => 'sbrin@example.com'),
-//   // ),
-// 	));
-// 	updateGoogleCalendar(CALENDAR_ID_EVENT, null, $event);
-// 	return true;
-
-// }
-// function updateGoogleEvent($eventId, $eventName, $location, $description, $startTime, $endTime, $attendees){
-
-
-
-// 	$event = new Google_Service_Calendar_Event(array(
-// 		'id' => $eventId,
-// 		'summary' => $eventName,
-// 		'location' => $location,
-// 		'description' => $description,
-// 		'start' => array(
-// 			'dateTime' => $startTime,
-// 			'timeZone' => TIMEZONE_KL,
-// 		),
-// 		'end' => array(
-// 			'dateTime' => $endTime,
-// 			'timeZone' => TIMEZONE_KL,
-// 		),
-//   // 'attendees' => array(
-//   //   array('email' => 'abc@example.com'),
-//   //   array('email' => 'sbrin@example.com'),
-//   // ),
-// 	));
-
-// 	updateGoogleCalendar(CALENDAR_ID_EVENT, $eventId, $event);
-// 	return true;
-
-// }
 function callGoogleCalendar($calendar, $eventId, $eventName, $location, $description, $startTime, $endTime, $attendees){
 	switch ($calendar) {
 		case 'EVENT':
@@ -179,6 +99,7 @@ function callGoogleCalendar($calendar, $eventId, $eventName, $location, $descrip
 		),
   		'attendees' => $emailArray,
 	));
+
  	// call google API to create client service
 	$client = getClient();
 	$service = new Google_Service_Calendar($client);
@@ -188,7 +109,7 @@ function callGoogleCalendar($calendar, $eventId, $eventName, $location, $descrip
 	}else{
 		$event = $service->events->insert($calendarId, $event);
 	}
-	return $event->getId();
+	return json_encode($event->getId());
 }
 
 ?>
