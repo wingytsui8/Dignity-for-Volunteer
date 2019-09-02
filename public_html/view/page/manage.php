@@ -317,10 +317,7 @@
 		
 		<div>
 			<h1>Pending Volunteer Work Application</h1>
-			<table st-table="pendingWork" class="table table-striped">
-				<tbody>
-					<tr ng-repeat="row in pendingWork">
-						<td>
+					<div ng-repeat="row in pendingWork">
 							<table st-table="pendingWork" class="table table-striped">
 								<thead>
 									<tr>
@@ -399,10 +396,7 @@
 
 									</tbody>
 								</table>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+					</div>
 			</div>
 			<hr>
 			<div>
