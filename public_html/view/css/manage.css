@@ -14,11 +14,13 @@
 .pending-vol-value1{
   text-align: left;
   padding-right: 25px;
+  min-width: 30vw;
 }
 
 .pending-vol-value2{
   text-align: left;
   margin-right: 20px;
+  min-width: 30vw;
 }
 
 textarea {
