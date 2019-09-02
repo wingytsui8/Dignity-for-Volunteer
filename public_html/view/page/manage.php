@@ -600,7 +600,7 @@
 					*For volunteer id, please sync with local database. Therefore, a whole new volunteer should not be created here<br>
 					*For dob, the format is yyyy-mm-dd<br>
 					*This function is for upadte or insert only. Contact IT support to delete a volunteer or set it to inactive<br>
-					<a href="template/update_volunteer_template.csv" download="update_volunteer_template.csv">Download Template</a>
+					<a href="template/vol_template.csv" download="vol_template.csv">Download Template</a>
 					<br>
 					<input type="file" file-reader="fileContent" />
 					<table st-table="upload_volunteer" class="table table-striped">
@@ -627,7 +627,7 @@
 				<div ng-show="uploadOption=='VolunteerWork'">
 					*All volunteer ID should already exist in our database before the upload process. If it is not, please upload volunteer first.
 					*For From and To, the format is yyyy-mm-dd<br>
-					<a href="template/update_volunteer_template.csv" download="update_volunteer_template.csv">Download Template</a>
+					<a href="template/volWork_template.csv" download="volWork_template.csv">Download Template</a>
 					<br>
 					<input type="file" file-reader="fileContent" />
 					<table st-table="upload_volunteer" class="table table-striped">
