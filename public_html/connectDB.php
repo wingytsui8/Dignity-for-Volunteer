@@ -1,12 +1,12 @@
 <?php
 include 'calendar.php';
- 
+
 
 //  	$fp = fopen('data.txt', 'a');//opens file in append mode  
 // fwrite($fp, ' this is additional text ');  
 // fwrite($fp, 'appending data');  
 // fclose($fp);  
-  
+
 // echo "File appended successfully"; 
 if(isset($_POST['action'])){
 
@@ -213,6 +213,18 @@ if(isset($_POST['action'])){
 
 		header('Content-type: application/json');
 		echo json_encode( deleteAnnouncement($id) );
+		exit;
+
+		case "uploadVolunteeer"
+		$records = $_POST['records'];
+		header('Content-type: application/json');
+		echo json_encode( uploadVolunteeer($records) );
+		exit;
+
+		case "uploadVolunteeerWork"
+		$records = $_POST['records'];
+		header('Content-type: application/json');
+		echo json_encode( uploadVolunteeerWork($records) );
 		exit;
 	}
 }
@@ -426,9 +438,9 @@ function getManagementOverview(){
 
 // get pending volunteer work record
 	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
-		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Pending' 
-		where `volunteer_work`.`fromDate` > CURDATE() 
-		order by `volunteer_work`.`fromDate` DESC" ;
+	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Pending' 
+	where `volunteer_work`.`fromDate` > CURDATE() 
+	order by `volunteer_work`.`fromDate` DESC" ;
 
 	$results = runQuickQuery($sql);
 	
@@ -441,10 +453,10 @@ function getManagementOverview(){
 
 // get pending event registration record
 	$sql= "SELECT `register`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`id`, `volunteer`.`name` as name,`volunteer`.`email` as email , `register`.`status` 
-		From `event` 
-		inner join `register` on `event`.`id` = `register`.`eventId` and `register`.`active` = 1 and `register`.`status` = 'Pending' 
-		inner join `volunteer` on `volunteer`.`id` = `register`.`volId`
-		order by fromDate, `event`.`id`, `register`.`createDate`";
+	From `event` 
+	inner join `register` on `event`.`id` = `register`.`eventId` and `register`.`active` = 1 and `register`.`status` = 'Pending' 
+	inner join `volunteer` on `volunteer`.`id` = `register`.`volId`
+	order by fromDate, `event`.`id`, `register`.`createDate`";
 
 
 	$results = runQuickQuery($sql);
@@ -457,9 +469,9 @@ function getManagementOverview(){
 	}
 
 	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
-		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Cancelled' 
-		where `volunteer_work`.`fromDate` > CURDATE() 
-		order by `volunteer_work`.`fromDate` DESC" ;
+	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Cancelled' 
+	where `volunteer_work`.`fromDate` > CURDATE() 
+	order by `volunteer_work`.`fromDate` DESC" ;
 
 	$results = runQuickQuery($sql);
 	
@@ -471,9 +483,9 @@ function getManagementOverview(){
 	}
 
 	$sql= "SELECT `type`, `content`
-	 From `setting` 
-		where `type` = 'Venue' or `type` = 'Location' 
-		order by `content`" ;
+	From `setting` 
+	where `type` = 'Venue' or `type` = 'Location' 
+	order by `content`" ;
 
 	$results = runQuickQuery($sql);
 	
@@ -507,9 +519,9 @@ function getManagementVolunteer(){
 	}
 
 	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
-		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Confirmed' 
-		where `volunteer_work`.`fromDate` >= CURDATE() 
-		order by `volunteer_work`.`fromDate` DESC" ;
+	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Confirmed' 
+	where `volunteer_work`.`fromDate` >= CURDATE() 
+	order by `volunteer_work`.`fromDate` DESC" ;
 
 	$results = runQuickQuery($sql);
 	
@@ -578,8 +590,8 @@ function postSetting($id, $type, $content){
 function updateVolunteerWork($id, $venue, $location, $status, $remarks){
 
 	$sql = "UPDATE `volunteer_work` 
-			SET venue= '".$venue."', location = '".$location. "' , status= '".$status."', remarks = '".$remarks. "'
-			WHERE id = ". $id .";";
+	SET venue= '".$venue."', location = '".$location. "' , status= '".$status."', remarks = '".$remarks. "'
+	WHERE id = ". $id .";";
 	runNonQuery($sql);
 	return true;
 
@@ -616,8 +628,8 @@ function registerEvents($email, $registerData){
 
 function updateRegistrationStatus($id, $status){
 	$sql = "UPDATE `register` 
-			SET  status= '".$status."'
-			WHERE id = ". $id .";";
+	SET  status= '".$status."'
+	WHERE id = ". $id .";";
 	return runQuery($sql);
 }
 
@@ -625,7 +637,7 @@ function addVolunteerWork($email, $from, $to, $post, $remarks){
 	if (checkLoginSession($email)){
 		$volId = getVolunteerId($email);
 		$sql = "Insert into `volunteer_work` (`volId`, `fromDate`, `toDate`, `post`, `status`, `active`, `remarks`, `createDate`, `modifyDate`)
-				VALUES (". $volId .", '". $from ."', '". $to ."', '". $post ."', 'Pending', 1, '". $remarks ."', Now(), Now());";
+		VALUES (". $volId .", '". $from ."', '". $to ."', '". $post ."', 'Pending', 1, '". $remarks ."', Now(), Now());";
 		runNonQuery($sql);
 		return updateGoogleCalendar('volunteer_work', null);
 		return true;
@@ -637,8 +649,8 @@ function addVolunteerWork($email, $from, $to, $post, $remarks){
 function cancelVolunteerWork($id, $email){
 	if (checkLoginSession($email)){
 		$sql = "UPDATE `volunteer_work` 
-			SET status= 'Cancelled', modifyDate = Now()
-			WHERE id = ". $id .";";
+		SET status= 'Cancelled', modifyDate = Now()
+		WHERE id = ". $id .";";
 		runNonQuery($sql);
 		return true;
 	}else{
@@ -682,6 +694,33 @@ function deleteAnnouncement($id){
 	return runQuery($sql);
 }
 
+
+function uploadVolunteeer($records){
+	$sql = "DROP TEMPORARY TABLE IF EXISTS TEMP; " +
+	       "CREATE TEMPORARY TABLE `TEMP` SELECT * FROM volunteer where 1=2;  ";
+
+	       // 1. Insert into TEMP values <---- For loop
+	       // 2. Insert into Volunteer inner join Temp on Duplicate ID Update
+	       // $record structure: 
+	       // <td>{{row.VolunteerID}}</td>
+	       // <td>{{row.Name}}</td>
+		   // <td>{{row.Email}}</td>
+		   // <td>{{row.Dob}}</td>
+
+}
+
+function uploadVolunteeerWork($records){
+	$sql = "DROP TEMPORARY TABLE IF EXISTS TEMP; " +
+	       "CREATE TEMPORARY TABLE `TEMP` SELECT * FROM volunteer where 1=2;  ";
+
+	       // 1. Insert into TEMP values <---- For loop
+	       // 2. Insert into Volunteer Work inner join Temp on Duplicate ID Update
+	       // $record structure: 
+	       // <td>{{row.VolunteerID}}</td>
+	       // <td>{{row.fromDate}}</td>
+		   // <td>{{row.toDate}}</td>
+
+}
 
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv other vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
@@ -741,18 +780,18 @@ function updateGoogleCalendar ($table, $id){
 
 	switch ($table) {
 		case 'event':
-			$calendar = 'EVENT';
-			break;
+		$calendar = 'EVENT';
+		break;
 		case 'volunteer_work':
-			$calendar = 'WORK';
-			$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` , `googleCalendarId` From `volunteer_work` 
+		$calendar = 'WORK';
+		$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` , `googleCalendarId` From `volunteer_work` 
 		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` "
-		 ;
-			break;
+		;
+		break;
 		default:
-			$calendar = '';
-			return;
-			break;
+		$calendar = '';
+		return;
+		break;
 	}
 	if($id){
 		$sql = $sql . " where `volunteer_work`.`id` = " . $id ;

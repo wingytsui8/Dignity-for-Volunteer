@@ -394,274 +394,290 @@
 										<td></td>
 										<td></td>
 										<!-- Or use <tfoot> -->
-										<td> <button class="pending-vol-button" ng-click="updateVolunteerWork(row)">Save</button> </td>
-									</tr>
+											<td> <button class="pending-vol-button" ng-click="updateVolunteerWork(row)">Save</button> </td>
+										</tr>
 
-								</tbody>
-							</table>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<hr>
-	<div>
-		<h1>Pending Event Helper Application</h1>
-		<table st-table="pendingEvent" class="table table-striped">
-			<thead>
-				<tr>
-					<th style="width: 40%;">Volunteer</th>
-					<th style="width: 40%;">Event</th>
-					<th style="width: 20%;"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in pendingEvent">
-					<td><label>Id: </label>&nbsp{{row.volId}}<br>
-						<label>Name: </label>&nbsp{{row.name}}<br>
-						<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application of {{row.eventName}} on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
-					</td>
-					<td>
-						<label>Name: </label>&nbsp{{row.eventName}}<br>
-						<label>Period: </label>&nbsp{{row.period}}<br>
-						<label>Venue: </label>&nbsp{{row.venue}}<br>
-						<label>Status: </label>
-						<select ng-model="row.status">
-							<option value="Pending">Pending</option>
-							<option value="Confirmed">Confirmed</option>
-							<option value="Cancelled">Cancelled</option>
-						</select>
-					</td>
-					<td>
-						<button ng-click="updateRegistrationStatus(row)">Save</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<hr>
-	<div>
-		<h1>Unread Cancelled Record</h1>
-		<button ng-click="inactiveCancelledWork()">Clear All</button>
-		<table st-table="Cancelled" class="table table-striped">
-			<thead>
-				<tr>
-					<th style="width: 20%;">Info</th>
-					<th style="width: 30%;">Venue</th>
-					<th style="width: 30%;">Remarks</th>
-					<th style="width: 20%;"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in cancelled">
-					<td><label>Vol id: </label>{{row.volId}}<br>
-						<label>Name: </label>{{row.name}}<br>
-						<label>Period: </label>{{row.period}}<br>
-						<label>Post: </label>{{row.post}}
-					</td>
-					<td><label>Venue</label>
-						<input id="venue" type="text" ng-model="row.venue"/>
-						<label>Location</label> 
-						<textarea id="location" ng-model="row.location"/></textarea> 
-					</td>
-					<td>
-						<label>Status</label>
-						<select ng-model="row.status">
-							<option value="Pending">Pending</option>
-							<option value="Confirmed">Confirmed</option>
-							<option value="Cancelled">Cancelled</option>
-						</select>
-						<label>Remarks</label>
-						<textarea id="content" ng-model="row.remarks"/></textarea> 
-					</td>
-					<td>
-						<button ng-click="saveWork(row.id)">Save</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
-<div id="Volunteer" class="tabcontent">
-	<button class="collapsible">Announcement</button>
-	<div class="content">
-		<h1>Announcement</h1>
-		<button ng-click="createEmptyAnnouncement()">New</button>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<hr>
+			<div>
+				<h1>Pending Event Helper Application</h1>
+				<table st-table="pendingEvent" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 40%;">Volunteer</th>
+							<th style="width: 40%;">Event</th>
+							<th style="width: 20%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in pendingEvent">
+							<td><label>Id: </label>&nbsp{{row.volId}}<br>
+								<label>Name: </label>&nbsp{{row.name}}<br>
+								<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application of {{row.eventName}} on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
+							</td>
+							<td>
+								<label>Name: </label>&nbsp{{row.eventName}}<br>
+								<label>Period: </label>&nbsp{{row.period}}<br>
+								<label>Venue: </label>&nbsp{{row.venue}}<br>
+								<label>Status: </label>
+								<select ng-model="row.status">
+									<option value="Pending">Pending</option>
+									<option value="Confirmed">Confirmed</option>
+									<option value="Cancelled">Cancelled</option>
+								</select>
+							</td>
+							<td>
+								<button ng-click="updateRegistrationStatus(row)">Save</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<hr>
+			<div>
+				<h1>Unread Cancelled Record</h1>
+				<button ng-click="inactiveCancelledWork()">Clear All</button>
+				<table st-table="Cancelled" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 20%;">Info</th>
+							<th style="width: 30%;">Venue</th>
+							<th style="width: 30%;">Remarks</th>
+							<th style="width: 20%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in cancelled">
+							<td><label>Vol id: </label>{{row.volId}}<br>
+								<label>Name: </label>{{row.name}}<br>
+								<label>Period: </label>{{row.period}}<br>
+								<label>Post: </label>{{row.post}}
+							</td>
+							<td><label>Venue</label>
+								<input id="venue" type="text" ng-model="row.venue"/>
+								<label>Location</label> 
+								<textarea id="location" ng-model="row.location"/></textarea> 
+							</td>
+							<td>
+								<label>Status</label>
+								<select ng-model="row.status">
+									<option value="Pending">Pending</option>
+									<option value="Confirmed">Confirmed</option>
+									<option value="Cancelled">Cancelled</option>
+								</select>
+								<label>Remarks</label>
+								<textarea id="content" ng-model="row.remarks"/></textarea> 
+							</td>
+							<td>
+								<button ng-click="saveWork(row.id)">Save</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="Volunteer" class="tabcontent">
+			<button class="collapsible">Announcement</button>
+			<div class="content">
+				<h1>Announcement</h1>
+				<button ng-click="createEmptyAnnouncement()">New</button>
 
-		<table st-table="announcement" class="table table-striped">
-			<thead>
-				<tr>
-					<th style="width: 20%;">Post Date</th>
-					<th style="width: 20%;">Valid until</th>
-					<th style="width: 40%;">Content</th>
-					<th style="width: 20%;"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in announcement">
-					<td>
-						<input id="postDate" type="date" ng-model="row.postDate" style="width: 100%" />  
-					</td>
-					<td>
-						<input id="toDate" type="date" ng-model="row.toDate" style="width: 100%"/>  
-					</td>
-					<td>
-						<textarea id="content" ng-model="row.content"/></textarea> 
-					</td>
-					<td>
-						<button ng-click="postAnnouncement(row)">Save</button>
-						<button ng-click="deleteAnnouncement(row.id)">Remove</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<button class="collapsible">Volunteer Overview</button>
-	<div class="content">
-		<h1>Volunteer Overview</h1>
-		show all upcoming and volunteer ??
-	</div>
-	<button class="collapsible">Upcoming Volunteer Work List</button>
-	<div class="content">
-		<table st-table="confirmed" class="table table-striped">
-			<thead>
-				<tr>
-					<th style="width: 40%;">Volunteer</th>
-					<th style="width: 40%;">Work Remarks</th>
-					<th style="width: 20%;"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in confirmed">
-					<td><label>Id: </label>&nbsp{{row.volId}}<br>
-						<label>Name: </label>&nbsp{{row.name}}<br>
-						<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
-						<label>Period: </label>&nbsp{{row.period}}<br>
-						<label>Post: </label>&nbsp{{row.post}}
-					</td>
-					<td><label>Venue</label>
-						<input id="venue" type="text" ng-model="row.venue"/>
-						<label>Location</label> 
-						<textarea id="location" ng-model="row.location"/></textarea> 
-						<label>Status</label>
-						<select ng-model="row.status">
-							<option value="Pending">Pending</option>
-							<option value="Confirmed">Confirmed</option>
-							<option value="Cancelled">Cancelled</option>
-						</select>
-						<label>Remarks</label>
-						<textarea id="content" ng-model="row.remarks"/></textarea> 
-					</td>
-					<td>
-						<button ng-click="updateVolunteerWork(row)">Save</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
-<div id="Setting" class="tabcontent">
-	<button class="collapsible">Edit Options</button>
-	<div class="content">
-		<button ng-click="createEmptySetting()">New</button>
-		<table st-table="setting" class="table table-striped">
-			<thead>
-				<tr>
-					<th style="width: 30%;">type</th>
-					<th style="width: 40%;">Content</th>
-					<th style="width: 30%;"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in setting">
-					<td>
-						<select ng-model="row.type">
-							<option value="Admin's Email">Admin's Email</option>
-							<option value="Admin's Temp Last Login Time">Admin's Temp Last Login Time
-							</option>
-							<option value="Post">Post</option>
-							<option value="Venue">Venue</option>
-							<option value="Location">Location</option>
-						</select>
-					</td>
-					<td>
-						<input id="content" type="text" ng-model="row.content" />  
-					</td>
-					<td>
-						<button ng-click="postSetting(row)">Save</button>
-						<button ng-click="deleteSetting(row.id)">Remove</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<button class="collapsible">Upload</button>
-	<div class="content">
-		<h1>Upload</h1>
-		<select onchange='checkvalue(this.value)' ng-model="UploadOption"> 
-			<option disabled selected value> -- select an option -- </option>
-			<option value="Volunteer">Upload Volunteers</option>
-			<option value="VolunteerWork">Upload Volunteer Works</option>
-		</select>
-		<div ng-show="UploadOption=='Volunteer'">
-			<br>
-			*For volunteer id, please sync with local database. Therefore, a whole new volunteer should not be created here<br>
-			*For dob, the format is yyyy-mm-dd<br>
-			*This function is for upadte or insert only. Contact IT support to delete a volunteer or set it to inactive<br>
-			<a href="template/update_volunteer_template.csv" download="update_volunteer_template.csv">Template</a>
-			<br>
-			Expected columns:
-			<table st-table="upload_volunteer" class="table table-striped">
-				<thead>
-					<tr>
-						<th style="width: 20%;">VolunteerID</th>
-						<th style="width: 20%;">Name</th>
-						<th style="width: 40%;">Email</th>
-						<th style="width: 20%;">Date of birth</th>
-					</tr>
-				</thead>
-			</table>
-			<input type="file" file-reader="fileContent" />
+				<table st-table="announcement" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 20%;">Post Date</th>
+							<th style="width: 20%;">Valid until</th>
+							<th style="width: 40%;">Content</th>
+							<th style="width: 20%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in announcement">
+							<td>
+								<input id="postDate" type="date" ng-model="row.postDate" style="width: 100%" />  
+							</td>
+							<td>
+								<input id="toDate" type="date" ng-model="row.toDate" style="width: 100%"/>  
+							</td>
+							<td>
+								<textarea id="content" ng-model="row.content"/></textarea> 
+							</td>
+							<td>
+								<button ng-click="postAnnouncement(row)">Save</button>
+								<button ng-click="deleteAnnouncement(row.id)">Remove</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<button class="collapsible">Volunteer Overview</button>
+			<div class="content">
+				<h1>Volunteer Overview</h1>
+				show all upcoming and volunteer ??
+			</div>
+			<button class="collapsible">Upcoming Volunteer Work List</button>
+			<div class="content">
+				<table st-table="confirmed" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 40%;">Volunteer</th>
+							<th style="width: 40%;">Work Remarks</th>
+							<th style="width: 20%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in confirmed">
+							<td><label>Id: </label>&nbsp{{row.volId}}<br>
+								<label>Name: </label>&nbsp{{row.name}}<br>
+								<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
+								<label>Period: </label>&nbsp{{row.period}}<br>
+								<label>Post: </label>&nbsp{{row.post}}
+							</td>
+							<td><label>Venue</label>
+								<input id="venue" type="text" ng-model="row.venue"/>
+								<label>Location</label> 
+								<textarea id="location" ng-model="row.location"/></textarea> 
+								<label>Status</label>
+								<select ng-model="row.status">
+									<option value="Pending">Pending</option>
+									<option value="Confirmed">Confirmed</option>
+									<option value="Cancelled">Cancelled</option>
+								</select>
+								<label>Remarks</label>
+								<textarea id="content" ng-model="row.remarks"/></textarea> 
+							</td>
+							<td>
+								<button ng-click="updateVolunteerWork(row)">Save</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<div ng-show="UploadOption=='VolunteerWork'">
-			*All volunteer ID uploaded should already exist in our database. If it is not, please upload volunteer first.
-			*For dates, the format is yyyy-mm-dd<br>
-			<a href="template/update_volunteer_template.csv" download="update_volunteer_template.csv">Template</a>
-			Expected columns:
-			<table st-table="upload_volunteer" class="table table-striped">
-				<thead>
-					<tr>
-						<th style="width: 20%;">VolunteerID</th>
-						<th style="width: 30%;">From Date</th>
-						<th style="width: 30%;">To Date</th>
-					</tr>
-				</thead>
-			</table>
-			<input type="file" file-reader="fileContent" />
+		<div id="Setting" class="tabcontent">
+			<button class="collapsible">Edit Options</button>
+			<div class="content">
+				<button ng-click="createEmptySetting()">New</button>
+				<table st-table="setting" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 30%;">type</th>
+							<th style="width: 40%;">Content</th>
+							<th style="width: 30%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in setting">
+							<td>
+								<select ng-model="row.type">
+									<option value="Admin's Email">Admin's Email</option>
+									<option value="Admin's Temp Last Login Time">Admin's Temp Last Login Time
+									</option>
+									<option value="Post">Post</option>
+									<option value="Venue">Venue</option>
+									<option value="Location">Location</option>
+								</select>
+							</td>
+							<td>
+								<input id="content" type="text" ng-model="row.content" />  
+							</td>
+							<td>
+								<button ng-click="postSetting(row)">Save</button>
+								<button ng-click="deleteSetting(row.id)">Remove</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<button class="collapsible">Upload</button>
+			<div class="content">
+				<select onchange='checkvalue(this.value)' ng-model="uploadOption" style="width:50%;"> 
+					<option disabled selected value> -- select an option -- </option>
+					<option value="Volunteer">Upload Volunteers</option>
+					<option value="VolunteerWork">Upload Volunteer Works</option>
+				</select>
+				<div ng-show="uploadOption=='Volunteer'">
+					*For volunteer id, please sync with local database. Therefore, a whole new volunteer should not be created here<br>
+					*For dob, the format is yyyy-mm-dd<br>
+					*This function is for upadte or insert only. Contact IT support to delete a volunteer or set it to inactive<br>
+					<a href="template/update_volunteer_template.csv" download="update_volunteer_template.csv">Download Template</a>
+					<br>
+					<input type="file" file-reader="fileContent" />
+					<table st-table="upload_volunteer" class="table table-striped">
+						<thead>
+							<tr>
+								<th style="width: 20%;">VolunteerID</th>
+								<th style="width: 20%;">Name</th>
+								<th style="width: 40%;">Email</th>
+								<th style="width: 20%;">Dob</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="row in tryUpload.volunteer">
+								<td>{{row.VolunteerID}}</td>
+								<td>{{row.Name}}</td>
+								<td>{{row.Email}}</td>
+								<td>{{row.Dob}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<button ng-click="upload()" ng-show="tryUploadedVol">Upload</button>
+					<button ng-click="cancelUpload()" ng-show="tryUploadedVol">Cancel</button>
+				</div>
+				<div ng-show="uploadOption=='VolunteerWork'">
+					*All volunteer ID should already exist in our database before the upload process. If it is not, please upload volunteer first.
+					*For dates, the format is yyyy-mm-dd<br>
+					<a href="template/update_volunteer_template.csv" download="update_volunteer_template.csv">Download Template</a>
+					<br>
+					<input type="file" file-reader="fileContent" />
+					<table st-table="upload_volunteer" class="table table-striped">
+						<thead>
+							<tr>
+								<th style="width: 20%;">VolunteerID</th>
+								<th style="width: 30%;">From Date</th>
+								<th style="width: 30%;">To Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="row in tryUpload.volunteerWork">
+								<td>{{row.volunteerID}}</td>
+								<td>{{row.fromDate}}</td>
+								<td>{{row.toDate}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<button ng-click="Upload()" ng-show="tryUploadedVolWork">Upload</button>
+					<button ng-click="cancelUpload()" ng-show="tryUploadedVolWork">Cancel</button>
+				</div>
+			</div>
+			<button class="collapsible">Housekeeping</button>
+			<div class="content">
+				<h1>Housekeeping</h1>
+				clean up all unused past record
+			</div>
 		</div>
 	</div>
-	<button class="collapsible">Housekeeping</button>
-	<div class="content">
-		<h1>Housekeeping</h1>
-		clean up all unused past record
-	</div>
-</div>
-</div>
-<commonfooter></commonfooter>
-<script>
-	function displaySection(evt, sectionName) {
-		var i, tabcontent, tablinks;
-		tabcontent = document.getElementsByClassName("tabcontent");
-		for (i = 0; i < tabcontent.length; i++) {
-			tabcontent[i].style.display = "none";
+	<commonfooter></commonfooter>
+	<script>
+		function displaySection(evt, sectionName) {
+			var i, tabcontent, tablinks;
+			tabcontent = document.getElementsByClassName("tabcontent");
+			for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			}
+			tablinks = document.getElementsByClassName("tablinks");
+			for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			}
+			document.getElementById(sectionName).style.display = "block";
+			evt.currentTarget.className += " active";
 		}
-		tablinks = document.getElementsByClassName("tablinks");
-		for (i = 0; i < tablinks.length; i++) {
-			tablinks[i].className = tablinks[i].className.replace(" active", "");
-		}
-		document.getElementById(sectionName).style.display = "block";
-		evt.currentTarget.className += " active";
-	}
 		// Get the element with id="defaultOpen" and click on it
 		document.getElementById("defaultOpen").click();
 

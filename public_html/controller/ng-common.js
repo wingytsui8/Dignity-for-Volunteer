@@ -631,7 +631,7 @@ $scope.periodCovertToString = function (from, to){
 	var today = new Date();
 	var period = "";
 	var past = false;
-	
+
 	fromDateString = fromDate.toLocaleDateString();
 		// fromHour = String(fromDate.getHours()).padStart(2,0)
 		// fromMin = String(fromDate.getMinutes()).padStart(2,0) 
@@ -692,6 +692,10 @@ $scope.periodCovertToString = function (from, to){
 }]);
 
 app.controller("manageController", ["$scope", "$rootScope", function($scope, $rootScope) {
+
+	$scope.tryUploadedVol = false;
+	$scope.tryUploadedVolWork = false;
+
 	$scope.getManagementOverview = function(){
 		$.ajax({
 			url: '../connectDB.php',
@@ -712,17 +716,17 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 					$scope.pendingWork = responseData.pendingWork;
 					// for (var i = 0; i < responseData.pendingWork.length; i++){
 					// 	$scope.pendingWork[i].period = $scope.periodCovertToString($scope.pendingWork[i].fromDate, $scope.pendingWork[i].toDate);
-					
+
 					// }
 					$scope.pendingEvent = responseData.pendingEvent;
 					// for (var i = 0; i < responseData.pendingEvent.length; i++){
 					// 	$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
-					
+
 					// }
 					$scope.cancelled = responseData.cancelled;
 					// for (var i = 0; i < responseData.pending.length; i++){
 					// 	$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
-					
+
 					// }
 				}
 			}
@@ -842,6 +846,48 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
 		window.location.href = "mailto:" + record.email + "?subject=" + mailSubject + "&body=" + mailBody;
 	}
+	$scope.tryUpload = function(uploadResultInJson){
+		if ($scope.uploadOption == 'Volunteer'){
+			$scope.tryUpload.volunteer = uploadResultInJson;
+			$scope.tryUploadedVol = true;
+		}else if($scope.uploadOption == 'VolunteerWork'){
+			$scope.tryUpload.volunteerWork = uploadResultInJson;
+			$scope.tryUploadedVolWork = true;
+		}
+	}
+	$scope.cancelUpload = function(){
+		if ($scope.uploadOption == 'Volunteer'){
+			$scope.tryUpload.volunteer = null;
+			$scope.tryUploadedVol = false;
+		}else if($scope.uploadOption == 'VolunteerWork'){
+			$scope.tryUpload.volunteerWork = null;
+			$scope.tryUploadedVolWork = false;
+		}
+	}
+
+	$scope.upload = function(){
+		if($scope.tryUploadedVolWork || $scope.tryUploadedVol){
+		if (confirm("are you sure to upload " + $scope.uploadOption + " records?")){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { 
+					action: $scope.uploadOption == 'Volunteer'?'uploadVolunteeer':$scope.uploadOption == 'VolunteerWork'?'uploadVolunteeerWork' ,  
+					records: $scope.uploadOption == 'Volunteer'?$scope.tryUpload.volunteer:$scope.uploadOption == 'VolunteerWork'?$scope.tryUpload.volunteerWork
+				},
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+					if (responseData){
+						alert("Change applied.");
+						location.reload();
+					}
+				}
+			});
+		}
+	}
+	};
 }]);
 
 app.directive('fileReader', function() {
@@ -868,7 +914,7 @@ app.directive('fileReader', function() {
 								}
 								result.push(obj);
 							}
-							scope.fileReader = result;;
+							scope.$parent.tryUpload(result);
 						});
 					};
 
@@ -877,5 +923,29 @@ app.directive('fileReader', function() {
 			});
 		}
 	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
