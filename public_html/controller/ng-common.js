@@ -695,6 +695,7 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 
 	$scope.tryUploadedVol = false;
 	$scope.tryUploadedVolWork = false;
+	$scope.venueOptions = [];
 
 	$scope.getManagementOverview = function(){
 		$.ajax({
@@ -728,6 +729,16 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 					// 	$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
 
 					// }
+					$scope.venueOptions = [];
+					$scope.locationOptions = [];
+					for (var i = 0; i < responseData.options.length; i++){
+						if (responseData.options[i].type = 'Venue'){
+							$scope.venueOptions.push(responseData.options[i])
+						}else if (responseData.options[i].type = 'Location'){
+							$scope.locationOptions.push(responseData.options[i])
+						}
+					}
+					
 				}
 			}
 		});
@@ -774,6 +785,13 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				responseData = JSON.parse(response);
 				if (responseData){
 					$scope.setting = responseData.setting;
+					for (var i = 0; i < responseData.setting.length; i++){
+						if (responseData.setting[i].id == 1 || responseData.setting[i].id == 2){
+							$scope.setting[i].disabled = true;
+						}else{
+							$scope.setting[i].disabled = false;
+						}
+					}
 				}
 			}
 		});
@@ -782,6 +800,10 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 	$scope.createEmptyAnnouncement = function() {
 		var responseData = {id: null, content: null, postDate: new Date(), toDate: new Date()};
 		$scope.announcement.push(responseData);
+	}
+	$scope.createEmptySetting = function() {
+		var responseData = {id: null, type: null, content: null, disabled: false};
+		$scope.setting.push(responseData);
 	}
 	$scope.postAnnouncement = function(announcement) {
 		$.ajax({
@@ -793,6 +815,27 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				postDate: $scope.toLocalTimeString(announcement.postDate),
 				toDate: $scope.toLocalTimeString(announcement.toDate), 
 				content: announcement.content
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+	}
+	$scope.postSetting = function(setting) {
+		if(setting.id == 1 || setting.id == 2){
+			alert("It is not allowed to change.");
+			return;
+		}
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'postSetting' ,  
+				id: setting.id, 
+				type: setting.type,
+				content: setting.content
 			},
 			dataType: "json",
 			async: false,
@@ -817,6 +860,26 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		});
 		$scope.getVolunteerWorkManageDetail();
 	}
+	$scope.deleteSetting = function(id) {
+		if(setting.id == 1 || setting.id == 2){
+			alert("It is not allowed to change.");
+			return;
+		}
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'deleteSetting' ,  
+				id: id, 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.getManagementSetting();
+	}
 	$scope.updateVolunteerWork = function(record) {
 		if (confirm("Are you sure?")){
 			$.ajax({
@@ -825,8 +888,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				data : { 
 					action: 'updateVolunteerWork' ,  
 					id: record.id, 
-					venue: record.venue,
-					location: record.location, 
+					venue: record.venue.content,
+					location: record.location.content, 
 					status: record.status,
 					remarks: record.remarks, 
 				},

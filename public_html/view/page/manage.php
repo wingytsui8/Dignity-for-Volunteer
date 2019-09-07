@@ -348,13 +348,13 @@
 									<div class="pending-vol-header">Venue:</div>
 								</td>
 								<td>
-									<select ng-model="row.venue" ng-options="venueOptions" class="pending-vol-value1"></select>
+									<select ng-model="row.venue" ng-options="option.content for option in venueOptions" class="pending-vol-value1"></select>
 								</td>
 								<td>
 									<div class="pending-vol-header">Location:</div>
 								</td>
 								<td>
-									<textarea class="pending-vol-value2" id="location" ng-model="row.location"></textarea>
+									<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value1"></select>
 								</td>
 							</tr>
 							<tr>
@@ -409,9 +409,9 @@
 							</tr>
 							<tr>
 								<td class="pending-vol-header">Event:</td>
-								<td class="pending-vol-value2">{{row.eventName}}	</td>
+								<td class="pending-vol-value2">{{row.eventName}}</td>
 								<td class="pending-vol-header">Period:</td>
-								<td class="pending-vol-value2">{{row.period}}	</td>
+								<td class="pending-vol-value2">{{row.period}}</td>
 							</tr>
 							<tr>
 								<td class="pending-vol-header">Venue:</td>
@@ -587,7 +587,7 @@
 					<tbody>
 						<tr ng-repeat="row in setting">
 							<td>
-								<select ng-model="row.type">
+								<select ng-disabled="row.disabled" ng-model="row.type">
 									<option value="Admin's Email">Admin's Email</option>
 									<option value="Admin's Temp Last Login Time">Admin's Temp Last Login Time
 									</option>
@@ -597,11 +597,11 @@
 								</select>
 							</td>
 							<td>
-								<input id="content" type="text" ng-model="row.content">  
+								<input ng-disabled="row.disabled" id="content" type="text" ng-model="row.content">  
 							</td>
 							<td>
-								<button ng-click="postSetting(row)">Save</button>
-								<button ng-click="deleteSetting(row.id)">Remove</button>
+								<button ng-hide="row.disabled" ng-click="postSetting(row)">Save</button>
+								<button ng-hide="row.disabled" ng-click="deleteSetting(row.id)">Remove</button>
 							</td>
 						</tr>
 					</tbody>
