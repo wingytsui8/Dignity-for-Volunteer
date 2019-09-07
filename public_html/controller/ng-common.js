@@ -734,6 +734,51 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 	}
 	$scope.getManagementOverview();
 
+	$scope.getManagementVolunteer = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'getManagementVolunteer', 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					$scope.announcement = responseData.announcement;
+					for (var i = 0; i < responseData.announcement.length; i++){
+						$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
+						$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
+					}
+					$scope.confirmed = responseData.confirmed;
+					// for (var i = 0; i < responseData.pendingEvent.length; i++){
+					// 	$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
+
+					// }
+					
+				}
+			}
+		});
+	}
+	$scope.getManagementSetting = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'getManagementSetting', 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					$scope.setting = responseData.setting;
+				}
+			}
+		});
+	}
+
 	$scope.createEmptyAnnouncement = function() {
 		var responseData = {id: null, content: null, postDate: new Date(), toDate: new Date()};
 		$scope.announcement.push(responseData);
@@ -872,8 +917,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				url: '../connectDB.php',
 				type: 'POST',
 				data : { 
-					action: $scope.uploadOption == 'Volunteer'?'uploadVolunteeer':$scope.uploadOption == 'VolunteerWork'?'uploadVolunteeerWork' ,  
-					records: $scope.uploadOption == 'Volunteer'?$scope.tryUpload.volunteer:$scope.uploadOption == 'VolunteerWork'?$scope.tryUpload.volunteerWork
+					action: $scope.uploadOption == 'Volunteer'?'uploadVolunteeer':($scope.uploadOption == 'VolunteerWork'?'uploadVolunteeerWork':''),  
+					records: $scope.uploadOption == 'Volunteer'?$scope.tryUpload.volunteer:($scope.uploadOption == 'VolunteerWork'?$scope.tryUpload.volunteerWork:'')
 				},
 				dataType: "json",
 				async: false,

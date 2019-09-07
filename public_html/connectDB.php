@@ -205,13 +205,13 @@ if(isset($_POST['action'])){
 		echo json_encode( deleteAnnouncement($id) );
 		exit;
 
-		case "uploadVolunteeer"
+		case "uploadVolunteeer":
 		$records = $_POST['records'];
 		header('Content-type: application/json');
 		echo json_encode( uploadVolunteeer($records) );
 		exit;
 
-		case "uploadVolunteeerWork"
+		case "uploadVolunteeerWork":
 		$records = $_POST['records'];
 		header('Content-type: application/json');
 		echo json_encode( uploadVolunteeerWork($records) );
@@ -442,7 +442,7 @@ function getManagementOverview(){
 	}
 
 // get pending event registration record
-	$sql= "SELECT `register`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`id`, `volunteer`.`name` as name,`volunteer`.`email` as email , `register`.`status` 
+	$sql= "SELECT `register`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`id` as volId, `volunteer`.`name` as name,`volunteer`.`email` as email , `register`.`status` 
 	From `event` 
 	inner join `register` on `event`.`id` = `register`.`eventId` and `register`.`active` = 1 and `register`.`status` = 'Pending' 
 	inner join `volunteer` on `volunteer`.`id` = `register`.`volId`
@@ -687,9 +687,17 @@ function deleteAnnouncement($id){
 
 
 function uploadVolunteeer($records){
-	$sql = "DROP TEMPORARY TABLE IF EXISTS TEMP; " +
-	       "CREATE TEMPORARY TABLE `TEMP` SELECT * FROM volunteer where 1=2;  ";
-
+	$sql = "DROP TEMPORARY TABLE IF EXISTS `temp`; " .
+	       "CREATE TEMPORARY TABLE `temp` SELECT * FROM volunteer where 1=2;  ";
+	foreach($records as $record){
+		$pwHash = hash("sha256", hash("sha256", $record['Dob']));
+		$sql = $sql . "INSERT INTO `temp` (id, name, dob, email, password, active) VALUES ('". $record['VolunteerID']. "','" . $record['Name']."', '".$record['Dob']."', '".$record['Email']."', '" .$pwHash."' , '1'); ";
+	}
+	$sql = $sql . " INSERT INTO `volunteer` SELECT `temp`.* FROM `temp`";
+	 
+	runNonQuery($sql);
+	return true;
+	       
 	       // 1. Insert into TEMP values <---- For loop
 	       // 2. Insert into Volunteer inner join Temp on Duplicate ID Update
 	       // $record structure: 
@@ -701,9 +709,16 @@ function uploadVolunteeer($records){
 }
 
 function uploadVolunteeerWork($records){
-	$sql = "DROP TEMPORARY TABLE IF EXISTS TEMP; " +
-	       "CREATE TEMPORARY TABLE `TEMP` SELECT * FROM volunteer where 1=2;  ";
-
+	// $sql = "DROP TEMPORARY TABLE IF EXISTS TEMP; " +
+	//        "CREATE TEMPORARY TABLE `TEMP` SELECT * FROM volunteer where 1=2;  ";
+	// foreach($records as $record){
+	// 	$sql = $sql . "INSERT INTO `temp` (volId, fromDate, toDate, post, status, active, createDate, modifyDate ) VALUES ('". $record['VolunteerID']. "','" . $record['fromDate']."', '".$record['toDate']."', 'General', 'Confirmed' , '1', Now(), Now()); ";
+	// }
+	// $sql = $sql . " INSERT INTO `volunteer_work` SELECT `temp`.* FROM `temp` LEFT JOIN `volunteer_work` ON `volunteer_work`.id = `temp`.`id` 
+	// ON DUPLICATE KEY UPDATE name=VALUES(name), dob=VALUES(dob), email=VALUES(email), password=VALUES(password), active=VALUES(active)";
+	 
+	// runNonQuery($sql);
+	return true;
 	       // 1. Insert into TEMP values <---- For loop
 	       // 2. Insert into Volunteer Work inner join Temp on Duplicate ID Update
 	       // $record structure: 
