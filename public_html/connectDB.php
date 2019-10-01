@@ -715,7 +715,7 @@ function uploadVolunteeer($records){
 	       "CREATE TEMPORARY TABLE `temp` SELECT * FROM volunteer where 1=2;  ";
 	foreach($records as $record){
 		$pwHash = hash("sha256", hash("sha256", preg_replace("/[^0-9]/", "", $record['Dob'])));
-		$sql = $sql . "INSERT INTO `temp` (id, name, dob, email, password, active) VALUES ('". $record['VolunteerID']. "','" .  $record['Name']."', '".$record['Dob']."', '".$record['Email']."', '" .$pwHash."' , '1'); ";
+		$sql = $sql . "INSERT INTO `temp` (id, name, dob, email, password, active) VALUES ('". $record['VolunteerID']. "','" .  $record['Name']."', '".$record['Dob']."', '". strtolower(preg_replace('/\s*/', "", $record['Email']))."', '" .$pwHash."' , '1'); ";
 	}
 	$sql = $sql . " INSERT INTO `volunteer` SELECT `temp`.* FROM `temp`";
 	 

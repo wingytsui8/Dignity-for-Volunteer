@@ -306,7 +306,7 @@
 			<div>
 				<h1>Pending Volunteer Work Application</h1>
 				<div ng-repeat="row in pendingWork">
-					<table st-table="pendingWork" class="table table-striped">
+					<table st-table="pendingWork" class="table table-striped nameCard">
 						<thead>
 							<tr>
 								<th>Vol ID:</th>
@@ -392,7 +392,7 @@
 			<div>
 				<h1>Pending Event Helper Application</h1>
 				<div ng-repeat="row in pendingEvent">
-					<table st-table="pendingEvent" class="table table-striped">
+					<table st-table="pendingEvent" class="table table-striped nameCard">
 						<thead>
 							<tr>
 								<th>Vol ID</th>
@@ -555,7 +555,7 @@
 			<button class="collapsible">Upcoming Volunteer Work List</button>
 			<div class="content">
 				<div ng-repeat="row in confirmed">
-					<table st-table="confirmed" class="table table-striped">
+					<table st-table="confirmed" class="table table-striped nameCard">
 						<thead>
 							<tr>
 								<th>Vol ID</th>

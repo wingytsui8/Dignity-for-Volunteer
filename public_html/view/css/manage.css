@@ -95,6 +95,12 @@ h1 {
 hr {
   border-top: 2px solid var(--main-color-dark);
 }
+
+.nameCard {
+  border: 2px solid var(--main-color);
+
+}
+
 /* Style the tab */
 .tab {
   overflow: hidden;
