@@ -79,11 +79,13 @@ function callGoogleCalendar($calendar, $eventId, $eventName, $location, $descrip
 
 	//create event object
 	//create attendees array
-	$emailArray = [];
-	foreach ($attendees as $attendee) {
-	 	$email = array( 'email' => $attendee);
-	 	$emailArray[] = $email;
-	}
+
+	// $emailArray = [];
+	// foreach ($attendees as $attendee) {
+	//  	$email = array( 'email' => $attendee);
+	//  	$emailArray[] = $email;
+	// }
+	$description = $description . PHP_EOL . 'Attendees:' . PHP_EOL . json_encode($attendees);
 
 	$event = new Google_Service_Calendar_Event(array(
 		'summary' => $eventName,
@@ -97,7 +99,7 @@ function callGoogleCalendar($calendar, $eventId, $eventName, $location, $descrip
 			'dateTime' => $endTime,
 			'timeZone' => TIMEZONE_KL,
 		),
-  		'attendees' => $emailArray,
+  		'attendees' => [],
 	));
 
  	// call google API to create client service

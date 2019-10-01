@@ -57,6 +57,7 @@
 	<div class="textbody" ng-controller="manageController">
 		<div class="tab">
 			<button class="tablinks" onclick="displaySection(event, 'Overview')" ng-click="getManagementOverview()" id="defaultOpen">Overview</button>
+			<button class="tablinks" onclick="displaySection(event, 'Announcement')" ng-click="getManagementAnnouncement()">Announcement</button>
 			<button class="tablinks" onclick="displaySection(event, 'Volunteer')" ng-click="getManagementVolunteer()">Volunteer</button>
 			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(1)">Upcoming Event</button>
 			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(0)">Past Event</button>
@@ -64,7 +65,7 @@
 		</div>
 		<div id="Event" class="tabcontent">
 			<h1 id="events">Events details</h1>
-			<button ng-click="getMoreEvent()">More</button>
+			<button ng-show="past" ng-click="getMoreEvent()">More</button>
 			<table st-table="events" class="table table-striped">
 				<thead>
 					<tr>
@@ -132,13 +133,13 @@
 							<label >Venue</label>
 						</td>
 						<td class="tdcontent">
-							<input id="venue" type="text" ng-model="eventDetail.venue" ng-disabled="past"/>
+							<select id="venue" ng-model="eventDetail.venue" ng-options="option.content for option in venueOptions" ng-disabled="past"></select>
 						</td>
 						<td class="tdheader">
 							<label >Location</label>
 						</td>
 						<td class="tdcontent">
-							<textarea id="location" ng-model="eventDetail.location" ng-disabled="past"></textarea> 
+							s
 						</td>
 					</tr>
 					<tr>
@@ -479,9 +480,9 @@
 				</table>
 			</div>
 		</div>
-		<div id="Volunteer" class="tabcontent">
-			<button class="collapsible">Announcement</button>
-			<div class="content">
+		<div id="Announcement" class="tabcontent">
+			<!-- <button class="collapsible">Announcement</button> -->
+			<!-- <div class="content"> -->
 				<h1>Announcement</h1>
 				<button ng-click="createEmptyAnnouncement()">New</button>
 				<table st-table="announcement" class="table table-striped">
@@ -511,7 +512,41 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
+			<!-- </div> -->
+		</div>
+		<div id="Volunteer" class="tabcontent">
+			<!-- <button class="collapsible">Announcement</button> -->
+			<!-- <div class="content">
+				<h1>Announcement</h1>
+				<button ng-click="createEmptyAnnouncement()">New</button>
+				<table st-table="announcement" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 20%;">Post Date</th>
+							<th style="width: 20%;">Valid until</th>
+							<th style="width: 40%;">Content</th>
+							<th style="width: 20%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in announcement">
+							<td>
+								<input id="postDate" type="date" ng-model="row.postDate" style="width: 100%" />  
+							</td>
+							<td>
+								<input id="toDate" type="date" ng-model="row.toDate" style="width: 100%"/>  
+							</td>
+							<td>
+								<textarea id="content" ng-model="row.content"></textarea> 
+							</td>
+							<td>
+								<button ng-click="postAnnouncement(row)">Save</button>
+								<button ng-click="deleteAnnouncement(row.id)">Remove</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div> -->
 			<button class="collapsible">Volunteer Overview</button>
 			<div class="content">
 				<h1>Volunteer Overview</h1>

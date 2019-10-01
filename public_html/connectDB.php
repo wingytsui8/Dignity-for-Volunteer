@@ -169,6 +169,11 @@ if(isset($_POST['action'])){
 		echo json_encode( getManagementOverview() );
 		exit;
 
+		case "getManagementAnnouncement":
+		header('Content-type: application/json');
+		echo json_encode( getManagementAnnouncement() );
+		exit;
+
 		case "getManagementVolunteer":
 		header('Content-type: application/json');
 		echo json_encode( getManagementVolunteer() );
@@ -495,7 +500,7 @@ function getManagementOverview(){
 	
 }
 
-function getManagementVolunteer(){
+function getManagementAnnouncement(){
 	$sql= "SELECT id, content, postDate, toDate
 	From announcement 
 	order by postDate;";
@@ -507,6 +512,25 @@ function getManagementVolunteer(){
 			$announcement[] = $result;
 		}
 	}
+
+	return json_encode([
+		"announcement" => $announcement,
+	]);
+	
+}
+
+function getManagementVolunteer(){
+	// $sql= "SELECT id, content, postDate, toDate
+	// From announcement 
+	// order by postDate;";
+
+	// $results = runQuickQuery($sql);
+	// $announcement = [];
+	// if($results->num_rows > 0){
+	// 	while($result = $results->fetch_assoc()) {
+	// 		$announcement[] = $result;
+	// 	}
+	// }
 
 	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
 	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Confirmed' 
@@ -522,7 +546,7 @@ function getManagementVolunteer(){
 		}
 	}
 	return json_encode([
-		"announcement" => $announcement,
+		// "announcement" => $announcement,
 		"confirmed" => $confirmed,
 
 	]);
@@ -690,8 +714,8 @@ function uploadVolunteeer($records){
 	$sql = "DROP TEMPORARY TABLE IF EXISTS `temp`; " .
 	       "CREATE TEMPORARY TABLE `temp` SELECT * FROM volunteer where 1=2;  ";
 	foreach($records as $record){
-		$pwHash = hash("sha256", hash("sha256", $record['Dob']));
-		$sql = $sql . "INSERT INTO `temp` (id, name, dob, email, password, active) VALUES ('". $record['VolunteerID']. "','" . $record['Name']."', '".$record['Dob']."', '".$record['Email']."', '" .$pwHash."' , '1'); ";
+		$pwHash = hash("sha256", hash("sha256", preg_replace("/[^0-9]/", "", $record['Dob'])));
+		$sql = $sql . "INSERT INTO `temp` (id, name, dob, email, password, active) VALUES ('". $record['VolunteerID']. "','" .  $record['Name']."', '".$record['Dob']."', '".$record['Email']."', '" .$pwHash."' , '1'); ";
 	}
 	$sql = $sql . " INSERT INTO `volunteer` SELECT `temp`.* FROM `temp`";
 	 
@@ -782,6 +806,7 @@ function connectDB($sql){
 	}
 }
 //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv Common Connecter Functions vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ update Googel Calendar ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 function updateGoogleCalendar ($table, $id){
 
 	switch ($table) {
@@ -835,5 +860,5 @@ function updateGoogleCalendar ($table, $id){
 	runNonQuery($sql);
 	return true;
 }
-
+//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv update Googel Calendar vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 ?>

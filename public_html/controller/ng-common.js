@@ -744,7 +744,33 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		});
 	}
 	$scope.getManagementOverview();
+	$scope.getManagementAnnouncement = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'getManagementAnnouncement', 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					$scope.announcement = responseData.announcement;
+					for (var i = 0; i < responseData.announcement.length; i++){
+						$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
+						$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
+					}
+					$scope.confirmed = responseData.confirmed;
+					// for (var i = 0; i < responseData.pendingEvent.length; i++){
+					// 	$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
 
+					// }
+					
+				}
+			}
+		});
+	}
 	$scope.getManagementVolunteer = function(){
 		$.ajax({
 			url: '../connectDB.php',
@@ -757,11 +783,11 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 			success: function(response) {
 				responseData = JSON.parse(response);
 				if (responseData){
-					$scope.announcement = responseData.announcement;
-					for (var i = 0; i < responseData.announcement.length; i++){
-						$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
-						$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
-					}
+					// $scope.announcement = responseData.announcement;
+					// for (var i = 0; i < responseData.announcement.length; i++){
+					// 	$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
+					// 	$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
+					// }
 					$scope.confirmed = responseData.confirmed;
 					// for (var i = 0; i < responseData.pendingEvent.length; i++){
 					// 	$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
@@ -888,8 +914,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				data : { 
 					action: 'updateVolunteerWork' ,  
 					id: record.id, 
-					venue: record.venue.content,
-					location: record.location.content, 
+					// venue: record.venue.content,
+					// location: record.location.content, 
 					status: record.status,
 					remarks: record.remarks, 
 				},
@@ -909,8 +935,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 							var mailBodyDetails= "Here are the details:  " + mailNextLine;
 							mailBodyDetails += "Period: " + record.period + mailNextLine;
 							mailBodyDetails += "Post: " + record.post + mailNextLine;
-							mailBodyDetails += "Venue: " + record.venue + mailNextLine;
-							mailBodyDetails += "Location: " + record.location + mailNextLine;
+							// mailBodyDetails += "Venue: " + record.venue + mailNextLine;
+							// mailBodyDetails += "Location: " + record.location + mailNextLine;
 							mailBodyDetails += "Remarks: " + record.remarks + mailNextLine;
 
 							var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
@@ -920,6 +946,7 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				}
 			});
 		}
+		$scope.getManagementOverview();
 	}
 	$scope.updateRegistrationStatus = function(record) {
 		$.ajax({
@@ -1031,27 +1058,6 @@ app.directive('fileReader', function() {
 			});
 		}
 	};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
