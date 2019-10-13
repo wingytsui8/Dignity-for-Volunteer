@@ -776,11 +776,12 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 			success: function(response) {
 				responseData = JSON.parse(response);
 				if (responseData){
-					$scope.setting = responseData;
+					$scope.upcomingVolList = responseData;
 				}
 			}
 		});
 	}
+	$scope.getConfirmedUpcomingVolWork();
 
 	$scope.getManagementSetting = function(){
 		$.ajax({

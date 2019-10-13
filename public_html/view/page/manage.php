@@ -557,8 +557,8 @@
 						<tr>
 							<th style="width: 30%;">Date</th>
 							<th style="width: 20%;">Volunteer</th>
-							<th style="width: 10%;">Post</th>
 							<th style="width: 10%;">Venue</th>
+							<th style="width: 10%;">Post</th>
 							<th style="width: 30%;">Email</th>
 						</tr>
 					</thead>
@@ -568,7 +568,6 @@
 							<td>{{row.name}}</td>
 							<td>{{row.venue}}</td>
 							<td>{{row.post}}</td>
-							<td>{{row.remarks}}</td>
 							<td>{{row.email}}</td>
 						</tr>
 					</tbody>
