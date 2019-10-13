@@ -531,11 +531,11 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		$scope.postOptions = responseData[0].postOptions;
 		$scope.postOptions.push({type: "Post", content: "Other"});
 		for (var i = 0 ;i<responseData[0].past.length;i++){
-			var period = $scope.periodCovertToString(responseData[0].past[i].fromDate, responseData[0].past[i].toDate);
+			var period = periodCovertToString(responseData[0].past[i].fromDate, responseData[0].past[i].toDate).period;
 			responseData[0].past[i].period = period.period;
 		}
 		for (var i = 0 ;i<responseData[0].upcoming.length;i++){
-			var period = $scope.periodCovertToString(responseData[0].upcoming[i].fromDate, responseData[0].upcoming[i].toDate);
+			var period = periodCovertToString(responseData[0].upcoming[i].fromDate, responseData[0].upcoming[i].toDate).period;
 			responseData[0].upcoming[i].period = period.period;
 			if (responseData[0].upcoming[i].registered == "1"){
 				responseData[0].upcoming[i].isRegistered = true;
@@ -545,7 +545,7 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 			responseData[0].upcoming[i].original = responseData[0].upcoming[i].isRegistered;
 		}
 		for (var i = 0 ;i<responseData[0].volWork.length;i++){
-			var period = $scope.periodCovertToString(responseData[0].volWork[i].fromDate, responseData[0].volWork[i].toDate);
+			var period = periodCovertToString(responseData[0].volWork[i].fromDate, responseData[0].volWork[i].toDate).period;
 			responseData[0].volWork[i].period = period.period;
 			if (responseData[0].volWork[i].status == "Cancelled"){	
 				responseData[0].volWork[i].displayButton = false;
@@ -627,37 +627,7 @@ $scope.cancelVolunteerWork = function(id){
 		});
 	}
 }
-$scope.periodCovertToString = function (from, to){
-	var fromDate = new Date(from);
-	var toDate = new Date(to);
-	var today = new Date();
-	var period = "";
-	var past = false;
-
-	fromDateString = fromDate.toLocaleDateString();
-		// fromHour = String(fromDate.getHours()).padStart(2,0)
-		// fromMin = String(fromDate.getMinutes()).padStart(2,0) 
-
-		toDateString = toDate.toLocaleDateString();
-		// toHour = String(toDate.getHours()).padStart(2,0)
-		// toMin = String(toDate.getMinutes()).padStart(2,0) 
-
-		if (fromDate!=toDate){
-			// period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toDateString + " , " + toHour + ":" +  toMin ;
-			period = fromDateString + "  -  " + toDateString;
-		}else{
-			// period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toHour + ":" +  toMin;
-			period = fromDateString;
-		}	
-
-		if (fromDate > today){
-			past = false;
-		}else{
-			past = true
-		}
-
-		return { period: period ,  past: past }
-	}
+	
 
 	$scope.confirmRegister = function(){
 		if (confirm("Are you sure?")){
@@ -727,21 +697,21 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 					// }
 					$scope.pendingWork = responseData.pendingWork;
 					for (var i = 0; i < responseData.pendingWork.length; i++){
-						// $scope.pendingWork[i].period = $scope.periodCovertToString($scope.pendingWork[i].fromDate, $scope.pendingWork[i].toDate);
+						$scope.pendingWork[i].period = periodCovertToString($scope.pendingWork[i].fromDate, $scope.pendingWork[i].toDate).period;
 						$scope.pendingWork[i].venue = $scope.venueOptions.find(o => o.content == responseData.pendingWork[i].venue);
 						$scope.pendingWork[i].location = $scope.locationOptions.find(o => o.content == responseData.pendingWork[i].location);
 
 					}
 					$scope.pendingEvent = responseData.pendingEvent;
-					// for (var i = 0; i < responseData.pendingEvent.length; i++){
-					// 	$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
+					for (var i = 0; i < responseData.pendingEvent.length; i++){
+						$scope.pendingEvent[i].period = periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate).period;
 
-					// }
+					}
 					$scope.cancelled = responseData.cancelled;
-					// for (var i = 0; i < responseData.pending.length; i++){
-					// 	$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
+					for (var i = 0; i < responseData.pending.length; i++){
+						$scope.pending[i].period = periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate).period;
 
-					// }
+					}
 					
 					
 				}
@@ -766,12 +736,6 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 						$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
 						$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
 					}
-					$scope.confirmed = responseData.confirmed;
-					// for (var i = 0; i < responseData.pendingEvent.length; i++){
-					// 	$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
-
-					// }
-					
 				}
 			}
 		});
@@ -788,14 +752,9 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 			success: function(response) {
 				responseData = JSON.parse(response);
 				if (responseData){
-					// $scope.announcement = responseData.announcement;
-					// for (var i = 0; i < responseData.announcement.length; i++){
-					// 	$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
-					// 	$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
-					// }
 					$scope.confirmed = responseData.confirmed;
-					for (var i = 0; i < responseData.pendingEvent.length; i++){
-						// $scope.confirmed[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
+					for (var i = 0; i < responseData.confirmed.length; i++){
+						$scope.confirmed[i].period = periodCovertToString($scope.confirmed[i].fromDate, $scope.confirmed[i].toDate).period;
 						$scope.confirmed[i].venue = $scope.venueOptions.find(o => o.content == responseData.confirmed[i].venue);
 						$scope.confirmed[i].location = $scope.locationOptions.find(o => o.content == responseData.confirmed[i].location);
 
@@ -1068,8 +1027,37 @@ app.directive('fileReader', function() {
 			});
 		}
 	};
-
-
-
 });
+
+ function periodCovertToString(from, to){
+		var fromDate = new Date(from);
+		var toDate = new Date(to);
+		var today = new Date();
+		var period = "";
+		var past = false;
+
+		fromDateString = fromDate.toLocaleDateString();
+			// fromHour = String(fromDate.getHours()).padStart(2,0)
+			// fromMin = String(fromDate.getMinutes()).padStart(2,0) 
+
+			toDateString = toDate.toLocaleDateString();
+			// toHour = String(toDate.getHours()).padStart(2,0)
+			// toMin = String(toDate.getMinutes()).padStart(2,0) 
+
+			if (fromDate!=toDate){
+				// period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toDateString + " , " + toHour + ":" +  toMin ;
+				period = fromDateString + "  -  " + toDateString;
+			}else{
+				// period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toHour + ":" +  toMin;
+				period = fromDateString;
+			}	
+
+			if (fromDate > today){
+				past = false;
+			}else{
+				past = true
+			}
+
+			return { period: period ,  past: past }
+}
 
