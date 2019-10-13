@@ -603,7 +603,7 @@ function getConfirmedUpcomingVolWork(){
 	$sql= "SELECT CONCAT(DATE_FORMAT(`fromDate`, '%Y-%m-%d'), \" to \", DATE_FORMAT(`toDate`, '%Y-%m-%d')) AS `date`, `volunteer`.`name`, `venue`, `post`, `volunteer`.`email`
 	From `volunteer_work` 
 	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer`.active = 1
-	where `volunteer_work`.`fromDate` >= CURDATE()  and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Confirmed' 
+	where `volunteer_work`.`toDate` >= CURDATE()  and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Confirmed' 
 	order by `volunteer_work`.`fromDate` ";
 
 	return runQuery($sql);
