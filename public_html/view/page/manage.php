@@ -616,11 +616,11 @@
 		<div id="Setting" class="tabcontent">
 			<button class="collapsible">Edit Options</button>
 			<div class="content">
-				<button ng-click="createEmptySetting()">New</button>
+				<button ng-click="createEmptySetting()">New Option</button>
 				<table st-table="setting" class="table table-striped">
-					<thead>
+					<thead> 
 						<tr>
-							<th style="width: 30%;">type</th>
+							<th style="width: 30%;">Type</th>
 							<th style="width: 40%;">Content</th>
 							<th style="width: 30%;"></th>
 						</tr>
