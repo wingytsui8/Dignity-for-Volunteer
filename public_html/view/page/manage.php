@@ -558,6 +558,7 @@
 							<th style="width: 10%;">Post</th>
 							<th style="width: 10%;">Venue</th>
 							<th style="width: 30%;">Email</th>
+						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="row in upcomingVolList">
