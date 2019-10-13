@@ -184,6 +184,12 @@ if(isset($_POST['action'])){
 		echo json_encode( getManagementSetting() );
 		exit;
 
+		case "getConfirmedUpcomingVolWork"
+
+		header('Content-type: application/json');
+		echo json_encode( getConfirmedUpcomingVolWork() );
+		exit;
+
 		case "postAnnouncement":
 		$id = (string)$_POST['id'];
 		$postDate = (string)$_POST['postDate'];
@@ -455,8 +461,8 @@ function getManagementOverview(){
 
 // get pending volunteer work record
 	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
-	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Pending' 
-	where `volunteer_work`.`fromDate` > CURDATE() 
+	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` 
+	where `volunteer_work`.`fromDate` > CURDATE() and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Pending' 
 	order by `volunteer_work`.`fromDate` DESC" ;
 
 	$results = runQuickQuery($sql);
@@ -591,6 +597,16 @@ function getManagementSetting(){
 		"setting" => $setting,
 	]);
 	
+}
+
+function getConfirmedUpcomingVolWork(){
+	$sql= "SELECT CONCAT(DATE_FORMAT(`fromDate`, '%Y-%m-%d'), \" to \", DATE_FORMAT(`toDate`, '%Y-%m-%d')) AS `date`, `volunteer`.`name`, `venue`, `post`, `remarks`, volunteer`.`email`
+	From `volunteer_work` 
+	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer`.active = 1
+	where `volunteer_work`.`fromDate` >= CURDATE()  and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Confirmed' 
+	order by `volunteer_work`.`fromDate` ";
+
+	return runQuery($sql);
 }
 // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  Get functions   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 

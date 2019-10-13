@@ -698,7 +698,6 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 	$scope.tryUploadedVol = false;
 	$scope.tryUploadedVolWork = false;
 	$scope.venueOptions = [];
-
 	$scope.getManagementOverview = function(){
 		$.ajax({
 			url: '../connectDB.php',
@@ -805,6 +804,25 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 			}
 		});
 	}
+
+	$scope.getConfirmedUpcomingVolWork = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'getConfirmedUpcomingVolWork', 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					$scope.setting = responseData;
+				}
+			}
+		});
+	}
+
 	$scope.getManagementSetting = function(){
 		$.ajax({
 			url: '../connectDB.php',
