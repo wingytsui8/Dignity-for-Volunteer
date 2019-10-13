@@ -6,10 +6,10 @@ if(isset($_POST['action'])){
 		case "getEvent":
 		$orderBy = (string)$_POST['orderBy'];
 		$active = (string)$_POST['active'];
-		$upcoming = (string)$_POST['upcoming'];
+		$past = (string)$_POST['past'];
 
 		header('Content-type: application/json');
-		echo json_encode( getEvent($orderBy, $active, $upcoming) );
+		echo json_encode( getEvent($orderBy, $active, $past) );
 		exit;
 
 		case "getRegisterEventDetails":
@@ -49,6 +49,11 @@ if(isset($_POST['action'])){
 		echo json_encode( postEvent($id, $name,$fromDate, $toDate, $venue, $location, $contactName, $contactEmail, $applicationDeadline, $quota, $active) );
 		exit;
 
+		case "getLocation":
+		header('Content-type: application/json');
+		echo json_encode( getLocation());
+		exit;
+
 		case "getEventManageDetail":
 		$id = (string)$_POST['id'];
 
@@ -86,7 +91,7 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( postPhoto($id) );
 
-		case "daletePhoto":
+		case "deletePhoto":
 		$id = (string)$_POST['id'];
 
 		header('Content-type: application/json');
@@ -241,17 +246,17 @@ if(isset($_POST['action'])){
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Get functions ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-function getEvent($orderBy, $active , $upcoming){
-	$sql= "SELECT id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
+function getEvent($orderBy, $active , $past){
+	$sql= "SELECT id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
 	From event
-	where fromDate " . ($upcoming? " >= " : " <= ") . " CURDATE() " .
+	where fromDate " . ($past? " <= " : " >= ") . " CURDATE() " .
 	($active? (" and active = " . $active ): "") .
 	" order by fromDate " . $orderBy;
 	return runQuery($sql);
 }
 
 function getRegisterEventDetails($email){
-	$sql= "SELECT e.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, 
+	$sql= "SELECT e.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, 
 	!(r.eventId is null) as registered
 	From event as e
 	left outer join  
@@ -284,7 +289,7 @@ function getVolunteerId($email){
 }
 
 function getEventManageDetail($id){
-	$sql= "SELECT event.id as id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks, pastDisplay, upcomingDisplay, event.active, count(event.id) as registered
+	$sql= "SELECT event.id as id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks, pastDisplay, upcomingDisplay, event.active, count(event.id) as registered
 	From event
 	left outer join register on event.id = register.eventId and register.active = 1
 	where event.id = " . $id . " 
@@ -293,9 +298,18 @@ function getEventManageDetail($id){
 		// return $sql;
 	return runQuery($sql);
 }
+function getLocation(){
+
+	$sql= "SELECT `type`, `content`
+		From `setting` 
+		where `type` = 'Venue' or `type` = 'Location' 
+		order by `content`" ;
+
+	return runQuery($sql);
+}
 
 function getRecentEventsList($start){
-	$sql= "SELECT event.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') AS toDate, remarks, photo.path
+	$sql= "SELECT event.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') AS toDate, remarks, photo.path
 	From event 
 	left outer join photo on event.id = photo.eventId and photo.type = 'profile'
 	where active = 1 and toDate < CURDATE() and pastDisplay = 1 
@@ -307,7 +321,7 @@ function getRecentEventsList($start){
 
 
 function getEventDisplayDetail($id){
-	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, remarks
+	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as `To`, venue as Place, remarks
 	From event 
 	where event.id = " . $id;
 	$result = runQuickQuery($sql);
@@ -332,7 +346,7 @@ function getEventDisplayDetail($id){
 }
 
 function getUpcomingList(){
-	$sql= "SELECT event.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') AS toDate, remarks, photo.path
+	$sql= "SELECT event.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') AS toDate, remarks, photo.path
 	From event 
 	left outer join photo on event.id = photo.eventId and photo.type = 'profile'
 	where active = 1 and fromDate > CURDATE() and upcomingDisplay = 1 
@@ -341,7 +355,7 @@ function getUpcomingList(){
 }
 
 function getUpcomingDisplayDetail($id){
-	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as `To`, venue as Place, location, contactName, contactEmail, applicationDeadline, quota, remarks, `path` as Photo
+	$sql= "SELECT name as Name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS `From`, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as `To`, venue as Place, location, contactName, contactEmail, applicationDeadline, quota, remarks, `path` as Photo
 	From event 
 	left outer join photo on photo.eventId = event.id and photo.type = 'poster'
 	where event.id = " . $id;
@@ -358,7 +372,7 @@ function getEventPhoto($id){
 function getPortfolio($email){
 	$volId = getVolunteerId($email);
 
-	$sql= "SELECT e.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, applicationDeadline, !(r.eventId is null) as registered, r.status as status
+	$sql= "SELECT e.id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as toDate, applicationDeadline, !(r.eventId is null) as registered, r.status as status
 	From event as e
 	left outer join  
 	(
@@ -378,7 +392,7 @@ function getPortfolio($email){
 		}
 	}
 
-	$sql= "SELECT event.id, event.name, DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, pastDisplay
+	$sql= "SELECT event.id, event.name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as toDate, pastDisplay
 	From event
 	INNER join register on register.eventId = event.id and register.active = 1 and volId = ". $volId ."
 	where fromDate  <  CURDATE()
@@ -393,7 +407,7 @@ function getPortfolio($email){
 		}
 	}
 
-	$sql= "SELECT DATE_FORMAT(fromDate, '%Y-%m-%dT%TZ') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%TZ') as toDate, post, venue, status, remarks, id
+	$sql= "SELECT DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as toDate, post, venue, status, remarks, id
 	From volunteer_work
 	where active = 1 and volId = ". $volId ."
 	order by fromDate>CURDATE() DESC, `status`='Confirmed' DESC, fromDate" ;
@@ -460,7 +474,7 @@ function getPortfolio($email){
 function getManagementOverview(){
 
 // get pending volunteer work record
-	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
+	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%T') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%T') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
 	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` 
 	where `volunteer_work`.`fromDate` > CURDATE() and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Pending' 
 	order by `volunteer_work`.`fromDate` DESC" ;
@@ -475,7 +489,7 @@ function getManagementOverview(){
 	}
 
 // get pending event registration record
-	$sql= "SELECT `register`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`id` as volId, `volunteer`.`name` as name,`volunteer`.`email` as email , `register`.`status` 
+	$sql= "SELECT `register`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%T') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%T') as `toDate`, `venue`, `volunteer`.`id` as volId, `volunteer`.`name` as name,`volunteer`.`email` as email , `register`.`status` 
 	From `event` 
 	inner join `register` on `event`.`id` = `register`.`eventId` and `register`.`active` = 1 and `register`.`status` = 'Pending' 
 	inner join `volunteer` on `volunteer`.`id` = `register`.`volId`
@@ -491,7 +505,7 @@ function getManagementOverview(){
 		}
 	}
 
-	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
+	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%T') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%T') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
 	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Cancelled' 
 	where `volunteer_work`.`fromDate` > CURDATE() 
 	order by `volunteer_work`.`fromDate` DESC" ;
@@ -548,19 +562,7 @@ function getManagementAnnouncement(){
 }
 
 function getManagementVolunteer(){
-	// $sql= "SELECT id, content, postDate, toDate
-	// From announcement 
-	// order by postDate;";
-
-	// $results = runQuickQuery($sql);
-	// $announcement = [];
-	// if($results->num_rows > 0){
-	// 	while($result = $results->fetch_assoc()) {
-	// 		$announcement[] = $result;
-	// 	}
-	// }
-
-	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
+	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%T') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%T') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
 	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Confirmed' 
 	where `volunteer_work`.`fromDate` >= CURDATE() 
 	order by `volunteer_work`.`fromDate` DESC" ;
@@ -574,9 +576,7 @@ function getManagementVolunteer(){
 		}
 	}
 	return json_encode([
-		// "announcement" => $announcement,
 		"confirmed" => $confirmed,
-
 	]);
 	
 }
