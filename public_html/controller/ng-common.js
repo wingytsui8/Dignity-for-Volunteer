@@ -544,6 +544,10 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		}
 		$scope.past = $past;
 		$scope.events = responseData;
+		for (var i = 0; i < responseData.length; i++){
+			$scope.events[i].period = periodCovertToString($scope.events[i].fromDate, $scope.events[i].fromDate).period;
+			$scope.events[i].applicationDeadline = new Date($scope.events[i].applicationDeadline).toLocaleDateString();
+		}
 	}
 
 	$scope.createEmptyEvent = function() {

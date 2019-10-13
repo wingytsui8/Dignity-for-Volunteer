@@ -80,7 +80,7 @@
 				<tbody>
 					<tr ng-repeat="row in events">
 						<td>{{row.name}}</td>
-						<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+						<td>{{row.period}}</td>
 						<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
 						<td>{{row.applicationDeadline}}</td>
 						<!-- <td>{{row.quota}}</td> -->
@@ -96,6 +96,7 @@
 				<button ng-click="deleteEvent(eventDetail.id)">Delete</button>
 				<button ng-click="postEvent()">Save</button>
 				<table>
+					<tbody class="nameCard">
 					<tr>
 						<td class="tdheader">
 							<label>Id</label> 
@@ -117,7 +118,7 @@
 						<td class="tdcontent">
 							<input id="fromDate" type="date" ng-model="eventDetail.fromDate" ng-disabled="past"/>  
 							<input id="fromTime" type="time" ng-model="eventDetail.fromDate" ng-disabled="past"/><br>
-							<input id="fromDate1" type="text" ng-model="eventDetail.fromDate" ng-disabled="past"/><br>
+							<!-- <input id="fromDate1" type="text" ng-model="eventDetail.fromDate" ng-disabled="past"/><br> -->
 						</td>
 						<td class="tdheader">
 							<label >To</label>
@@ -125,7 +126,7 @@
 						<td class="tdcontent">
 							<input id="toDate" type="date" ng-model="eventDetail.toDate" ng-disabled="past"/>
 							<input id="toTime" type="time" ng-model="eventDetail.toDate" ng-disabled="past"/><br>
-							<input id="toDate1" type="text" ng-model="eventDetail.toDate" ng-disabled="past"/><br>
+							<!-- <input id="toDate1" type="text" ng-model="eventDetail.toDate" ng-disabled="past"/><br> -->
 						</td>
 					</tr>
 					<tr>
@@ -162,7 +163,7 @@
 						</td>
 						<td class="tdcontent">
 							<input id="applictionDeadline" type="date" ng-model="eventDetail.applicationDeadline" ng-disabled="past"/><br>
-							<input id="applictionDeadline1" type="text" ng-model="eventDetail.applicationDeadline" ng-disabled="past"/>
+							<!-- <input id="applictionDeadline1" type="text" ng-model="eventDetail.applicationDeadline" ng-disabled="past"/> -->
 						</td>
 						<td class="tdheader">
 							<label >Quota</label>
@@ -205,6 +206,7 @@
 							</select>
 						</td>
 					</tr>
+				</tbody>
 				</table>		
 			</div>
 			<button class="collapsible">Registered Volunteer</button>
