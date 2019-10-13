@@ -132,14 +132,14 @@
 						<td class="tdheader">
 							<label >Venue</label>
 						</td>
-						<td class="tdcontent">
-							<select id="venue" ng-model="eventDetail.venue" ng-options="option.content for option in venueOptions" ng-disabled="past"></select>
+						<td>
+							<select ng-model="eventDetail.venue" ng-options="option.content for option in venueOptions" ng-disabled="past"></select>
 						</td>
 						<td class="tdheader">
 							<label >Location</label>
 						</td>
-						<td class="tdcontent">
-							s
+						<td>
+							<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value1" ng-disabled="past"></select>
 						</td>
 					</tr>
 					<tr>
@@ -306,8 +306,8 @@
 			<div>
 				<h1>Pending Volunteer Work Application</h1>
 				<div ng-repeat="row in pendingWork">
-					<table st-table="pendingWork" class="table table-striped nameCard">
-						<thead>
+					<table st-table="pendingWork" class="table table-striped">
+						<thead class="nameCard">
 							<tr>
 								<th>Vol ID:</th>
 								<th>{{row.volId}}</th>
@@ -315,7 +315,7 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody class="nameCard">
 							<tr>
 								<td>
 									<div class="pending-vol-header">Name:</div>
@@ -392,8 +392,8 @@
 			<div>
 				<h1>Pending Event Helper Application</h1>
 				<div ng-repeat="row in pendingEvent">
-					<table st-table="pendingEvent" class="table table-striped nameCard">
-						<thead>
+					<table st-table="pendingEvent" class="table table-striped">
+						<thead class="nameCard">
 							<tr>
 								<th>Vol ID</th>
 								<th>{{row.volId}}</th>
@@ -401,7 +401,7 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody class="nameCard">
 							<tr>
 								<td class="pending-vol-header">Name:</td>
 								<td class="pending-vol-value2">{{row.name}}	</td>
@@ -555,8 +555,8 @@
 			<button class="collapsible">Upcoming Volunteer Work List</button>
 			<div class="content">
 				<div ng-repeat="row in confirmed">
-					<table st-table="confirmed" class="table table-striped nameCard">
-						<thead>
+					<table st-table="confirmed" class="table table-striped">
+						<thead class="nameCard">
 							<tr>
 								<th>Vol ID</th>
 								<th>{{row.volId}}</th>
@@ -564,7 +564,7 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody class="nameCard">
 							<tr>
 								<td class="pending-vol-header">Name:</td>
 								<td class="pending-vol-value2">{{row.name}}	</td>
@@ -579,9 +579,15 @@
 							</tr>
 							<tr>
 								<td class="pending-vol-header">Venue:</td>
-								<td class="pending-vol-value1"><select ng-model="row.venue" ng-options="venueOptions" ></select></td>
-								<td class="pending-vol-header">Location:</td>
-								<td class="pending-vol-value2"><textarea id="location" ng-model="row.location"></textarea></td>
+								<td>
+									<select ng-model="row.venue" ng-options="option.content for option in venueOptions" class="pending-vol-value1"></select>
+								</td>
+								<td>
+									<div class="pending-vol-header">Location:</div>
+								</td>
+								<td>
+									<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value1"></select>
+								</td>
 							</tr>
 							<tr>
 								<td class="pending-vol-header">Remarks:</td>

@@ -210,6 +210,13 @@ if(isset($_POST['action'])){
 		echo json_encode( deleteAnnouncement($id) );
 		exit;
 
+		case "deleteSetting":
+		$id = (string)$_POST['id'];
+
+		header('Content-type: application/json');
+		echo json_encode( deleteSetting($id) );
+		exit;
+
 		case "uploadVolunteeer":
 		$records = $_POST['records'];
 		header('Content-type: application/json');
@@ -416,6 +423,20 @@ function getPortfolio($email){
 	order by volunteer_work.fromDate
 	Limit 0 , 1";
 
+	$sql= "SELECT `type`, `content`
+	From `setting` 
+	where `type` = 'Post'  
+	order by `content`" ;
+
+	$results = runQuickQuery($sql);
+	
+	$postOptions = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$postOptions[] = $result;
+		}
+	}
+
 	$results = runQuickQuery($sql);
 
 	if ($results->num_rows > 0) {
@@ -424,6 +445,7 @@ function getPortfolio($email){
 			"past" => $pastEvents,
 			"volWork" => $volWork,
 			'announcement' => $announcement,
+			'postOptions' => $postOptions,
 		]);
 		return json_encode($resArr);
 	}
@@ -708,7 +730,10 @@ function deleteAnnouncement($id){
 	$sql= "DELETE FROM announcement WHERE id = " . $id;
 	return runQuery($sql);
 }
-
+function deleteSetting($id){
+	$sql= "DELETE FROM setting WHERE id = " . $id;
+	return runQuery($sql);
+}
 
 function uploadVolunteeer($records){
 	$sql = "DROP TEMPORARY TABLE IF EXISTS `temp`; " .
