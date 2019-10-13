@@ -55,42 +55,39 @@
 		<a href="#registeredList">Registered List</a>
 	</div> -->
 	<div class="textbody" ng-controller="manageController">
-
 		<div class="tab">
 			<button class="tablinks" onclick="displaySection(event, 'Overview')" ng-click="getManagementOverview()" id="defaultOpen">Overview</button>
+			<button class="tablinks" onclick="displaySection(event, 'Announcement')" ng-click="getManagementAnnouncement()">Announcement</button>
 			<button class="tablinks" onclick="displaySection(event, 'Volunteer')" ng-click="getManagementVolunteer()">Volunteer</button>
 			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(1)">Upcoming Event</button>
 			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(0)">Past Event</button>
 			<button class="tablinks" onclick="displaySection(event, 'Setting')" ng-click="getManagementSetting()">Setting</button>
-
 		</div>
 		<div id="Event" class="tabcontent">
-			<div>
-				<h1 id="events">Events details</h1>
-				<button ng-click="getMoreEvent()">More</button>
-				<table st-table="events" class="table table-striped">
-					<thead>
-						<tr>
-							<th style="width: 25%">Name</th>
-							<th style="width: 15%">Period</th>
-							<th style="width: 35%">Venue</th>
-							<th style="width: 10%">Application Deadline</th>
-							<!-- <th style="width: 5%">Quota</th> -->
-							<th style="width: 10%"></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="row in events">
-							<td>{{row.name}}</td>
-							<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
-							<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
-							<td>{{row.applicationDeadline}}</td>
-							<!-- <td>{{row.quota}}</td> -->
-							<td><button ng-click="getEventDetail(row.id)">Edit</button></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+			<h1 id="events">Events details</h1>
+			<button ng-show="past" ng-click="getMoreEvent()">More</button>
+			<table st-table="events" class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 25%">Name</th>
+						<th style="width: 15%">Period</th>
+						<th style="width: 35%">Venue</th>
+						<th style="width: 10%">Application Deadline</th>
+						<!-- <th style="width: 5%">Quota</th> -->
+						<th style="width: 10%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in events">
+						<td>{{row.name}}</td>
+						<td>{{row.fromDate}} - <br>{{row.toDate}}</td>
+						<td><strong>{{row.venue}}</strong><br>{{row.location}}</td>
+						<td>{{row.applicationDeadline}}</td>
+						<!-- <td>{{row.quota}}</td> -->
+						<td><button ng-click="getEventDetail(row.id)">Edit</button></td>
+					</tr>
+				</tbody>
+			</table>
 			<button class="collapsible">{{action}}</button>
 			<div class="content">
 				<h1 id="details">{{action}}</h1>
@@ -135,14 +132,14 @@
 						<td class="tdheader">
 							<label >Venue</label>
 						</td>
-						<td class="tdcontent">
-							<input id="venue" type="text" ng-model="eventDetail.venue" ng-disabled="past"/>
+						<td>
+							<select ng-model="eventDetail.venue" ng-options="option.content for option in venueOptions" ng-disabled="past"></select>
 						</td>
 						<td class="tdheader">
 							<label >Location</label>
 						</td>
-						<td class="tdcontent">
-							<textarea id="location" ng-model="eventDetail.location" ng-disabled="past"/></textarea> 
+						<td>
+							<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value1" ng-disabled="past"></select>
 						</td>
 					</tr>
 					<tr>
@@ -159,279 +156,286 @@
 							<input id="loginEmail" type="text" ng-model="eventDetail.contactEmail" ng-disabled="past"/>
 						</td>
 					</tr>
-				</td>
-				<tr>
-					<td class="tdheader">
-						<label >Application Deadline</label>
-					</td>
-					<td class="tdcontent">
-						<input id="applictionDeadline" type="date" ng-model="eventDetail.applicationDeadline" ng-disabled="past"/><br>
-						<input id="applictionDeadline1" type="text" ng-model="eventDetail.applicationDeadline" ng-disabled="past"/>
-					</td>
-					<td class="tdheader">
-						<label >Quota</label>
-					</td>
-					<td class="tdcontent">
-						<input id="quota" type="number" ng-model="eventDetail.quota" ng-disabled="past"/>
-					</td>
-				</tr>
-				<tr>
-					<td class="tdheader">
-						<label >Registered Number: </label> 
-					</td>
-					<td class="tdcontent">
-						{{eventDetail.registered}}
-					</td>
-					<td class="tdheader">
-						<label >Remaing Quota: </label>
-					</td>
-					<td class="tdcontent"> 
-						{{eventDetail.quota - eventDetail.registered}}
-					</td>
-				</tr>
-				<tr>
-					<td class="tdheader">						
-						<label>Upcoming Display</label>
-					</td>
-					<td class="tdcontent">
-						<select ng-model="eventDetail.upcomingDisplay">
-							<option value="1">Display</option>
-							<option value="0">Hidden</option>
-						</select>
-					</td>
-					<td class="tdheader">
-						<label >Past Display</label> 
-					</td>
-					<td class="tdcontent">
-						<select ng-model="eventDetail.pastDisplay">
-							<option value="1">Display</option>
-							<option value="0">Hidden</option>
-						</select>
-					</td>
-
-				</tr>
-			</table>		
-
-		</div>
-		<button class="collapsible">Registered Volunteer</button>
-		<div class="content">
-			<h1 id="registeredList">Registered Volunteer</h1> <button ng-click="downloadRegisteredList()">Download CSV</button> 
-			<table st-table="registered" class="table table-striped">
-				<thead>
 					<tr>
-						<th style="width: 5%;">No.</th>
-						<th style="width: 10%;">Volunteer id</th>
-						<th style="width: 30%;">Name</th>
-						<th style="width: 30%;">Email</th>
-						<th style="width: 15%;">Registered Date</th>
-						<th style="width: 10%;">Status</th>
+						<td class="tdheader">
+							<label >Application Deadline</label>
+						</td>
+						<td class="tdcontent">
+							<input id="applictionDeadline" type="date" ng-model="eventDetail.applicationDeadline" ng-disabled="past"/><br>
+							<input id="applictionDeadline1" type="text" ng-model="eventDetail.applicationDeadline" ng-disabled="past"/>
+						</td>
+						<td class="tdheader">
+							<label >Quota</label>
+						</td>
+						<td class="tdcontent">
+							<input id="quota" type="number" ng-model="eventDetail.quota" ng-disabled="past"/>
+						</td>
 					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="row in registeredList">
-						<td>{{$index + 1}}</td>
-						<td>{{row.volId}}</td>
-						<td>{{row.name}}</td>
-						<td>{{row.email}}</td>
-						<td>{{row.createDate}}</td>
-						<td>{{row.status}}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<button class="collapsible">Photos</button>
-		<div class="content">
-			<h1 id="photo">Photos</h1> 
-			<button ng-click="createEmptyPhoto()">New</button>
-			<a href="https://www.youtube.com/watch?v=HSiZgaM2H_4" target=1 class="button">How to upload an image from Google Photo</a>
-			
-			<table st-table="photo" class="table table-striped">
-				<thead>
 					<tr>
-						<th style="width: 5%;">Id</th>
-						<th style="width: 10%;">Type</th>
-						<th style="width: 35%;">Description</th>
-						<th style="width: 35%;">Photo Path</th>
-						<th style="width: 15%;">Active</th>
+						<td class="tdheader">
+							<label >Registered Number: </label> 
+						</td>
+						<td class="tdcontent">
+							{{eventDetail.registered}}
+						</td>
+						<td class="tdheader">
+							<label >Remaing Quota: </label>
+						</td>
+						<td class="tdcontent"> 
+							{{eventDetail.quota - eventDetail.registered}}
+						</td>
 					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="row in eventPhoto">
-						<td>{{$index + 1}}</td>
-						<td>
-							<select ng-model="row.type">
-								<option value="poster">Poster</option>
-								<option value="profile">Profile</option>
-								<option value="content">Content</option>
+					<tr>
+						<td class="tdheader">						
+							<label>Upcoming Display</label>
+						</td>
+						<td class="tdcontent">
+							<select ng-model="eventDetail.upcomingDisplay">
+								<option value="1">Display</option>
+								<option value="0">Hidden</option>
 							</select>
 						</td>
-						<td>
-							<textarea id="path" ng-model="row.Description"/></textarea>
+						<td class="tdheader">
+							<label >Past Display</label> 
 						</td>
-						<td>
-							<textarea id="description" ng-model="row.Photo"/></textarea> 
-						</td>
-						<td>
-							<button ng-click="savePhoto(row)">Save</button><br>
-							<button ng-click="deletePhoto(row.id)">Remove</button>
+						<td class="tdcontent">
+							<select ng-model="eventDetail.pastDisplay">
+								<option value="1">Display</option>
+								<option value="0">Hidden</option>
+							</select>
 						</td>
 					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<button class="collapsible">Slide</button>
-		<div class="content">
-			<div id="slidesPreview">
-				<ul id="slides" >
-					<li class="slide" ng-repeat="row in eventPhoto">
-						<a href="{{row.Photo}}" target=1>
-							<div class="slide-img"><img ng-src={{row.Photo}} src={{row.Photo}}></div>
-							<h1 class="title"><span class="title-text">{{row.Description}}</span></h1>
-						</a>
-					</li>
-				</ul>
-				<ul id="slide-select">
-					<li class="btn prev"><</li>
-					<li class="selector" ng-repeat="row in eventPhoto"></li>
-					<li class="btn next">></li>
-				</ul>
+				</table>		
 			</div>
-		</div>
-	</div>
-
-	<div id="Overview" class="tabcontent">
-		<div>
-			<h1>Notification</h1>
-			today/tmr voluteer work record?
-			how many updated record?
-		</div>
-		<hr>
-		<div>
-			<h1>Calendar</h1>
-			<div>
-				<iframe src="https://calendar.google.com/calendar/embed?height=800&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=dm5mMDduaHN0ZnN1c211ZDV1N200cXBlcXNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=b2s4NHVqZmJrOTVnbm1zbm9xbWVtOWM4NTBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=ZW4tZ2IuY2hyaXN0aWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4tZ2IubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23F6BF26&amp;color=%23039BE5&amp;color=%230B8043&amp;color=%23D81B60&amp;showTitle=0" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-			</div>
-		</div>
-		<hr>
-		
-		<div>
-			<h1>Pending Volunteer Work Application</h1>
-					<div ng-repeat="row in pendingWork">
-							<table st-table="pendingWork" class="table table-striped">
-								<thead>
-									<tr>
-										<th>Volunteer</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td> 
-											<div class="pending-vol-header">ID:</div> 
-										</td>
-
-										<td>
-											<div class="pending-vol-value1">{{row.volId}}</div>
-										</td>
-										<td>
-											<div class="pending-vol-header">Name:</div>
-										</td>
-										<td>
-											<div class="pending-vol-value2">{{row.name}}</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="pending-vol-header">Email:</div>
-										</td>
-										<td>
-											<div class="pending-vol-value1"><a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a></div>
-										</td>
-										<td>
-											<div class="pending-vol-header">Period:</div>
-										</td>
-										<td>
-											<div class="pending-vol-value2">{{row.period}}</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="pending-vol-header">Post:</div>
-										</td>
-										<td>
-											<div class="pending-vol-value1">{{row.post}}</div>
-										</td>
-										<td>
-											<div class="pending-vol-header">Status:</div>
-										</td>
-										<td>
-											<select ng-model="row.status" class="pending-vol-value2">
-												<option value="Pending">Pending</option>
-												<option value="Confirmed">Confirmed</option>
-												<option value="Cancelled">Cancelled</option>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="pending-vol-header">Venue:</div>
-										</td>
-										<td>
-											<select ng-model="row.venue" ng-options="venueOptions" class="pending-vol-value1"></select>
-										</td>
-										<td>
-											<div class="pending-vol-header">Location:</div>
-										</td>
-										<td>
-											<textarea class="pending-vol-value2" id="location" ng-model="row.location"/></textarea>
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-										<td></td>
-										<!-- Or use <tfoot> -->
-											<td> <button class="pending-vol-button" ng-click="updateVolunteerWork(row)">Save</button> </td>
-										</tr>
-
-									</tbody>
-								</table>
-					</div>
-			</div>
-			<hr>
-			<div>
-				<h1>Pending Event Helper Application</h1>
-				<table st-table="pendingEvent" class="table table-striped">
+			<button class="collapsible">Registered Volunteer</button>
+			<div class="content">
+				<h1 id="registeredList">Registered Volunteer</h1> <button ng-click="downloadRegisteredList()">Download CSV</button> 
+				<table st-table="registered" class="table table-striped">
 					<thead>
 						<tr>
-							<th style="width: 40%;">Volunteer</th>
-							<th style="width: 40%;">Event</th>
-							<th style="width: 20%;"></th>
+							<th style="width: 5%;">No.</th>
+							<th style="width: 10%;">Volunteer id</th>
+							<th style="width: 30%;">Name</th>
+							<th style="width: 30%;">Email</th>
+							<th style="width: 15%;">Registered Date</th>
+							<th style="width: 10%;">Status</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="row in pendingEvent">
-							<td><label>Id: </label>&nbsp{{row.volId}}<br>
-								<label>Name: </label>&nbsp{{row.name}}<br>
-								<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application of {{row.eventName}} on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
-							</td>
+						<tr ng-repeat="row in registeredList">
+							<td>{{$index + 1}}</td>
+							<td>{{row.volId}}</td>
+							<td>{{row.name}}</td>
+							<td>{{row.email}}</td>
+							<td>{{row.createDate}}</td>
+							<td>{{row.status}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<button class="collapsible">Photos</button>
+			<div class="content">
+				<h1 id="photo">Photos</h1> 
+				<button ng-click="createEmptyPhoto()">New</button>
+				<a href="https://www.youtube.com/watch?v=HSiZgaM2H_4" target=1 class="button">How to upload an image from Google Photo</a>
+				<table st-table="photo" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 5%;">Id</th>
+							<th style="width: 10%;">Type</th>
+							<th style="width: 35%;">Description</th>
+							<th style="width: 35%;">Photo Path</th>
+							<th style="width: 15%;">Active</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in eventPhoto">
+							<td>{{$index + 1}}</td>
 							<td>
-								<label>Name: </label>&nbsp{{row.eventName}}<br>
-								<label>Period: </label>&nbsp{{row.period}}<br>
-								<label>Venue: </label>&nbsp{{row.venue}}<br>
-								<label>Status: </label>
-								<select ng-model="row.status">
-									<option value="Pending">Pending</option>
-									<option value="Confirmed">Confirmed</option>
-									<option value="Cancelled">Cancelled</option>
+								<select ng-model="row.type">
+									<option value="poster">Poster</option>
+									<option value="profile">Profile</option>
+									<option value="content">Content</option>
 								</select>
 							</td>
 							<td>
-								<button ng-click="updateRegistrationStatus(row)">Save</button>
+								<textarea id="path" ng-model="row.Description"></textarea>
+							</td>
+							<td>
+								<textarea id="description" ng-model="row.Photo"></textarea> 
+							</td>
+							<td>
+								<button ng-click="savePhoto(row)">Save</button><br>
+								<button ng-click="deletePhoto(row.id)">Remove</button>
 							</td>
 						</tr>
 					</tbody>
 				</table>
+			</div>
+			<button class="collapsible">Slide</button>
+			<div class="content">
+				<div id="slidesPreview">
+					<ul id="slides" >
+						<li class="slide" ng-repeat="row in eventPhoto">
+							<a href="{{row.Photo}}" target=1>
+								<div class="slide-img"><img ng-src={{row.Photo}} src={{row.Photo}}></div>
+								<h1 class="title"><span class="title-text">{{row.Description}}</span></h1>
+							</a>
+						</li>
+					</ul>
+					<ul id="slide-select">
+						<li class="btn prev"><</li>
+						<li class="selector" ng-repeat="row in eventPhoto"></li>
+						<li class="btn next">></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="Overview" class="tabcontent">
+			<div>
+				<h1>Notification</h1>
+				today/tmr voluteer work record?
+				how many updated record?
+			</div>
+			<hr>
+			<div>
+				<h1>Calendar</h1>
+				<iframe src="https://calendar.google.com/calendar/embed?height=1200&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=dm5mMDduaHN0ZnN1c211ZDV1N200cXBlcXNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=b2s4NHVqZmJrOTVnbm1zbm9xbWVtOWM4NTBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=ZW4tZ2IuY2hyaXN0aWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4tZ2IubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23F6BF26&amp;color=%23039BE5&amp;color=%230B8043&amp;color=%23D81B60&amp;showTitle=0" style="border-width:0" width="1200" height="800" frameborder="0" scrolling="no"></iframe>
+			</div>
+			<hr>
+			<div>
+				<h1>Pending Volunteer Work Application</h1>
+				<div ng-repeat="row in pendingWork">
+					<table st-table="pendingWork" class="table table-striped">
+						<thead class="nameCard">
+							<tr>
+								<th>Vol ID:</th>
+								<th>{{row.volId}}</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody class="nameCard">
+							<tr>
+								<td>
+									<div class="pending-vol-header">Name:</div>
+								</td>
+								<td>
+									<div class="pending-vol-value2">{{row.name}}</div>
+								</td>
+								<td>
+									<div class="pending-vol-header">Email:</div>
+								</td>
+								<td>
+									<div class="pending-vol-value1"><a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="pending-vol-header">Post:</div>
+								</td>
+								<td>
+									<div class="pending-vol-value1">{{row.post}}</div>
+								</td>
+								<td>
+									<div class="pending-vol-header">Period:</div>
+								</td>
+								<td>
+									<div class="pending-vol-value2">{{row.period}}</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="pending-vol-header">Venue:</div>
+								</td>
+								<td>
+									<select ng-model="row.venue" ng-options="option.content for option in venueOptions" class="pending-vol-value1"></select>
+								</td>
+								<td>
+									<div class="pending-vol-header">Location:</div>
+								</td>
+								<td>
+									<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value1"></select>
+								</td>
+							</tr>
+							<tr>
+								<td> 
+									<div class="pending-vol-header">Remarks:</div>
+								</td>
+								<td> 
+									<textarea class="pending-vol-value2" id="remarks" ng-model="row.remarks"></textarea> 
+								</td>
+								<td>
+									<div class="pending-vol-header">Status:</div>
+								</td>
+								<td>
+									<select ng-model="row.status" class="pending-vol-value2">
+										<option value="Pending">Pending</option>
+										<option value="Confirmed">Confirmed</option>
+										<option value="Cancelled">Cancelled</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<!-- Or use <tfoot> -->
+								<td> <button class="pending-vol-button" ng-click="updateVolunteerWork(row)">Save</button> </td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<hr>
+			<div>
+				<h1>Pending Event Helper Application</h1>
+				<div ng-repeat="row in pendingEvent">
+					<table st-table="pendingEvent" class="table table-striped">
+						<thead class="nameCard">
+							<tr>
+								<th>Vol ID</th>
+								<th>{{row.volId}}</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody class="nameCard">
+							<tr>
+								<td class="pending-vol-header">Name:</td>
+								<td class="pending-vol-value2">{{row.name}}	</td>
+								<td class="pending-vol-header">Email:</td>
+								<td class="pending-vol-value1"><a href="mailto:{{row.email}}?subject=Regarding your volunteer application of {{row.eventName}} on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a></td>
+							</tr>
+							<tr>
+								<td class="pending-vol-header">Event:</td>
+								<td class="pending-vol-value2">{{row.eventName}}</td>
+								<td class="pending-vol-header">Period:</td>
+								<td class="pending-vol-value2">{{row.period}}</td>
+							</tr>
+							<tr>
+								<td class="pending-vol-header">Venue:</td>
+								<td class="pending-vol-value1">{{row.venue}}</td>
+								<td class="pending-vol-header">Status:</td>
+								<td class="pending-vol-value2">
+									<select ng-model="row.status">
+										<option value="Pending">Pending</option>
+										<option value="Confirmed">Confirmed</option>
+										<option value="Cancelled">Cancelled</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<!-- Or use <tfoot> -->
+								<td> <button class="pending-vol-button" ng-click="updateRegistrationStatus(row)">Save</button> </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<hr>
 			<div>
@@ -456,7 +460,7 @@
 							<td><label>Venue</label>
 								<input id="venue" type="text" ng-model="row.venue"/>
 								<label>Location</label> 
-								<textarea id="location" ng-model="row.location"/></textarea> 
+								<textarea id="location" ng-model="row.location"></textarea> 
 							</td>
 							<td>
 								<label>Status</label>
@@ -466,7 +470,7 @@
 									<option value="Cancelled">Cancelled</option>
 								</select>
 								<label>Remarks</label>
-								<textarea id="content" ng-model="row.remarks"/></textarea> 
+								<textarea id="content" ng-model="row.remarks"></textarea> 
 							</td>
 							<td>
 								<button ng-click="saveWork(row.id)">Save</button>
@@ -476,12 +480,11 @@
 				</table>
 			</div>
 		</div>
-		<div id="Volunteer" class="tabcontent">
-			<button class="collapsible">Announcement</button>
-			<div class="content">
+		<div id="Announcement" class="tabcontent">
+			<!-- <button class="collapsible">Announcement</button> -->
+			<!-- <div class="content"> -->
 				<h1>Announcement</h1>
 				<button ng-click="createEmptyAnnouncement()">New</button>
-
 				<table st-table="announcement" class="table table-striped">
 					<thead>
 						<tr>
@@ -500,7 +503,7 @@
 								<input id="toDate" type="date" ng-model="row.toDate" style="width: 100%"/>  
 							</td>
 							<td>
-								<textarea id="content" ng-model="row.content"/></textarea> 
+								<textarea id="content" ng-model="row.content"></textarea> 
 							</td>
 							<td>
 								<button ng-click="postAnnouncement(row)">Save</button>
@@ -509,7 +512,41 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
+			<!-- </div> -->
+		</div>
+		<div id="Volunteer" class="tabcontent">
+			<!-- <button class="collapsible">Announcement</button> -->
+			<!-- <div class="content">
+				<h1>Announcement</h1>
+				<button ng-click="createEmptyAnnouncement()">New</button>
+				<table st-table="announcement" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 20%;">Post Date</th>
+							<th style="width: 20%;">Valid until</th>
+							<th style="width: 40%;">Content</th>
+							<th style="width: 20%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in announcement">
+							<td>
+								<input id="postDate" type="date" ng-model="row.postDate" style="width: 100%" />  
+							</td>
+							<td>
+								<input id="toDate" type="date" ng-model="row.toDate" style="width: 100%"/>  
+							</td>
+							<td>
+								<textarea id="content" ng-model="row.content"></textarea> 
+							</td>
+							<td>
+								<button ng-click="postAnnouncement(row)">Save</button>
+								<button ng-click="deleteAnnouncement(row.id)">Remove</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div> -->
 			<button class="collapsible">Volunteer Overview</button>
 			<div class="content">
 				<h1>Volunteer Overview</h1>
@@ -517,41 +554,63 @@
 			</div>
 			<button class="collapsible">Upcoming Volunteer Work List</button>
 			<div class="content">
-				<table st-table="confirmed" class="table table-striped">
-					<thead>
-						<tr>
-							<th style="width: 40%;">Volunteer</th>
-							<th style="width: 40%;">Work Remarks</th>
-							<th style="width: 20%;"></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="row in confirmed">
-							<td><label>Id: </label>&nbsp{{row.volId}}<br>
-								<label>Name: </label>&nbsp{{row.name}}<br>
-								<label>Email: </label> &nbsp<a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a><br>
-								<label>Period: </label>&nbsp{{row.period}}<br>
-								<label>Post: </label>&nbsp{{row.post}}
-							</td>
-							<td><label>Venue</label>
-								<input id="venue" type="text" ng-model="row.venue"/>
-								<label>Location</label> 
-								<textarea id="location" ng-model="row.location"/></textarea> 
-								<label>Status</label>
-								<select ng-model="row.status">
-									<option value="Pending">Pending</option>
-									<option value="Confirmed">Confirmed</option>
-									<option value="Cancelled">Cancelled</option>
-								</select>
-								<label>Remarks</label>
-								<textarea id="content" ng-model="row.remarks"/></textarea> 
-							</td>
-							<td>
-								<button ng-click="updateVolunteerWork(row)">Save</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div ng-repeat="row in confirmed">
+					<table st-table="confirmed" class="table table-striped">
+						<thead class="nameCard">
+							<tr>
+								<th>Vol ID</th>
+								<th>{{row.volId}}</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody class="nameCard">
+							<tr>
+								<td class="pending-vol-header">Name:</td>
+								<td class="pending-vol-value2">{{row.name}}	</td>
+								<td class="pending-vol-header">Email:</td>
+								<td class="pending-vol-value1"><a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a></td>
+							</tr>
+							<tr>
+								<td class="pending-vol-header">Post:</td>
+								<td class="pending-vol-value2">{{row.post}}	</td>
+								<td class="pending-vol-header">Period:</td>
+								<td class="pending-vol-value2">{{row.period}}	</td>
+							</tr>
+							<tr>
+								<td class="pending-vol-header">Venue:</td>
+								<td>
+									<select ng-model="row.venue" ng-options="option.content for option in venueOptions" class="pending-vol-value1"></select>
+								</td>
+								<td>
+									<div class="pending-vol-header">Location:</div>
+								</td>
+								<td>
+									<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value1"></select>
+								</td>
+							</tr>
+							<tr>
+								<td class="pending-vol-header">Remarks:</td>
+								<td class="pending-vol-value2"><textarea id="remarks" ng-model="row.remarks"></textarea></td>
+								<td class="pending-vol-header">Status:</td>
+								<td class="pending-vol-value2">
+									<select ng-model="row.status" >
+										<option value="Pending">Pending</option>
+										<option value="Confirmed">Confirmed</option>
+										<option value="Cancelled">Cancelled</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<!-- Or use <tfoot> -->
+								<td> <button class="pending-vol-button" ng-click="updateVolunteerWork(row)">Save</button> </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		<div id="Setting" class="tabcontent">
@@ -569,7 +628,7 @@
 					<tbody>
 						<tr ng-repeat="row in setting">
 							<td>
-								<select ng-model="row.type">
+								<select ng-disabled="row.disabled" ng-model="row.type">
 									<option value="Admin's Email">Admin's Email</option>
 									<option value="Admin's Temp Last Login Time">Admin's Temp Last Login Time
 									</option>
@@ -579,11 +638,11 @@
 								</select>
 							</td>
 							<td>
-								<input id="content" type="text" ng-model="row.content" />  
+								<input ng-disabled="row.disabled" id="content" type="text" ng-model="row.content">  
 							</td>
 							<td>
-								<button ng-click="postSetting(row)">Save</button>
-								<button ng-click="deleteSetting(row.id)">Remove</button>
+								<button ng-hide="row.disabled" ng-click="postSetting(row)">Save</button>
+								<button ng-hide="row.disabled" ng-click="deleteSetting(row.id)">Remove</button>
 							</td>
 						</tr>
 					</tbody>

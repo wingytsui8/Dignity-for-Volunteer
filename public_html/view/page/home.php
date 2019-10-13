@@ -145,12 +145,13 @@
 								<label>Post</label> 
 							</td>
 							<td>
-								<select onchange='checkvalue(this.value)' ng-model="work.postOption"> 
+								<select onchange='checkvalue(this.options[this.selectedIndex].label)' ng-model="work.postOptions" ng-options="option.content for option in postOptions"></select>
+								<!-- <select ng-model="work.postOption"> 
 									<option disabled selected value> -- select an option -- </option>
 									<option value="General">General</option>
 									<option value="Teacher">Teacher</option>
 									<option value="Other">Other</option>
-								</select> 
+								</select>  -->
 								<input type="text" id="post" ng-model="work.post" style='display:none'/>
 							</td>
 						</tr>

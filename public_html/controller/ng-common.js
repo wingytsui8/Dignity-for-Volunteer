@@ -528,6 +528,8 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 				responseData = JSON.parse(response);
 			}
 		});
+		$scope.postOptions = responseData[0].postOptions;
+		$scope.postOptions.push({type: "Post", content: "Other"});
 		for (var i = 0 ;i<responseData[0].past.length;i++){
 			var period = $scope.periodCovertToString(responseData[0].past[i].fromDate, responseData[0].past[i].toDate);
 			responseData[0].past[i].period = period.period;
@@ -560,12 +562,12 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		$rootScope.loading = false;
 	};
 	$scope.addVolunteerWork = function(){
-		if ($scope.work==null || $scope.work.postOption==null || $scope.work.fromDate==null || $scope.work.toDate==null || ($scope.work.postOption=="Other" 
+		if ($scope.work==null || $scope.work.postOptions==null || $scope.work.fromDate==null || $scope.work.toDate==null || ($scope.work.postOptions.content=="Other" 
 			&& ($scope.work.post == null || $scope.work.post.length == 0))){
 			alert("Please fill in all the necessary items before submission.");
 	}else{
 		if (confirm("Are you sure?")){
-			var post = $scope.work.postOption;
+			var post = $scope.work.postOptions.content;
 			if (post == "Other"){
 				post = $scope.work.post;
 			}
@@ -695,6 +697,7 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 
 	$scope.tryUploadedVol = false;
 	$scope.tryUploadedVolWork = false;
+	$scope.venueOptions = [];
 
 	$scope.getManagementOverview = function(){
 		$.ajax({
@@ -708,16 +711,27 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 			success: function(response) {
 				responseData = JSON.parse(response);
 				if (responseData){
+					$scope.venueOptions = [];
+					$scope.locationOptions = [];
+					for (var i = 0; i < responseData.options.length; i++){
+						if (responseData.options[i].type == 'Venue'){
+							$scope.venueOptions.push(responseData.options[i])
+						}else if (responseData.options[i].type == 'Location'){
+							$scope.locationOptions.push(responseData.options[i])
+						}
+					}
 					// $scope.announcement = responseData.announcement;
 					// for (var i = 0; i < responseData.announcement.length; i++){
 					// 	$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
 					// 	$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
 					// }
 					$scope.pendingWork = responseData.pendingWork;
-					// for (var i = 0; i < responseData.pendingWork.length; i++){
-					// 	$scope.pendingWork[i].period = $scope.periodCovertToString($scope.pendingWork[i].fromDate, $scope.pendingWork[i].toDate);
+					for (var i = 0; i < responseData.pendingWork.length; i++){
+						// $scope.pendingWork[i].period = $scope.periodCovertToString($scope.pendingWork[i].fromDate, $scope.pendingWork[i].toDate);
+						$scope.pendingWork[i].venue = $scope.venueOptions.find(o => o.content == responseData.pendingWork[i].venue);
+						$scope.pendingWork[i].location = $scope.locationOptions.find(o => o.content == responseData.pendingWork[i].location);
 
-					// }
+					}
 					$scope.pendingEvent = responseData.pendingEvent;
 					// for (var i = 0; i < responseData.pendingEvent.length; i++){
 					// 	$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
@@ -728,15 +742,101 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 					// 	$scope.pending[i].period = $scope.periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate);
 
 					// }
+					
+					
 				}
 			}
 		});
 	}
 	$scope.getManagementOverview();
+	$scope.getManagementAnnouncement = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'getManagementAnnouncement', 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					$scope.announcement = responseData.announcement;
+					for (var i = 0; i < responseData.announcement.length; i++){
+						$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
+						$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
+					}
+					$scope.confirmed = responseData.confirmed;
+					// for (var i = 0; i < responseData.pendingEvent.length; i++){
+					// 	$scope.pendingEvent[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
+
+					// }
+					
+				}
+			}
+		});
+	}
+	$scope.getManagementVolunteer = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'getManagementVolunteer', 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					// $scope.announcement = responseData.announcement;
+					// for (var i = 0; i < responseData.announcement.length; i++){
+					// 	$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
+					// 	$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
+					// }
+					$scope.confirmed = responseData.confirmed;
+					for (var i = 0; i < responseData.pendingEvent.length; i++){
+						// $scope.confirmed[i].period = $scope.periodCovertToString($scope.pendingEvent[i].fromDate, $scope.pendingEvent[i].toDate);
+						$scope.confirmed[i].venue = $scope.venueOptions.find(o => o.content == responseData.confirmed[i].venue);
+						$scope.confirmed[i].location = $scope.locationOptions.find(o => o.content == responseData.confirmed[i].location);
+
+					}
+					
+				}
+			}
+		});
+	}
+	$scope.getManagementSetting = function(){
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'getManagementSetting', 
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+				if (responseData){
+					$scope.setting = responseData.setting;
+					for (var i = 0; i < responseData.setting.length; i++){
+						if (responseData.setting[i].id == 1 || responseData.setting[i].id == 2){
+							$scope.setting[i].disabled = true;
+						}else{
+							$scope.setting[i].disabled = false;
+						}
+					}
+				}
+			}
+		});
+	}
 
 	$scope.createEmptyAnnouncement = function() {
 		var responseData = {id: null, content: null, postDate: new Date(), toDate: new Date()};
 		$scope.announcement.push(responseData);
+	}
+	$scope.createEmptySetting = function() {
+		var responseData = {id: null, type: null, content: null, disabled: false};
+		$scope.setting.push(responseData);
 	}
 	$scope.postAnnouncement = function(announcement) {
 		$.ajax({
@@ -748,6 +848,27 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				postDate: $scope.toLocalTimeString(announcement.postDate),
 				toDate: $scope.toLocalTimeString(announcement.toDate), 
 				content: announcement.content
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+	}
+	$scope.postSetting = function(setting) {
+		if(setting.id == 1 || setting.id == 2){
+			alert("It is not allowed to change.");
+			return;
+		}
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'postSetting' ,  
+				id: setting.id, 
+				type: setting.type,
+				content: setting.content
 			},
 			dataType: "json",
 			async: false,
@@ -772,6 +893,29 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		});
 		$scope.getVolunteerWorkManageDetail();
 	}
+	$scope.deleteSetting = function(id) {
+		if (confirm("Are you sure?")){
+			if(id == 1 || id == 2){
+				alert("It is not allowed to change.");
+				return;
+			}
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { 
+					action: 'deleteSetting' ,  
+					id: id, 
+				},
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+				}
+			});
+			alert("Change applied.");
+			$scope.getManagementSetting();
+		}
+	}
 	$scope.updateVolunteerWork = function(record) {
 		if (confirm("Are you sure?")){
 			$.ajax({
@@ -780,8 +924,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				data : { 
 					action: 'updateVolunteerWork' ,  
 					id: record.id, 
-					venue: record.venue,
-					location: record.location, 
+					venue: record.venue.hasOwnProperty('content')?record.venue['content']:'',
+					location: record.location.hasOwnProperty('content')?record.location['content']:'',
 					status: record.status,
 					remarks: record.remarks, 
 				},
@@ -801,8 +945,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 							var mailBodyDetails= "Here are the details:  " + mailNextLine;
 							mailBodyDetails += "Period: " + record.period + mailNextLine;
 							mailBodyDetails += "Post: " + record.post + mailNextLine;
-							mailBodyDetails += "Venue: " + record.venue + mailNextLine;
-							mailBodyDetails += "Location: " + record.location + mailNextLine;
+							// mailBodyDetails += "Venue: " + record.venue + mailNextLine;
+							// mailBodyDetails += "Location: " + record.location + mailNextLine;
 							mailBodyDetails += "Remarks: " + record.remarks + mailNextLine;
 
 							var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
@@ -812,6 +956,7 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				}
 			});
 		}
+		$scope.getManagementOverview();
 	}
 	$scope.updateRegistrationStatus = function(record) {
 		$.ajax({
@@ -872,8 +1017,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 				url: '../connectDB.php',
 				type: 'POST',
 				data : { 
-					action: $scope.uploadOption == 'Volunteer'?'uploadVolunteeer':$scope.uploadOption == 'VolunteerWork'?'uploadVolunteeerWork' ,  
-					records: $scope.uploadOption == 'Volunteer'?$scope.tryUpload.volunteer:$scope.uploadOption == 'VolunteerWork'?$scope.tryUpload.volunteerWork
+					action: $scope.uploadOption == 'Volunteer'?'uploadVolunteeer':($scope.uploadOption == 'VolunteerWork'?'uploadVolunteeerWork':''),  
+					records: $scope.uploadOption == 'Volunteer'?$scope.tryUpload.volunteer:($scope.uploadOption == 'VolunteerWork'?$scope.tryUpload.volunteerWork:'')
 				},
 				dataType: "json",
 				async: false,
@@ -923,27 +1068,6 @@ app.directive('fileReader', function() {
 			});
 		}
 	};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

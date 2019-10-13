@@ -169,6 +169,11 @@ if(isset($_POST['action'])){
 		echo json_encode( getManagementOverview() );
 		exit;
 
+		case "getManagementAnnouncement":
+		header('Content-type: application/json');
+		echo json_encode( getManagementAnnouncement() );
+		exit;
+
 		case "getManagementVolunteer":
 		header('Content-type: application/json');
 		echo json_encode( getManagementVolunteer() );
@@ -205,13 +210,20 @@ if(isset($_POST['action'])){
 		echo json_encode( deleteAnnouncement($id) );
 		exit;
 
-		case "uploadVolunteeer"
+		case "deleteSetting":
+		$id = (string)$_POST['id'];
+
+		header('Content-type: application/json');
+		echo json_encode( deleteSetting($id) );
+		exit;
+
+		case "uploadVolunteeer":
 		$records = $_POST['records'];
 		header('Content-type: application/json');
 		echo json_encode( uploadVolunteeer($records) );
 		exit;
 
-		case "uploadVolunteeerWork"
+		case "uploadVolunteeerWork":
 		$records = $_POST['records'];
 		header('Content-type: application/json');
 		echo json_encode( uploadVolunteeerWork($records) );
@@ -411,6 +423,20 @@ function getPortfolio($email){
 	order by volunteer_work.fromDate
 	Limit 0 , 1";
 
+	$sql= "SELECT `type`, `content`
+	From `setting` 
+	where `type` = 'Post'  
+	order by `content`" ;
+
+	$results = runQuickQuery($sql);
+	
+	$postOptions = [];
+	if($results->num_rows > 0){
+		while($result = $results->fetch_assoc()) {
+			$postOptions[] = $result;
+		}
+	}
+
 	$results = runQuickQuery($sql);
 
 	if ($results->num_rows > 0) {
@@ -419,6 +445,7 @@ function getPortfolio($email){
 			"past" => $pastEvents,
 			"volWork" => $volWork,
 			'announcement' => $announcement,
+			'postOptions' => $postOptions,
 		]);
 		return json_encode($resArr);
 	}
@@ -442,7 +469,7 @@ function getManagementOverview(){
 	}
 
 // get pending event registration record
-	$sql= "SELECT `register`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`id`, `volunteer`.`name` as name,`volunteer`.`email` as email , `register`.`status` 
+	$sql= "SELECT `register`.`id` as `id`, `event`.`name` as eventName, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `volunteer`.`id` as volId, `volunteer`.`name` as name,`volunteer`.`email` as email , `register`.`status` 
 	From `event` 
 	inner join `register` on `event`.`id` = `register`.`eventId` and `register`.`active` = 1 and `register`.`status` = 'Pending' 
 	inner join `volunteer` on `volunteer`.`id` = `register`.`volId`
@@ -495,7 +522,7 @@ function getManagementOverview(){
 	
 }
 
-function getManagementVolunteer(){
+function getManagementAnnouncement(){
 	$sql= "SELECT id, content, postDate, toDate
 	From announcement 
 	order by postDate;";
@@ -507,6 +534,25 @@ function getManagementVolunteer(){
 			$announcement[] = $result;
 		}
 	}
+
+	return json_encode([
+		"announcement" => $announcement,
+	]);
+	
+}
+
+function getManagementVolunteer(){
+	// $sql= "SELECT id, content, postDate, toDate
+	// From announcement 
+	// order by postDate;";
+
+	// $results = runQuickQuery($sql);
+	// $announcement = [];
+	// if($results->num_rows > 0){
+	// 	while($result = $results->fetch_assoc()) {
+	// 		$announcement[] = $result;
+	// 	}
+	// }
 
 	$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%TZ') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%TZ') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` From `volunteer_work` 
 	INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` and `volunteer_work`.`active` = 1 and `volunteer_work`.`status` = 'Confirmed' 
@@ -522,7 +568,7 @@ function getManagementVolunteer(){
 		}
 	}
 	return json_encode([
-		"announcement" => $announcement,
+		// "announcement" => $announcement,
 		"confirmed" => $confirmed,
 
 	]);
@@ -684,12 +730,23 @@ function deleteAnnouncement($id){
 	$sql= "DELETE FROM announcement WHERE id = " . $id;
 	return runQuery($sql);
 }
-
+function deleteSetting($id){
+	$sql= "DELETE FROM setting WHERE id = " . $id;
+	return runQuery($sql);
+}
 
 function uploadVolunteeer($records){
-	$sql = "DROP TEMPORARY TABLE IF EXISTS TEMP; " +
-	       "CREATE TEMPORARY TABLE `TEMP` SELECT * FROM volunteer where 1=2;  ";
-
+	$sql = "DROP TEMPORARY TABLE IF EXISTS `temp`; " .
+	       "CREATE TEMPORARY TABLE `temp` SELECT * FROM volunteer where 1=2;  ";
+	foreach($records as $record){
+		$pwHash = hash("sha256", hash("sha256", preg_replace("/[^0-9]/", "", $record['Dob'])));
+		$sql = $sql . "INSERT INTO `temp` (id, name, dob, email, password, active) VALUES ('". $record['VolunteerID']. "','" .  $record['Name']."', '".$record['Dob']."', '". strtolower(preg_replace('/\s*/', "", $record['Email']))."', '" .$pwHash."' , '1'); ";
+	}
+	$sql = $sql . " INSERT INTO `volunteer` SELECT `temp`.* FROM `temp`";
+	 
+	runNonQuery($sql);
+	return true;
+	       
 	       // 1. Insert into TEMP values <---- For loop
 	       // 2. Insert into Volunteer inner join Temp on Duplicate ID Update
 	       // $record structure: 
@@ -701,9 +758,16 @@ function uploadVolunteeer($records){
 }
 
 function uploadVolunteeerWork($records){
-	$sql = "DROP TEMPORARY TABLE IF EXISTS TEMP; " +
-	       "CREATE TEMPORARY TABLE `TEMP` SELECT * FROM volunteer where 1=2;  ";
-
+	// $sql = "DROP TEMPORARY TABLE IF EXISTS TEMP; " +
+	//        "CREATE TEMPORARY TABLE `TEMP` SELECT * FROM volunteer where 1=2;  ";
+	// foreach($records as $record){
+	// 	$sql = $sql . "INSERT INTO `temp` (volId, fromDate, toDate, post, status, active, createDate, modifyDate ) VALUES ('". $record['VolunteerID']. "','" . $record['fromDate']."', '".$record['toDate']."', 'General', 'Confirmed' , '1', Now(), Now()); ";
+	// }
+	// $sql = $sql . " INSERT INTO `volunteer_work` SELECT `temp`.* FROM `temp` LEFT JOIN `volunteer_work` ON `volunteer_work`.id = `temp`.`id` 
+	// ON DUPLICATE KEY UPDATE name=VALUES(name), dob=VALUES(dob), email=VALUES(email), password=VALUES(password), active=VALUES(active)";
+	 
+	// runNonQuery($sql);
+	return true;
 	       // 1. Insert into TEMP values <---- For loop
 	       // 2. Insert into Volunteer Work inner join Temp on Duplicate ID Update
 	       // $record structure: 
@@ -767,6 +831,7 @@ function connectDB($sql){
 	}
 }
 //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv Common Connecter Functions vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ update Googel Calendar ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 function updateGoogleCalendar ($table, $id){
 
 	switch ($table) {
@@ -820,5 +885,5 @@ function updateGoogleCalendar ($table, $id){
 	runNonQuery($sql);
 	return true;
 }
-
+//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv update Googel Calendar vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 ?>
