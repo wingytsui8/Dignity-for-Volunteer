@@ -192,6 +192,7 @@ td {
 	border-bottom: 1px solid var(--main-color);
 	border-collapse: collapse;
 	padding: 5px;
+  vertical-align: middle !important;
 }
 
 button {

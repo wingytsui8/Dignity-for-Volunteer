@@ -16,7 +16,6 @@
 	<meta property="og:url" content="{{curr_url}}" />
 	<!-- Facebook Open Graph end -->
 
-	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	
 	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 	<script src="js/bootstrap.min.js" type="text/javascript"></script>
@@ -31,6 +30,7 @@
 	<script src="../controller/loginController.js"></script>
 	<script src="../controller/slideController.js" type="text/javascript"></script>
 
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="css/font-awesome/font-awesome.min.css?v=4.7.0" rel="stylesheet" type="text/css" />
 	<link href="css/site.css?v=20190117142750" rel="stylesheet" type="text/css" />
 	<link href="css/common.css?ts=1556705653" rel="stylesheet" type="text/css" />
@@ -59,8 +59,8 @@
 			<button class="tablinks" onclick="displaySection(event, 'Overview')" ng-click="getManagementOverview()" id="defaultOpen">Overview</button>
 			<button class="tablinks" onclick="displaySection(event, 'Announcement')" ng-click="getManagementAnnouncement()">Announcement</button>
 			<button class="tablinks" onclick="displaySection(event, 'Volunteer')" ng-click="getManagementVolunteer()">Volunteer</button>
-			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(1)">Upcoming Event</button>
-			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(0)">Past Event</button>
+			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(0)">Upcoming Event</button>
+			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(1)">Past Event</button>
 			<button class="tablinks" onclick="displaySection(event, 'Setting')" ng-click="getManagementSetting()">Setting</button>
 		</div>
 		<div id="Event" class="tabcontent">
@@ -134,12 +134,15 @@
 						</td>
 						<td>
 							<select ng-model="eventDetail.venue" ng-options="option.content for option in venueOptions" ng-disabled="past"></select>
+							<textarea ng-model="eventDetail.venue.content"></textarea>
+							<textarea ng-model="venueOptions"></textarea>
+
 						</td>
 						<td class="tdheader">
 							<label >Location</label>
 						</td>
 						<td>
-							<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value1" ng-disabled="past"></select>
+							<select ng-model="eventDetail.location" ng-options="option.content for option in locationOptions" class="pending-vol-value1" ng-disabled="past"></select>
 						</td>
 					</tr>
 					<tr>
@@ -488,10 +491,10 @@
 				<table st-table="announcement" class="table table-striped">
 					<thead>
 						<tr>
-							<th style="width: 20%;">Post Date</th>
-							<th style="width: 20%;">Valid until</th>
+							<th style="width: 10%;">Post Date</th>
+							<th style="width: 10%;">Valid until</th>
 							<th style="width: 40%;">Content</th>
-							<th style="width: 20%;"></th>
+							<th style="width: 40%;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -621,7 +624,7 @@
 					<thead> 
 						<tr>
 							<th style="width: 30%;">Type</th>
-							<th style="width: 40%;">Content</th>
+							<th style="width: 30%;">Content</th>
 							<th style="width: 30%;"></th>
 						</tr>
 					</thead>

@@ -6,10 +6,10 @@ if(isset($_POST['action'])){
 		case "getEvent":
 		$orderBy = (string)$_POST['orderBy'];
 		$active = (string)$_POST['active'];
-		$upcoming = (string)$_POST['upcoming'];
+		$past = (string)$_POST['past'];
 
 		header('Content-type: application/json');
-		echo json_encode( getEvent($orderBy, $active, $upcoming) );
+		echo json_encode( getEvent($orderBy, $active, $past) );
 		exit;
 
 		case "getRegisterEventDetails":
@@ -49,6 +49,11 @@ if(isset($_POST['action'])){
 		echo json_encode( postEvent($id, $name,$fromDate, $toDate, $venue, $location, $contactName, $contactEmail, $applicationDeadline, $quota, $active) );
 		exit;
 
+		case "getLocation":
+		header('Content-type: application/json');
+		echo json_encode( getLocation());
+		exit;
+
 		case "getEventManageDetail":
 		$id = (string)$_POST['id'];
 
@@ -86,7 +91,7 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( postPhoto($id) );
 
-		case "daletePhoto":
+		case "deletePhoto":
 		$id = (string)$_POST['id'];
 
 		header('Content-type: application/json');
@@ -235,10 +240,10 @@ if(isset($_POST['action'])){
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Get functions ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-function getEvent($orderBy, $active , $upcoming){
+function getEvent($orderBy, $active , $past){
 	$sql= "SELECT id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
 	From event
-	where fromDate " . ($upcoming? " >= " : " <= ") . " CURDATE() " .
+	where fromDate " . ($past? " <= " : " >= ") . " CURDATE() " .
 	($active? (" and active = " . $active ): "") .
 	" order by fromDate " . $orderBy;
 	return runQuery($sql);
@@ -285,6 +290,15 @@ function getEventManageDetail($id){
 	group by event.id"
 	;
 		// return $sql;
+	return runQuery($sql);
+}
+function getLocation(){
+
+	$sql= "SELECT `type`, `content`
+		From `setting` 
+		where `type` = 'Venue' or `type` = 'Location' 
+		order by `content`" ;
+
 	return runQuery($sql);
 }
 

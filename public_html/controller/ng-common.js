@@ -143,18 +143,17 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 
 	$scope.action = "";
 	$scope.past = false;
-	$scope.getEvents = function($upcoming){
-		if ($upcoming){
+	$scope.getEvents = function($past){
+		if ($past){
 			$.ajax({
 				url: '../connectDB.php',
 				type: 'POST',
-				data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '0' ,  upcoming: $upcoming },
+				data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '0' ,  past: $past },
 				dataType: "json",
 				async: false,
 				success: function(response) {
 					responseData = JSON.parse(response);
 					$scope.action = "Edit Upcoming Event";
-					$scope.past = false;
 				}
 			});
 
@@ -162,18 +161,17 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 			$.ajax({
 				url: '../connectDB.php',
 				type: 'POST',
-				data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '0' ,  upcoming: $upcoming },
+				data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '0' ,  past: $past },
 				dataType: "json",
 				async: false,
 				success: function(response) {
 					responseData = JSON.parse(response);
 					$scope.action = "Edit Past Event";
-					$scope.past = true;
 				}
 			});
 		}
+		$scope.past = $past;
 		$scope.events = responseData;
-		
 	}
 
 	$scope.createEmptyEvent = function() {
@@ -183,6 +181,27 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 	}
 
 	$scope.getEventDetail = function(id) {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getLocation' },
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+
+		$scope.venueOptions = [];
+		$scope.locationOptions = [];
+		for (var i = 0; i < responseData.length; i++){
+			if (responseData[i].type == 'Venue'){
+				$scope.venueOptions.push(responseData[i])
+			}else if (responseData[i].type == 'Location'){
+				$scope.locationOptions.push(responseData[i])
+			}
+		}
+
 		$.ajax({
 			url: '../connectDB.php',
 			type: 'POST',
@@ -198,6 +217,9 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		$scope.eventDetail.toDate = new Date($scope.eventDetail.toDate);
 		$scope.eventDetail.applicationDeadline = new Date($scope.eventDetail.applicationDeadline);
 		$scope.eventDetail.quota = Number($scope.eventDetail.quota);
+		$scope.eventDetail.venue = $scope.venueOptions.find(o => o.content == $scope.eventDetail.venue);
+		$scope.eventDetail.location = $scope.locationOptions.find(o => o.content == $scope.eventDetail.location);
+
 		$scope.getRegisteredList();
 		$scope.getEventPhoto();
 	}
@@ -212,8 +234,8 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 				name: $scope.eventDetail.name,
 				fromDate: $scope.eventDetail.fromDate.toISOString().split('T')[0] + " " + $scope.eventDetail.fromDate.getHours() + ":" + $scope.eventDetail.fromDate.getMinutes() + ":" + $scope.eventDetail.fromDate.getSeconds() , 
 				toDate: $scope.eventDetail.toDate.toISOString().split('T')[0] + " " + $scope.eventDetail.toDate.getHours() + ":" + $scope.eventDetail.toDate.getMinutes() + ":" + $scope.eventDetail.toDate.getSeconds() , 
-				venue: $scope.eventDetail.venue, 
-				location: $scope.eventDetail.location,
+				venue: $scope.eventDetail.venue.content, 
+				location: $scope.eventDetail.location.content,
 				contactName: $scope.eventDetail.contactName, 
 				contactEmail: $scope.eventDetail.contactEmail,
 				applicationDeadline: $scope.eventDetail.applicationDeadline.toISOString().split('T')[0], 
@@ -227,6 +249,8 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 			}
 		});
 		$scope.sql = responseData;
+		
+		$scope.getEvents($scope.past);
 		$scope.getEventDetail($scope.eventDetail.id);
 	}
 	$scope.getRegisteredList = function() {
@@ -708,8 +732,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 
 					}
 					$scope.cancelled = responseData.cancelled;
-					for (var i = 0; i < responseData.pending.length; i++){
-						$scope.pending[i].period = periodCovertToString($scope.pending[i].fromDate, $scope.pending[i].toDate).period;
+					for (var i = 0; i < responseData.cancelled.length; i++){
+						$scope.cancelled[i].period = periodCovertToString($scope.cancelled[i].fromDate, $scope.cancelled[i].toDate).period;
 
 					}
 					
