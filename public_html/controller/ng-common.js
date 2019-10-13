@@ -106,32 +106,32 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		$route.reload();
 	}
 
-	$scope.menuStyle = {
-		"color" : "#e28a00",
-		"background-color" : "black",
-	}
-	$scope.mainStyle = {
-		"color" : "white",
-		"background-color" : "black",
-	}
+	// $scope.menuStyle = {
+	// 	"color" : "#e28a00",
+	// 	"background-color" : "black",
+	// }
+	// $scope.mainStyle = {
+	// 	"color" : "white",
+	// 	"background-color" : "black",
+	// }
 
-	$scope.bodyStyle = {
-		"padding" : "50px",
-		"color" : "black",
-		"background-color" : "white",
-	}
+	// $scope.bodyStyle = {
+	// 	"padding" : "50px",
+	// 	"color" : "black",
+	// 	"background-color" : "white",
+	// }
 
-	$scope.header1Style = {
-		"color" : "#e28a00",
-		"font-weight" : "700",
-		"letter-spacing": "1px",
-		"font-size": "25px"
-	}
+	// $scope.header1Style = {
+	// 	"color" : "#e28a00",
+	// 	"font-weight" : "700",
+	// 	"letter-spacing": "1px",
+	// 	"font-size": "25px"
+	// }
 
-	$scope.tableStyle = {
-		"color" : "orange",
-		"padding" : "50px"
-	}
+	// $scope.tableStyle = {
+	// 	"color" : "orange",
+	// 	"padding" : "50px"
+	// }
 	// $scope.eventDetail = {id: null}
 	// $scope.registeredList = {name: 'null'}
 
@@ -139,183 +139,6 @@ app.controller("CommonController", ["$scope", "$ocLazyLoad", "$rootScope", "$rou
 		if(date){
 			return date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 		}
-	}
-
-	$scope.action = "";
-	$scope.past = false;
-	$scope.getEvents = function($past){
-		if ($past){
-			$.ajax({
-				url: '../connectDB.php',
-				type: 'POST',
-				data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '0' ,  past: $past },
-				dataType: "json",
-				async: false,
-				success: function(response) {
-					responseData = JSON.parse(response);
-					$scope.action = "Edit Upcoming Event";
-				}
-			});
-
-		}else{
-			$.ajax({
-				url: '../connectDB.php',
-				type: 'POST',
-				data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '0' ,  past: $past },
-				dataType: "json",
-				async: false,
-				success: function(response) {
-					responseData = JSON.parse(response);
-					$scope.action = "Edit Past Event";
-				}
-			});
-		}
-		$scope.past = $past;
-		$scope.events = responseData;
-	}
-
-	$scope.createEmptyEvent = function() {
-		$scope.eventDetail = {id: null}
-		$scope.registeredList = {name: 'null'}
-		$scope.action = "Create New Event"
-	}
-
-	$scope.getEventDetail = function(id) {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'getLocation' },
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-
-		$scope.venueOptions = [];
-		$scope.locationOptions = [];
-		for (var i = 0; i < responseData.length; i++){
-			if (responseData[i].type == 'Venue'){
-				$scope.venueOptions.push(responseData[i])
-			}else if (responseData[i].type == 'Location'){
-				$scope.locationOptions.push(responseData[i])
-			}
-		}
-
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'getEventManageDetail' ,  id: id},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.eventDetail = responseData[0];
-		$scope.eventDetail.fromDate = new Date($scope.eventDetail.fromDate);
-		$scope.eventDetail.toDate = new Date($scope.eventDetail.toDate);
-		$scope.eventDetail.applicationDeadline = new Date($scope.eventDetail.applicationDeadline);
-		$scope.eventDetail.quota = Number($scope.eventDetail.quota);
-		$scope.eventDetail.venue = $scope.venueOptions.find(o => o.content == $scope.eventDetail.venue);
-		$scope.eventDetail.location = $scope.locationOptions.find(o => o.content == $scope.eventDetail.location);
-
-		$scope.getRegisteredList();
-		$scope.getEventPhoto();
-	}
-
-	$scope.postEvent = function() {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				action: 'postEvent' ,  
-				id: $scope.eventDetail.id, 
-				name: $scope.eventDetail.name,
-				fromDate: $scope.eventDetail.fromDate.toISOString().split('T')[0] + " " + $scope.eventDetail.fromDate.getHours() + ":" + $scope.eventDetail.fromDate.getMinutes() + ":" + $scope.eventDetail.fromDate.getSeconds() , 
-				toDate: $scope.eventDetail.toDate.toISOString().split('T')[0] + " " + $scope.eventDetail.toDate.getHours() + ":" + $scope.eventDetail.toDate.getMinutes() + ":" + $scope.eventDetail.toDate.getSeconds() , 
-				venue: $scope.eventDetail.venue.content, 
-				location: $scope.eventDetail.location.content,
-				contactName: $scope.eventDetail.contactName, 
-				contactEmail: $scope.eventDetail.contactEmail,
-				applicationDeadline: $scope.eventDetail.applicationDeadline.toISOString().split('T')[0], 
-				quota: $scope.eventDetail.quota,
-				active: $scope.eventDetail.active
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.sql = responseData;
-		
-		$scope.getEvents($scope.past);
-		$scope.getEventDetail($scope.eventDetail.id);
-	}
-	$scope.getRegisteredList = function() {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'getRegisteredList' ,  id: $scope.eventDetail.id},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.registeredList = responseData;
-	}
-	$scope.downloadRegisteredList = function (){
-		var csv = 'No.,Volunteer id,Name,Email,Registered Date,Status\n';
-		for (var i = $scope.registeredList.length-1;i >=0 ; i--){
-			csv += (i+1) + ',';
-			csv += $scope.registeredList[i].volId + ',';
-			csv += $scope.registeredList[i].name + ',';
-			csv += $scope.registeredList[i].email + ',';
-			csv += $scope.registeredList[i].createDate + ',';
-			csv += $scope.registeredList[i].status;
-			csv += "\n";
-		}
-		console.log(csv);
-		var current = new Date();
-		var hiddenElement = document.createElement('a');
-		hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-		hiddenElement.target = '_blank';
-		hiddenElement.download =  $scope.eventDetail.name + ' Registered List ' + current.getYear() + '-'  + current.getMonth() + '-'  + current.getDate() + '.csv';
-		hiddenElement.click();
-	}
-
-	$scope.eventPhoto = null;
-	$scope.getEventPhoto = function() {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'getEventPhoto' ,  id: $scope.eventDetail.id},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.eventPhoto = responseData;
-	}
-	$scope.createEmptyPhoto = function() {
-		var responseData = {id: null, path: null, type: "poster", des: null};
-		$scope.eventPhoto.push(responseData);
-	}
-	$scope.deletePhoto = function($id) {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { action: 'deletePhoto' ,  id: $id},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.getEventPhoto();
 	}
 
 	setTimeout(function(){
@@ -437,7 +260,6 @@ app.controller("RecentEventsController", function($scope) {
 				responseData[i].monthStr = $fromMonth;
 			}
 
-
 			$scope.recentEvents.push(responseData[i]);
 
 		}
@@ -520,7 +342,6 @@ app.controller("UpcomingEventDetailsController", ["$scope", "$rootScope", functi
 			$scope.eventDetail = responseData[0];
 			$scope.eventDetail.fromDate = new Date($scope.eventDetail.From);
 			$scope.eventDetail.toDate = new Date($scope.eventDetail.To);
-
 			
 			$fromDate = $scope.eventDetail.fromDate .toDateString();
 			$fromHour = String($scope.eventDetail.fromDate.getHours()).padStart(2,0)
@@ -692,7 +513,164 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 	$scope.tryUploadedVol = false;
 	$scope.tryUploadedVolWork = false;
 	$scope.venueOptions = [];
+	$scope.action = "";
+	$scope.past = false;
+	$scope.getEvents = function($past){
+		if ($past){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '0' ,  past: $past },
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+					$scope.action = "Edit Upcoming Event";
+				}
+			});
 
+		}else{
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'getEvent' ,  orderBy: 'ASC' ,  active: '0' ,  past: $past },
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+					$scope.action = "Edit Past Event";
+				}
+			});
+		}
+		$scope.past = $past;
+		$scope.events = responseData;
+	}
+
+	$scope.createEmptyEvent = function() {
+		$scope.eventDetail = {id: null}
+		$scope.registeredList = {name: 'null'}
+		$scope.action = "Create New Event"
+	}
+
+	$scope.getEventDetail = function(id) {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getEventManageDetail' ,  id: id},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.eventDetail = responseData[0];
+		$scope.eventDetail.fromDate = new Date($scope.eventDetail.fromDate);
+		$scope.eventDetail.toDate = new Date($scope.eventDetail.toDate);
+		$scope.eventDetail.applicationDeadline = new Date($scope.eventDetail.applicationDeadline);
+		$scope.eventDetail.quota = Number($scope.eventDetail.quota);
+		$scope.eventDetail.venue = $scope.venueOptions.find(o => o.content == $scope.eventDetail.venue);
+		$scope.eventDetail.location = $scope.locationOptions.find(o => o.content == $scope.eventDetail.location);
+
+		$scope.getRegisteredList();
+		$scope.getEventPhoto();
+	}
+
+	$scope.postEvent = function() {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { 
+				action: 'postEvent' ,  
+				id: $scope.eventDetail.id, 
+				name: $scope.eventDetail.name,
+				fromDate: $scope.eventDetail.fromDate.toISOString().split('T')[0] + " " + $scope.eventDetail.fromDate.getHours() + ":" + $scope.eventDetail.fromDate.getMinutes() + ":" + $scope.eventDetail.fromDate.getSeconds() , 
+				toDate: $scope.eventDetail.toDate.toISOString().split('T')[0] + " " + $scope.eventDetail.toDate.getHours() + ":" + $scope.eventDetail.toDate.getMinutes() + ":" + $scope.eventDetail.toDate.getSeconds() , 
+				venue: $scope.eventDetail.venue.content, 
+				location: $scope.eventDetail.location.content,
+				contactName: $scope.eventDetail.contactName, 
+				contactEmail: $scope.eventDetail.contactEmail,
+				applicationDeadline: $scope.eventDetail.applicationDeadline.toISOString().split('T')[0], 
+				quota: $scope.eventDetail.quota,
+				active: $scope.eventDetail.active
+			},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.sql = responseData;
+		alert("Change applied.");
+		$scope.getEvents($scope.past);
+		$scope.getEventDetail($scope.eventDetail.id);
+	}
+	$scope.getRegisteredList = function() {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getRegisteredList' ,  id: $scope.eventDetail.id},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.registeredList = responseData;
+	}
+	$scope.downloadRegisteredList = function (){
+		var csv = 'No.,Volunteer id,Name,Email,Registered Date,Status\n';
+		for (var i = $scope.registeredList.length-1;i >=0 ; i--){
+			csv += (i+1) + ',';
+			csv += $scope.registeredList[i].volId + ',';
+			csv += $scope.registeredList[i].name + ',';
+			csv += $scope.registeredList[i].email + ',';
+			csv += $scope.registeredList[i].createDate + ',';
+			csv += $scope.registeredList[i].status;
+			csv += "\n";
+		}
+		console.log(csv);
+		var current = new Date();
+		var hiddenElement = document.createElement('a');
+		hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+		hiddenElement.target = '_blank';
+		hiddenElement.download =  $scope.eventDetail.name + ' Registered List ' + current.getYear() + '-'  + current.getMonth() + '-'  + current.getDate() + '.csv';
+		hiddenElement.click();
+	}
+
+	$scope.eventPhoto = null;
+	$scope.getEventPhoto = function() {
+		$.ajax({
+			url: '../connectDB.php',
+			type: 'POST',
+			data : { action: 'getEventPhoto' ,  id: $scope.eventDetail.id},
+			dataType: "json",
+			async: false,
+			success: function(response) {
+				responseData = JSON.parse(response);
+			}
+		});
+		$scope.eventPhoto = responseData;
+	}
+	$scope.createEmptyPhoto = function() {
+		var responseData = {id: null, path: null, type: "poster", des: null};
+		$scope.eventPhoto.push(responseData);
+	}
+	$scope.deletePhoto = function($id) {
+		if (confirm("Are you sure?")){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { action: 'deletePhoto' ,  id: $id},
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+				}
+			});
+			alert("Change applied.");
+			$scope.getEventPhoto();
+		}
+	}
 	$scope.getManagementOverview = function(){
 		$.ajax({
 			url: '../connectDB.php',
@@ -714,11 +692,6 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 							$scope.locationOptions.push(responseData.options[i])
 						}
 					}
-					// $scope.announcement = responseData.announcement;
-					// for (var i = 0; i < responseData.announcement.length; i++){
-					// 	$scope.announcement[i].postDate = new Date(responseData.announcement[i].postDate);
-					// 	$scope.announcement[i].toDate = new Date(responseData.announcement[i].toDate);
-					// }
 					$scope.pendingWork = responseData.pendingWork;
 					for (var i = 0; i < responseData.pendingWork.length; i++){
 						$scope.pendingWork[i].period = periodCovertToString($scope.pendingWork[i].fromDate, $scope.pendingWork[i].toDate).period;
@@ -736,8 +709,6 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 						$scope.cancelled[i].period = periodCovertToString($scope.cancelled[i].fromDate, $scope.cancelled[i].toDate).period;
 
 					}
-					
-					
 				}
 			}
 		});
@@ -822,59 +793,68 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		$scope.setting.push(responseData);
 	}
 	$scope.postAnnouncement = function(announcement) {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				action: 'postAnnouncement' ,  
-				id: announcement.id, 
-				postDate: $scope.toLocalTimeString(announcement.postDate),
-				toDate: $scope.toLocalTimeString(announcement.toDate), 
-				content: announcement.content
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
+		if (confirm("Are you sure?")){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { 
+					action: 'postAnnouncement' ,  
+					id: announcement.id, 
+					postDate: $scope.toLocalTimeString(announcement.postDate),
+					toDate: $scope.toLocalTimeString(announcement.toDate), 
+					content: announcement.content
+				},
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+				}
+			});
+			alert("Change applied.");
+		}
 	}
 	$scope.postSetting = function(setting) {
 		if(setting.id == 1 || setting.id == 2){
 			alert("It is not allowed to change.");
 			return;
 		}
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				action: 'postSetting' ,  
-				id: setting.id, 
-				type: setting.type,
-				content: setting.content
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
+		if (confirm("Are you sure?")){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { 
+					action: 'postSetting' ,  
+					id: setting.id, 
+					type: setting.type,
+					content: setting.content
+				},
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+				}
+			});
+			alert("Change applied.");
+		}
 	}
 	$scope.deleteAnnouncement = function(id) {
-		$.ajax({
-			url: '../connectDB.php',
-			type: 'POST',
-			data : { 
-				action: 'deleteAnnouncement' ,  
-				id: id, 
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				responseData = JSON.parse(response);
-			}
-		});
-		$scope.getVolunteerWorkManageDetail();
+		if (confirm("Are you sure?")){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { 
+					action: 'deleteAnnouncement' ,  
+					id: id, 
+				},
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+				}
+			});
+			alert("Change applied.");
+			$scope.getVolunteerWorkManageDetail();
+		}
 	}
 	$scope.deleteSetting = function(id) {
 		if (confirm("Are you sure?")){
@@ -928,8 +908,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 							var mailBodyDetails= "Here are the details:  " + mailNextLine;
 							mailBodyDetails += "Period: " + record.period + mailNextLine;
 							mailBodyDetails += "Post: " + record.post + mailNextLine;
-							// mailBodyDetails += "Venue: " + record.venue + mailNextLine;
-							// mailBodyDetails += "Location: " + record.location + mailNextLine;
+							mailBodyDetails += "Venue: " + record.venue.hasOwnProperty('content')?record.venue['content']:'' + mailNextLine;
+							mailBodyDetails += "Location: " + record.location.hasOwnProperty('content')?record.location['content']:'' + mailNextLine;
 							mailBodyDetails += "Remarks: " + record.remarks + mailNextLine;
 
 							var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
@@ -1054,34 +1034,33 @@ app.directive('fileReader', function() {
 });
 
  function periodCovertToString(from, to){
-		var fromDate = new Date(from);
-		var toDate = new Date(to);
-		var today = new Date();
-		var period = "";
-		var past = false;
+	var fromDate = new Date(from);
+	var toDate = new Date(to);
+	var today = new Date();
+	var period = "";
+	var past = false;
 
-		fromDateString = fromDate.toLocaleDateString();
-			// fromHour = String(fromDate.getHours()).padStart(2,0)
-			// fromMin = String(fromDate.getMinutes()).padStart(2,0) 
+	fromDateString = fromDate.toLocaleDateString();
+	// fromHour = String(fromDate.getHours()).padStart(2,0)
+	// fromMin = String(fromDate.getMinutes()).padStart(2,0) 
 
-			toDateString = toDate.toLocaleDateString();
-			// toHour = String(toDate.getHours()).padStart(2,0)
-			// toMin = String(toDate.getMinutes()).padStart(2,0) 
+	toDateString = toDate.toLocaleDateString();
+	// toHour = String(toDate.getHours()).padStart(2,0)
+	// toMin = String(toDate.getMinutes()).padStart(2,0) 
 
-			if (fromDate!=toDate){
-				// period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toDateString + " , " + toHour + ":" +  toMin ;
-				period = fromDateString + "  -  " + toDateString;
-			}else{
-				// period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toHour + ":" +  toMin;
-				period = fromDateString;
-			}	
+	if (fromDate!=toDate){
+		// period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toDateString + " , " + toHour + ":" +  toMin ;
+		period = fromDateString + "  -  " + toDateString;
+	}else{
+		// period = fromDateString +  " , " + fromHour + ":" +  fromMin + "  -  " + toHour + ":" +  toMin;
+		period = fromDateString;
+	}	
 
-			if (fromDate > today){
-				past = false;
-			}else{
-				past = true
-			}
-
-			return { period: period ,  past: past }
+	if (fromDate > today){
+		past = false;
+	}else{
+		past = true
+	}
+	return { period: period ,  past: past }
 }
 

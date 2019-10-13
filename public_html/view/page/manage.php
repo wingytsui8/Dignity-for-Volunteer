@@ -134,9 +134,6 @@
 						</td>
 						<td>
 							<select ng-model="eventDetail.venue" ng-options="option.content for option in venueOptions" ng-disabled="past"></select>
-							<textarea ng-model="eventDetail.venue.content"></textarea>
-							<textarea ng-model="venueOptions"></textarea>
-
 						</td>
 						<td class="tdheader">
 							<label >Location</label>
