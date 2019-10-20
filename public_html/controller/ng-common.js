@@ -507,7 +507,7 @@ $scope.cancelVolunteerWork = function(id){
 }]);
 
 app.controller("manageController", ["$scope", "$rootScope", function($scope, $rootScope) {
-
+	$scope.events = [];
 	$scope.tryUploadedVol = false;
 	$scope.tryUploadedVolWork = false;
 	$scope.venueOptions = [];
@@ -517,9 +517,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 	$scope.eol = false;
 	$scope.getMorePastEvent = function(){
 		$scope.pastEventMoreCount+=5;
-		$scope.getEvents($past);
+		$scope.getEvents($scope.past);
 	}
-
 	$scope.getEvents = function($past){
 		if ($past){
 			$.ajax({
@@ -536,6 +535,9 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 					}
 				}
 			});
+			for (var i =0;i<responseData.length;i++){
+				$scope.events.push(responseData[i]);
+			}
 		}else{
 			$.ajax({
 				url: '../connectDB.php',
@@ -548,9 +550,10 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 					$scope.action = "Edit Past Event";
 				}
 			});
+
+		$scope.events = responseData;
 		}
 		$scope.past = $past;
-		$scope.events = responseData;
 		for (var i = 0; i < responseData.length; i++){
 			$scope.events[i].period = periodCovertToString($scope.events[i].fromDate, $scope.events[i].fromDate).period;
 			$scope.events[i].applicationDeadline = new Date($scope.events[i].applicationDeadline).toLocaleDateString();
