@@ -507,7 +507,6 @@ $scope.cancelVolunteerWork = function(id){
 }]);
 
 app.controller("manageController", ["$scope", "$rootScope", function($scope, $rootScope) {
-	$scope.events = [];
 	$scope.tryUploadedVol = false;
 	$scope.tryUploadedVolWork = false;
 	$scope.venueOptions = [];
@@ -518,6 +517,10 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 	$scope.getMorePastEvent = function(){
 		$scope.pastEventMoreCount+=5;
 		$scope.getEvents($scope.past);
+	}
+	$scope.getPastEvent = function(){
+		$scope.events = [];
+		$scope.getEvents(1);
 	}
 	$scope.getEvents = function($past){
 		if ($past){

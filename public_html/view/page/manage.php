@@ -60,7 +60,7 @@
 			<button class="tablinks" onclick="displaySection(event, 'Announcement')" ng-click="getManagementAnnouncement()">Announcement</button>
 			<button class="tablinks" onclick="displaySection(event, 'Volunteer')" ng-click="getManagementVolunteer()">Volunteer</button>
 			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(0)">Upcoming Event</button>
-			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getEvents(1)">Past Event</button>
+			<button class="tablinks" onclick="displaySection(event, 'Event')" ng-click="getPastEvent()">Past Event</button>
 			<button class="tablinks" onclick="displaySection(event, 'Setting')" ng-click="getManagementSetting()">Setting</button>
 		</div>
 		<div id="Event" class="tabcontent">
@@ -86,7 +86,7 @@
 						<td><button ng-click="getEventDetail(row.id)">Edit</button></td>
 					</tr>
 				</tbody>
-			<button ng-show="!eol" ng-click="getMorePastEvent()">More</button>
+			<button ng-show="!eol && past" ng-click="getMorePastEvent()">More</button>
 			</table>
 			<button class="collapsible">{{action}}</button>
 			<div class="content">
