@@ -323,13 +323,13 @@
 									<div class="pending-vol-header">Name:</div>
 								</td>
 								<td>
-									<div class="pending-vol-value2">{{row.name}}</div>
+									<div class="pending-vol-value1">{{row.name}}</div>
 								</td>
 								<td>
 									<div class="pending-vol-header">Email:</div>
 								</td>
 								<td>
-									<div class="pending-vol-value1"><a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a></div>
+									<div class="pending-vol-value2"><a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a></div>
 								</td>
 							</tr>
 							<tr>
@@ -357,7 +357,7 @@
 									<div class="pending-vol-header">Location:</div>
 								</td>
 								<td>
-									<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value1"></select>
+									<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value2"></select>
 								</td>
 							</tr>
 							<tr>
@@ -365,7 +365,7 @@
 									<div class="pending-vol-header">Remarks:</div>
 								</td>
 								<td> 
-									<textarea class="pending-vol-value2" id="remarks" ng-model="row.remarks"></textarea> 
+									<textarea class="pending-vol-value1" id="remarks" ng-model="row.remarks"></textarea> 
 								</td>
 								<td>
 									<div class="pending-vol-header">Status:</div>
@@ -406,13 +406,13 @@
 						<tbody class="nameCard">
 							<tr>
 								<td class="pending-vol-header">Name:</td>
-								<td class="pending-vol-value2">{{row.name}}	</td>
+								<td class="pending-vol-value1">{{row.name}}	</td>
 								<td class="pending-vol-header">Email:</td>
-								<td class="pending-vol-value1"><a href="mailto:{{row.email}}?subject=Regarding your volunteer application of {{row.eventName}} on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a></td>
+								<td class="pending-vol-value2"><a href="mailto:{{row.email}}?subject=Regarding your volunteer application of {{row.eventName}} on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a></td>
 							</tr>
 							<tr>
 								<td class="pending-vol-header">Event:</td>
-								<td class="pending-vol-value2">{{row.eventName}}</td>
+								<td class="pending-vol-value1">{{row.eventName}}</td>
 								<td class="pending-vol-header">Period:</td>
 								<td class="pending-vol-value2">{{row.period}}</td>
 							</tr>
@@ -420,8 +420,8 @@
 								<td class="pending-vol-header">Venue:</td>
 								<td class="pending-vol-value1">{{row.venue}}</td>
 								<td class="pending-vol-header">Status:</td>
-								<td class="pending-vol-value2">
-									<select ng-model="row.status">
+								<td >
+									<select ng-model="row.status" class="pending-vol-value2">
 										<option value="Pending">Pending</option>
 										<option value="Confirmed">Confirmed</option>
 										<option value="Cancelled">Cancelled</option>
@@ -588,13 +588,13 @@
 						<tbody class="nameCard">
 							<tr>
 								<td class="pending-vol-header">Name:</td>
-								<td class="pending-vol-value2">{{row.name}}	</td>
+								<td class="pending-vol-value1">{{row.name}}	</td>
 								<td class="pending-vol-header">Email:</td>
-								<td class="pending-vol-value1"><a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a></td>
+								<td class="pending-vol-value2"><a href="mailto:{{row.email}}?subject=Regarding your volunteer application on {{row.fromDate}}&body=Hi {{row.name}},">{{row.email}}</a></td>
 							</tr>
 							<tr>
 								<td class="pending-vol-header">Post:</td>
-								<td class="pending-vol-value2">{{row.post}}	</td>
+								<td class="pending-vol-value1">{{row.post}}	</td>
 								<td class="pending-vol-header">Period:</td>
 								<td class="pending-vol-value2">{{row.period}}	</td>
 							</tr>
@@ -607,15 +607,15 @@
 									<div class="pending-vol-header">Location:</div>
 								</td>
 								<td>
-									<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value1"></select>
+									<select ng-model="row.location" ng-options="option.content for option in locationOptions" class="pending-vol-value2"></select>
 								</td>
 							</tr>
 							<tr>
 								<td class="pending-vol-header">Remarks:</td>
-								<td class="pending-vol-value2"><textarea id="remarks" ng-model="row.remarks"></textarea></td>
+								<td><textarea id="remarks" ng-model="row.remarks" class="pending-vol-value1"></textarea></td>
 								<td class="pending-vol-header">Status:</td>
-								<td class="pending-vol-value2">
-									<select ng-model="row.status" >
+								<td>
+									<select ng-model="row.status" class="pending-vol-value2">
 										<option value="Pending">Pending</option>
 										<option value="Confirmed">Confirmed</option>
 										<option value="Cancelled">Cancelled</option>

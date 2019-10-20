@@ -23,10 +23,10 @@
   min-width: 30vw;
 }
 
-textarea {
+/*textarea {
   width: 400px;
   height: 30px
-}
+}*/
 
 .pending-vol-button{
   float: right;

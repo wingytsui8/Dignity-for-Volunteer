@@ -376,12 +376,10 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 		$scope.postOptions = responseData[0].postOptions;
 		$scope.postOptions.push({type: "Post", content: "Other"});
 		for (var i = 0 ;i<responseData[0].past.length;i++){
-			var period = periodCovertToString(responseData[0].past[i].fromDate, responseData[0].past[i].toDate).period;
-			responseData[0].past[i].period = period.period;
+			responseData[0].past[i].period = periodCovertToString(responseData[0].past[i].fromDate, responseData[0].past[i].toDate).period;
 		}
 		for (var i = 0 ;i<responseData[0].upcoming.length;i++){
-			var period = periodCovertToString(responseData[0].upcoming[i].fromDate, responseData[0].upcoming[i].toDate).period;
-			responseData[0].upcoming[i].period = period.period;
+			responseData[0].upcoming[i].period = periodCovertToString(responseData[0].upcoming[i].fromDate, responseData[0].upcoming[i].toDate).period;
 			if (responseData[0].upcoming[i].registered == "1"){
 				responseData[0].upcoming[i].isRegistered = true;
 			}else if(responseData[0].upcoming[i].registered == "0"){
@@ -390,7 +388,7 @@ app.controller("homeController", ["$scope", "$rootScope", function($scope, $root
 			responseData[0].upcoming[i].original = responseData[0].upcoming[i].isRegistered;
 		}
 		for (var i = 0 ;i<responseData[0].volWork.length;i++){
-			var period = periodCovertToString(responseData[0].volWork[i].fromDate, responseData[0].volWork[i].toDate).period;
+			var period = periodCovertToString(responseData[0].volWork[i].fromDate, responseData[0].volWork[i].toDate);
 			responseData[0].volWork[i].period = period.period;
 			if (responseData[0].volWork[i].status == "Cancelled"){	
 				responseData[0].volWork[i].displayButton = false;
@@ -924,7 +922,7 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 						alert("Change applied.");
 						if (confirm("Do you want to notify the volunteer with emai?")){
 							var mailNextLine = "%0D%0A";
-							var mailSubject = "Regarding your volunteer application on " + record.fromDate;
+							var mailSubject = "Regarding your volunteer application on " + record.fromDate.split("T")[0];
 							var mailBodyGreetings = "Hi " + record.name + "," + mailNextLine + mailNextLine;
 
 							var mailBodyStatus = "Your volunteer application has been " + record.status +  mailNextLine + mailNextLine;
@@ -932,8 +930,8 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 							var mailBodyDetails= "Here are the details:  " + mailNextLine;
 							mailBodyDetails += "Period: " + record.period + mailNextLine;
 							mailBodyDetails += "Post: " + record.post + mailNextLine;
-							mailBodyDetails += "Venue: " + record.venue.hasOwnProperty('content')?record.venue['content']:'' + mailNextLine;
-							mailBodyDetails += "Location: " + record.location.hasOwnProperty('content')?record.location['content']:'' + mailNextLine;
+							mailBodyDetails += "Venue: " + (record.venue.hasOwnProperty('content')?record.venue['content']:'') + mailNextLine;
+							mailBodyDetails += "Location: " + (record.location.hasOwnProperty('content')?record.location['content']:'') + mailNextLine;
 							mailBodyDetails += "Remarks: " + record.remarks + mailNextLine;
 
 							var mailBody = mailBodyGreetings + mailBodyStatus + mailBodyDetails;
@@ -965,7 +963,7 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		});
 		
 		var mailNextLine = "%0D%0A";
-		var mailSubject = "Regarding your volunteer application of " + record.eventName + " on " + record.fromDate;
+		var mailSubject = "Regarding your volunteer application of " + record.eventName + " on " + record.fromDate.split("T")[0];
 		var mailBodyGreetings = "Hi " + record.name + "," + mailNextLine + mailNextLine;
 
 		var mailBodyStatus = "Your volunteer application has been " + record.status +  mailNextLine + mailNextLine;
