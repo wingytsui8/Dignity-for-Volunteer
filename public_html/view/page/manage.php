@@ -302,7 +302,12 @@
 			<hr>
 			<div>
 				<h1>Calendar</h1>
-				<iframe src="https://calendar.google.com/calendar/embed?height=1200&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=dm5mMDduaHN0ZnN1c211ZDV1N200cXBlcXNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=b2s4NHVqZmJrOTVnbm1zbm9xbWVtOWM4NTBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=ZW4tZ2IuY2hyaXN0aWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4tZ2IubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23F6BF26&amp;color=%23039BE5&amp;color=%230B8043&amp;color=%23D81B60&amp;showTitle=0" style="border-width:0" width="1200" height="800" frameborder="0" scrolling="no"></iframe>
+				<div>
+					<span class="dot" style="background-color: #3C995B"></span>Christian Holidays   
+					<span class="dot" style="background-color: #E6804D"></span>Holidays in Malaysia  
+					<span class="dot" style="background-color: #CF9911"></span>Event  
+					<span class="dot" style="background-color: #668CD9"></span>Volunteer Work</div>
+				<iframe src="https://calendar.google.com/calendar/embed?height=800&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=dm5mMDduaHN0ZnN1c211ZDV1N200cXBlcXNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=b2s4NHVqZmJrOTVnbm1zbm9xbWVtOWM4NTBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=ZW4tZ2IuY2hyaXN0aWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4tZ2IubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23F6BF26&amp;color=%234285F4&amp;color=%230B8043&amp;color=%23F4511E&amp;showTitle=0&amp;showNav=1&amp;showDate=1&amp;showCalendars=1" style="border-width:0" width="1200" height="800" frameborder="0" scrolling="no"></iframe>
 			</div>
 			<hr>
 			<div>
