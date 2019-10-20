@@ -239,6 +239,13 @@ if(isset($_POST['action'])){
 		header('Content-type: application/json');
 		echo json_encode( uploadVolunteeerWork($records) );
 		exit;
+
+		case "getPastEvent":
+		$start = $_POST['start'];
+		header('Content-type: application/json');
+		echo json_encode( getPastEvent($start) );
+		exit;
+
 	}
 }
 
@@ -252,6 +259,15 @@ function getEvent($orderBy, $active , $past){
 	where fromDate " . ($past? " <= " : " >= ") . " CURDATE() " .
 	($active? (" and active = " . $active ): "") .
 	" order by fromDate " . $orderBy;
+	return runQuery($sql);
+}
+
+function getPastEvent($start){
+	$sql= "SELECT id, name, DATE_FORMAT(fromDate, '%Y-%m-%dT%T') AS fromDate, DATE_FORMAT(toDate, '%Y-%m-%dT%T') as toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, remarks
+	From event
+	where fromDate < CURDATE() and active = 1
+	order by fromDate desc
+	Limit " . $start . " , 5 ";
 	return runQuery($sql);
 }
 

@@ -515,20 +515,29 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 	$scope.venueOptions = [];
 	$scope.action = "";
 	$scope.past = false;
+	$scope.pastEventMoreCount = 0;
+	$scope.eol = false;
+	$scope.getMorePastEvent = function(){
+		$scope.pastEventMoreCount+=5;
+		$scope.getEvents($past);
+	}
+
 	$scope.getEvents = function($past){
 		if ($past){
 			$.ajax({
 				url: '../connectDB.php',
 				type: 'POST',
-				data : { action: 'getEvent' ,  orderBy: 'DESC' ,  active: '0' ,  past: $past },
+				data : { action: 'getPastEvent' ,  start: $scope.pastEventMoreCount },
 				dataType: "json",
 				async: false,
 				success: function(response) {
 					responseData = JSON.parse(response);
-					$scope.action = "Edit Upcoming Event";
+					$scope.action = "Edit Past Event";
+					if (responseData.length < 5){
+						$scope.eol = true;
+					}
 				}
 			});
-
 		}else{
 			$.ajax({
 				url: '../connectDB.php',

@@ -65,7 +65,6 @@
 		</div>
 		<div id="Event" class="tabcontent">
 			<h1 id="events">Events details</h1>
-			<button ng-show="past" ng-click="getMoreEvent()">More</button>
 			<table st-table="events" class="table table-striped">
 				<thead>
 					<tr>
@@ -87,6 +86,7 @@
 						<td><button ng-click="getEventDetail(row.id)">Edit</button></td>
 					</tr>
 				</tbody>
+			<button ng-show="!eol" ng-click="getMorePastEvent()">More</button>
 			</table>
 			<button class="collapsible">{{action}}</button>
 			<div class="content">
