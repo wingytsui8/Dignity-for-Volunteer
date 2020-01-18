@@ -66,7 +66,7 @@
 							<label name="email">Email</label>
 							<input id="loginEmail" type="email" placeholder="example@example.com" ng-model="email"/>
 							<label name="password">Password</label>
-							<input id="loginPw" placeholder = "Date of birth (YYYMMDD)" type="password" ng-model="password"/>
+							<input id="loginPw" placeholder = "Date of birth (YYYYMMDD)" type="password" ng-model="password"/>
 							<input type="submit" value="Login" ng-click="loginSubmit()"/>
 						</fieldset>
 					</div>
