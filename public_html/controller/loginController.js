@@ -35,13 +35,13 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
                         }
 					}else{
                         $scope.isValid = false;
-                        $scope.$apply();
+                        //$scope.$apply();
                     }
 				}
 			});
 		}else{
 			$scope.isValid = false;
-            $scope.$apply();
+            //$scope.$apply();
 		}
     }
     $scope.setLEmail = function(email) {
