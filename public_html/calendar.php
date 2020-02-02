@@ -114,4 +114,28 @@ function callGoogleCalendar($calendar, $eventId, $eventName, $location, $descrip
 	return json_encode($event->getId());
 }
 
+
+function deleteGoogleCalendar($calendar, $eventId){
+	switch ($calendar) {
+		case 'EVENT':
+			$calendarId = CALENDAR_ID_EVENT;
+			break;
+		case 'WORK':
+			$calendarId = CALENDAR_ID_VOLUNTEER_WORK;
+			break;
+		default:
+			$calendarId = CALENDAR_ID_DIGNITY;
+			break;
+	} 
+
+ 	// call google API to create client service
+	$client = getClient();
+	$service = new Google_Service_Calendar($client);
+	// cal; google API to create / update event
+
+	$service->events->delete($calendarId, $eventId);
+	
+	return;
+}
+
 ?>
