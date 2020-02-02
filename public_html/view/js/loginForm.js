@@ -10,6 +10,14 @@ $('#loginform').click(function(){
   $(this).toggleClass('green');
 });
 
+$(document).ready(function(){
+    $('input[id="loginPw"]').keypress(function(e){
+      if(e.keyCode==13)
+      $('input[type="submit"]').click();
+    });
+});
+
+
 $(document).mousedown(function (e)
 {
     var container = $(".login");
