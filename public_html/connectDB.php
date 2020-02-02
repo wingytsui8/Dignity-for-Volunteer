@@ -228,6 +228,13 @@ if(isset($_POST['action'])){
 		echo json_encode( deleteSetting($id) );
 		exit;
 
+		case "deleteEvent":
+		$id = (string)$_POST['id'];
+
+		header('Content-type: application/json');
+		echo json_encode( deleteEvent($id) );
+		exit;
+
 		case "uploadVolunteeer":
 		$records = $_POST['records'];
 		header('Content-type: application/json');
@@ -629,9 +636,7 @@ function getConfirmedUpcomingVolWork(){
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ other ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 function postEvent($id, $name, $fromDate, $toDate, $venue, $location, $contactName, $contactEmail, $applicationDeadline, $quota, $active){ 
-	$sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES ('". $id. "','" . $name."', '".$fromDate."', '".$toDate."', '" .$venue."', '" .$location. "' , '" . $contactName . "', '" . $contactEmail. "', '".$applicationDeadline."', '". $quota. "', '".$active."')
-	ON DUPLICATE KEY UPDATE 
-	name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
+	$sql= "INSERT INTO event (id, name, fromDate, toDate, venue, location, contactName, contactEmail, applicationDeadline, quota, active) VALUES (". ($id?$id:' null '). ",'" . $name."', '".$fromDate."', '".$toDate."', '" .$venue."', '" .$location. "' , '" . $contactName . "', '" . $contactEmail. "', '".$applicationDeadline."', '". $quota. "', '".$active."')ON DUPLICATE KEY UPDATE name=VALUES(name), name=VALUES(name), fromDate=VALUES(fromDate), toDate=VALUES(toDate), venue=VALUES(venue), location=VALUES(location), contactName=VALUES(contactName), contactEmail=VALUES(contactEmail), applicationDeadline=VALUES(applicationDeadline), quota=VALUES(quota),active=VALUES(active) ";
 
 	$results = runQuery($sql);
 	updateGoogleCalendar('event', $id);
@@ -753,6 +758,11 @@ function checkLoginSession($email){
 	return validate($sql);
 }
 
+function deleteEvent($id){
+	deleteGoogleCalendarEvent('event', $id);
+	$sql= "DELETE FROM event WHERE id = " . $id;
+	return runQuery($sql);
+}
 function deletePhoto($id){
 	$sql= "DELETE FROM photo WHERE id = " . $id;
 	return runQuery($sql);
@@ -868,18 +878,16 @@ function updateGoogleCalendar ($table, $id){
 
 	switch ($table) {
 		case 'event':
-		$calendar = 'EVENT';
-		$sql = "SELECT `event`.`id`, `event`.`name`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%T') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%T') as `toDate`, `venue`, `location`, `contactName`, `contactEmail`, `googleCalendarId` From `event`";
-		break;
+			$calendar = 'EVENT';
+			$sql = "SELECT `event`.`id`, `event`.`name`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%T') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%T') as `toDate`, `venue`, `location`, `contactName`, `contactEmail`, `googleCalendarId` From `event`";
+			break;
 		case 'volunteer_work':
-		$calendar = 'WORK';
-		$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%T') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%T') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` , `googleCalendarId` From `volunteer_work` 
-		INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` ";
-		break;
+			$calendar = 'WORK';
+			$sql= "SELECT `volunteer_work`.`id`, `volunteer`.`name`, `volunteer`.`email`, DATE_FORMAT(`fromDate`, '%Y-%m-%dT%T') AS `fromDate`, DATE_FORMAT(`toDate`, '%Y-%m-%dT%T') as `toDate`, `venue`, `location`, `post`, `status`, `remarks`, `volId` , `googleCalendarId` From `volunteer_work` 
+				INNER join `volunteer` on `volunteer`.id = `volunteer_work`.`volId` ";
+			break;
 		default:
-		$calendar = '';
-		return;
-		break;
+			return;
 	}
 	if($id){
 		$sql = $sql . " where " . $table . ".`id` = " . $id;
@@ -915,6 +923,29 @@ function updateGoogleCalendar ($table, $id){
 
 	$sql= "UPDATE " . $table . " set `googleCalendarId` = " . $googleCalendarId . " where id = " . $id;
 	runNonQuery($sql);
+	return true;
+}
+
+function deleteGoogleCalendarEvent($table, $id){
+
+	switch ($table) {
+		case 'event':
+			$calendar = 'EVENT';
+			$sql = "SELECT `googleCalendarId` From `event`";
+			break;
+		case 'volunteer_work':
+			$calendar = 'WORK';
+			$sql= "SELECT `googleCalendarId` From `volunteer_work`";
+			break;
+		default:
+			return;
+	}
+	$sql = $sql . " where " . $table . ".`id` = " . $id;
+	$results = json_decode(runQuery($sql),1);
+	$googleCalendarId = $results[0]['googleCalendarId'];
+	
+	$googleCalendarId = deleteGoogleCalendar($calendar, $googleCalendarId);
+
 	return true;
 }
 //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv update Googel Calendar vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv

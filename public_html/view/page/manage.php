@@ -274,7 +274,7 @@
 					</tbody>
 				</table>
 			</div>
-			<button class="collapsible">Slide</button>
+			<!-- <button class="collapsible">Slide</button>
 			<div class="content">
 				<div id="slidesPreview">
 					<ul id="slides" >
@@ -291,7 +291,7 @@
 						<li class="btn next">></li>
 					</ul>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div id="Overview" class="tabcontent">
 			<div>

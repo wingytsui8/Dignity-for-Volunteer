@@ -558,7 +558,7 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		}
 		$scope.past = $past;
 		for (var i = 0; i < responseData.length; i++){
-			$scope.events[i].period = periodCovertToString($scope.events[i].fromDate, $scope.events[i].fromDate).period;
+			$scope.events[i].period = periodCovertToString($scope.events[i].fromDate, $scope.events[i].toDate).period;
 			$scope.events[i].applicationDeadline = new Date($scope.events[i].applicationDeadline).toLocaleDateString();
 		}
 	}
@@ -619,7 +619,30 @@ app.controller("manageController", ["$scope", "$rootScope", function($scope, $ro
 		$scope.sql = responseData;
 		alert("Change applied.");
 		$scope.getEvents($scope.past);
-		$scope.getEventDetail($scope.eventDetail.id);
+		$scope.createEmptyEvent();
+	}
+
+	$scope.deleteEvent = function() {
+		if (confirm("Are you sure?")){
+			$.ajax({
+				url: '../connectDB.php',
+				type: 'POST',
+				data : { 
+					action: 'deleteEvent' ,  
+					id: $scope.eventDetail.id, 
+					
+				},
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					responseData = JSON.parse(response);
+				}
+			});
+			$scope.sql = responseData;
+			alert("Change applied.");
+			$scope.getEvents($scope.past);
+			$scope.createEmptyEvent();
+		}
 	}
 	$scope.getRegisteredList = function() {
 		$.ajax({
