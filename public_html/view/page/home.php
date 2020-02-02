@@ -64,9 +64,9 @@
 					<div class="home_randompad">
 						<fieldset>
 							<label name="email">Email</label>
-							<input id="loginEmail" type="email" placeholder="example@example.com" ng-model="email"/>
+							<input id="loginEmail" class={{isValid?"formholder_input_valid":"formholder_input_invalid"}} type="email" placeholder="example@example.com" ng-model="email"/>
 							<label name="password">Password</label>
-							<input id="loginPw" placeholder = "Date of birth (YYYYMMDD)" type="password" ng-model="password"/>
+							<input id="loginPw" class={{isValid?"formholder_input_valid":"formholder_input_invalid"}} placeholder = "Date of birth (YYYYMMDD)" type="password" ng-model="password"/>
 							<input type="submit" value="Login" ng-click="loginSubmit()"/>
 						</fieldset>
 					</div>

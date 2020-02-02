@@ -125,7 +125,6 @@ fieldset {
   color: black;
 }
 
-
 .formholder input[type="email"]:focus, .formholder input[type="password"]:focus {
   outline: none;
   box-shadow: 0 0 1px 1px var(--main-color);
