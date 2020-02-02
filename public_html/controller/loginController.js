@@ -12,7 +12,7 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
 
 	$scope.loginSubmit = function() {
 
-		if ($scope.password.length > 0 && $scope.email.length > 0){
+		if ($scope.password && $scope.email){
 
             $scope.email = $scope.email.toLowerCase();
 
@@ -26,17 +26,22 @@ angular.module('digVol').controller('loginController', ['$scope', '$http', '$roo
 				success: function(response) {
 					responseData = JSON.parse(response);
 					if (responseData){
+                        $scope.isValid = true;
 						$rootScope.lEmail = $scope.email;
 						extEmail = $rootScope.lEmail;
                         //$rootScope.upcomingInitChange(extEmail);
                         if ($rootScope.pageTitle == "Home"){
                             $rootScope.homeInit();
                         }
-					}
+					}else{
+                        $scope.isValid = false;
+                        $scope.$apply();
+                    }
 				}
 			});
 		}else{
 			$scope.isValid = false;
+            $scope.$apply();
 		}
     }
     $scope.setLEmail = function(email) {

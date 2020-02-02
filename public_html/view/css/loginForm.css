@@ -95,9 +95,9 @@ fieldset {
   right: 10px;
   line-height: 30px;
 }
-.formholder input[type="email"], .formholder input[type="password"] {
+.formholder_input_valid {
   padding: 5px 10px;
-  width: 96%;
+  width: 100%;
   display: block;
 /*  font-size: 18px;*/
   border-radius: 5px;
@@ -109,6 +109,23 @@ fieldset {
   margin: 0px 0px 10px 0px;
   color: black;
 }
+
+.formholder_input_invalid {
+  padding: 5px 10px;
+  width: 100%;
+  display: block;
+/*  font-size: 18px;*/
+  border-radius: 5px;
+  border: red 2px solid;;
+  -webkit-transition: 0.3s linear;
+  -moz-transition: 0.3s linear;
+  -o-transition: 0.3s linear;
+  transition: 0.3s linear;
+  margin: 0px 0px 10px 0px;
+  color: black;
+}
+
+
 .formholder input[type="email"]:focus, .formholder input[type="password"]:focus {
   outline: none;
   box-shadow: 0 0 1px 1px var(--main-color);
