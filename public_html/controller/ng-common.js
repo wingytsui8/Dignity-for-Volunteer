@@ -48,7 +48,7 @@ commonHeaderHtml +=
 "<label name=\"email\">Email</label>" +
 "<input class={{isValid?\"formholder_input_valid\":\"formholder_input_invalid\"}} id=\"loginEmail\" type=\"email\" placeholder=\"example@example.com\" ng-model=\"email\"/>" +
 "<label name=\"password\">Password</label>" + 
-"<input class={{isValid?\"formholder_input_valid\":\"formholder_input_invalid\"}} id=\"loginPw\" placeholder = \"Date of birth(YYYMMDD)\" type=\"password\" ng-model=\"password\"/> " +
+"<input class={{isValid?\"formholder_input_valid\":\"formholder_input_invalid\"}} id=\"loginPw\" placeholder = \"Date of birth(YYYYMMDD)\" type=\"password\" ng-model=\"password\"/> " +
 "<input type=\"submit\" value=\"Login\" ng-click=\"loginSubmit()\"/>" +
 "</fieldset>" +
 "</div>" +

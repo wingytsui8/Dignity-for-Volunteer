@@ -65,6 +65,10 @@
 fieldset {
   border: none;
 }
+label {
+  text-align: left;
+    display: block;
+}
 
 .login {
  /* position: absolute;
